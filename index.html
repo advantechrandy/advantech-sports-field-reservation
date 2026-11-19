@@ -1,0 +1,2295 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADVANTECH LINKOU ARENA｜研華科技假日林口室內運動場 4H 即時預約系統</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter, Noto Sans TC, JetBrains Mono (工業風等寬字體) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: {
+              950: '#07090d',
+              900: '#0c1017',
+              850: '#111620',
+              800: '#161d29',
+              700: '#1f2937',
+            },
+            steel: {
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* 工業風背景工程網格紋理 */
+    .bg-industrial-grid {
+      background-color: #07090d;
+      background-image:
+        linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* 工業斜紋警示條紋（用於公司活動停開與午休分隔） */
+    .hazard-stripes {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(244, 63, 94, 0.08),
+        rgba(244, 63, 94, 0.08) 10px,
+        rgba(12, 16, 23, 0.4) 10px,
+        rgba(12, 16, 23, 0.4) 20px
+      );
+    }
+
+    .neutral-stripes {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(148, 163, 184, 0.05),
+        rgba(148, 163, 184, 0.05) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+    }
+
+    /* 深色自訂捲軸 */
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0c1017;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #2d3748;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-modal {
+      animation: fadeSlideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-industrial-grid text-zinc-100 font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
+
+  <!-- ================= 頂部工業風導覽列 ================= -->
+  <header class="bg-obsidian-900/90 backdrop-blur-md border-b border-zinc-800/90 sticky top-0 z-30">
+    <!-- 頂部微光飾條 -->
+    <div class="h-0.5 w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-amber-500"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <!-- 品牌與標題 -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700/80 shadow-inner flex items-center justify-center shrink-0 relative overflow-hidden">
+          <div class="absolute inset-0 bg-cyan-500/10"></div>
+          <svg class="w-6 h-6 text-cyan-400 relative z-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M12 3v18M5.636 5.636l12.728 12.728M18.364 5.636L5.636 18.364" />
+            <circle cx="12" cy="12" r="9" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-extrabold tracking-wide text-white leading-tight">
+              研華科技假日林口室內運動場
+            </h1>
+            <span class="hidden sm:inline-block font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 tracking-wider">
+              4H BLOCKS
+            </span>
+          </div>
+          <p class="text-xs text-zinc-400 font-medium mt-0.5">
+            假日羽球 🏸・匹克球 🏓 即時場地調度系統
+          </p>
+        </div>
+      </div>
+
+      <!-- 右側狀態與管理後台 -->
+      <div class="flex items-center gap-2.5">
+        <!-- 即時同步狀態徽章 -->
+        <div id="sync-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-obsidian-950 border border-zinc-800 text-xs font-mono">
+          <span id="sync-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span id="sync-text" class="text-zinc-300">INIT...</span>
+        </div>
+
+        <!-- 管理員模式按鈕 -->
+        <button id="btn-admin-toggle" type="button"
+          class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 active:scale-95 transition text-xs sm:text-sm font-semibold text-zinc-100 border border-zinc-700 hover:border-zinc-500">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span id="admin-btn-label">管理員登入</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= 主內容區 ================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- 1. 置頂系統公告與預約規範 -->
+    <section class="bg-obsidian-850 rounded-2xl border border-zinc-800 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4 shadow-lg relative overflow-hidden">
+      <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-amber-500"></div>
+
+      <div class="flex items-start gap-3.5 pl-2">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-mono text-[11px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-zinc-800 text-zinc-200 border border-zinc-700">NOTICE</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">📅 預約期限：當週星期三 23:59 前</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30">⚠️ 同時段全場(A~D)合計滿 6 人始可向廠務借用</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">👥 單場上限 8 人（可開放 +1）</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-violet-500/15 text-violet-300 border border-violet-500/30">🛡️ 安全考量：1 位研華員工限帶 1～2 位親友</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">⏱️ 每次預約固定 4 小時</span>
+          </div>
+          <p id="announcement-display" class="text-sm text-zinc-300 mt-2 leading-relaxed">
+            歡迎使用研華科技假日林口室內運動場預約系統！A~D 四面場地皆可打羽球與匹克球，單次預約為完整 4 小時。因公司內部安全考量，一位研華員工只能帶一到兩位親友入場。當週六、日場地請務必於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。
+          </p>
+        </div>
+      </div>
+
+      <!-- 開放時段資訊卡 -->
+      <div class="flex flex-col sm:flex-row lg:flex-col gap-2 shrink-0 bg-obsidian-950 rounded-xl p-3.5 border border-zinc-800 text-xs font-mono">
+        <div class="flex items-center gap-2.5">
+          <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 font-bold">SAT</span>
+          <span class="text-zinc-300">08:00-12:00 / 13:00-17:00</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">SUN</span>
+          <span class="text-zinc-300">13:00-17:00 <span class="text-zinc-500 font-sans">(僅下午場)</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 假日日期選擇器 (橫向滾動膠囊卡) -->
+    <section class="space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-sm font-bold text-zinc-200 flex items-center gap-2 tracking-wide">
+          <span class="w-2 h-2 rounded-xs bg-cyan-400"></span>
+          <span>選擇假日日期</span>
+          <span class="font-mono text-xs font-normal text-zinc-500">// UPCOMING WEEKENDS</span>
+        </h2>
+        <span id="selected-date-summary" class="font-mono text-xs font-semibold text-cyan-300 bg-cyan-950/60 px-3 py-1 rounded-lg border border-cyan-500/30"></span>
+      </div>
+
+      <div id="date-selector-container" class="flex gap-3 overflow-x-auto pb-2 custom-scrollbar">
+        <!-- 由 JavaScript 動態產生假日日期按鈕 -->
+      </div>
+    </section>
+
+    <!-- 3. 篩選控制列與狀態圖例 -->
+    <section class="bg-obsidian-850 rounded-2xl border border-zinc-800 p-3.5 flex flex-wrap items-center justify-between gap-3">
+      <!-- 篩選按鈕群 -->
+      <div class="flex flex-wrap items-center gap-2" id="filter-buttons">
+        <button data-filter="all" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-cyan-500 text-obsidian-950 shadow-[0_0_12px_rgba(6,182,212,0.35)]">全部場地</button>
+        <button data-filter="available" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-950 text-zinc-400 border border-zinc-800 hover:border-zinc-600 hover:text-zinc-200">🟢 可預約</button>
+        <button data-filter="badminton" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-950 text-zinc-400 border border-zinc-800 hover:border-zinc-600 hover:text-zinc-200">🏸 羽球</button>
+        <button data-filter="pickleball" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-950 text-zinc-400 border border-zinc-800 hover:border-zinc-600 hover:text-zinc-200">🏓 匹克球</button>
+        <button data-filter="looking" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-950 text-zinc-400 border border-zinc-800 hover:border-zinc-600 hover:text-zinc-200">🙋 歡迎零打</button>
+      </div>
+
+      <!-- 狀態圖例 -->
+      <div class="flex flex-wrap items-center gap-3.5 text-xs text-zinc-400">
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-emerald-400 shadow-[0_0_6px_#34d399]"></span>可預約</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-cyan-400 shadow-[0_0_6px_#22d3ee]"></span>羽球 4H</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-amber-400 shadow-[0_0_6px_#fbbf24]"></span>匹克球 4H</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-rose-500"></span>公司活動停開</span>
+        <span class="flex items-center gap-1 text-emerald-300 font-semibold">🏢✅ 廠務預約完成</span>
+        <span class="flex items-center gap-1 text-amber-400 font-semibold">🔄 需調整球網</span>
+      </div>
+    </section>
+
+    <!-- 3.4 Firebase Firestore 權限設定引導橫幅（僅在權限不足時顯示） -->
+    <div id="firebase-permission-banner" class="hidden rounded-2xl bg-rose-950/60 border border-rose-500/50 p-4 space-y-3 shadow-lg">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-rose-300">Firebase Firestore 存取權限不足（請更新 Firebase Console 規則）</h3>
+            <p class="text-xs text-rose-200/80 mt-0.5 leading-relaxed">
+              請前往 Firebase Console → <strong>Firestore Database</strong> → <strong>規則 (Rules)</strong>，貼上下方規則並點擊「發布」，重新整理即可啟用即時同步：
+            </p>
+          </div>
+        </div>
+        <button type="button" id="btn-copy-rules" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-500 hover:bg-rose-400 text-white transition shrink-0">
+          📋 複製 Firestore 規則
+        </button>
+      </div>
+      <pre id="firestore-rules-snippet" class="text-[11px] font-mono bg-obsidian-950/90 text-cyan-300 p-3 rounded-xl border border-zinc-800 overflow-x-auto leading-relaxed">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /artifacts/advantech-linkou-arena/public/data/{document=**} {
+      allow read, write: if true;
+    }
+  }
+}</pre>
+    </div>
+
+    <!-- 3.5 當週星期三預約截止警示橫幅 -->
+    <div id="deadline-expired-banner" class="hidden rounded-2xl bg-amber-500/10 border border-amber-500/40 p-4 flex items-start gap-3.5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 flex items-center justify-center shrink-0">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div>
+        <h3 id="deadline-banner-title" class="text-sm sm:text-base font-bold text-amber-300 tracking-wide">本日期已過當週星期三預約期限</h3>
+        <p id="deadline-banner-desc" class="text-xs sm:text-sm text-amber-200/80 mt-1"></p>
+      </div>
+    </div>
+
+    <!-- 4. 公司活動警示橫幅（當該日有公司活動取消開放時顯示） -->
+    <div id="company-event-banner" class="hidden rounded-2xl hazard-stripes border border-rose-500/50 p-4 flex items-start gap-3.5 shadow-lg">
+      <div class="w-10 h-10 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-400 flex items-center justify-center shrink-0">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <div>
+        <h3 id="event-banner-title" class="text-sm sm:text-base font-bold text-rose-300 tracking-wide">當日公司活動：場地暫停開放</h3>
+        <p id="event-banner-desc" class="text-xs sm:text-sm text-rose-200/80 mt-1"></p>
+      </div>
+    </div>
+
+    <!-- 5. 主要場地 4 小時場次看板（手機免橫向捲動，自適應 4 面場地卡片矩陣） -->
+    <section id="sessions-container" class="space-y-6">
+      <!-- 由 JavaScript 動態渲染 08:00-12:00 / 13:00-17:00 場次與 A~D 四面場地 -->
+    </section>
+
+    <!-- 6. 當日預約紀錄總覽表 -->
+    <section class="bg-obsidian-850 rounded-2xl border border-zinc-800 p-4 sm:p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-sm sm:text-base font-bold text-zinc-100 flex items-center gap-2.5">
+          <span class="w-2 h-2 rounded-xs bg-amber-400"></span>
+          <span>當日預約紀錄明細</span>
+          <span id="daily-count-badge" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-zinc-800 text-cyan-400 border border-zinc-700">0 筆</span>
+        </h2>
+        <span class="text-xs text-zinc-500">點擊任一場地卡片可查看詳情或取消</span>
+      </div>
+      <div id="daily-booking-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <!-- 由 JavaScript 動態產生當日預約摘要卡 -->
+      </div>
+    </section>
+
+    <!-- 7. 球友即時聊天室／留言視窗 -->
+    <section id="chat-section" class="bg-obsidian-850 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl">
+      <div class="bg-obsidian-900/90 border-b border-zinc-800 px-4 sm:px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+          <h2 class="text-sm sm:text-base font-bold text-zinc-100">球友即時聊天室／留言板</h2>
+          <span class="font-mono text-[11px] text-zinc-500 hidden sm:inline">// LIVE MESSAGE BOARD</span>
+        </div>
+        <span id="chat-count-badge" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-zinc-800 text-cyan-400 border border-zinc-700">0 則留言</span>
+      </div>
+
+      <!-- 留言訊息清單 -->
+      <div id="chat-messages-container" class="p-4 sm:p-5 space-y-3 max-h-80 overflow-y-auto custom-scrollbar bg-obsidian-950/50">
+        <!-- 由 JavaScript 動態渲染留言 -->
+      </div>
+
+      <!-- 留言輸入列 -->
+      <form id="chat-form" class="p-3.5 sm:p-4 bg-obsidian-900 border-t border-zinc-800 flex flex-col sm:flex-row gap-2.5">
+        <input id="chat-input-name" type="text" required maxlength="20" placeholder="您的暱稱／英文名"
+          class="sm:w-44 px-3 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-cyan-400" />
+        <div class="flex-1 flex gap-2">
+          <input id="chat-input-message" type="text" required maxlength="200" placeholder="輸入留言（例如：揪團湊人、詢問借球拍、確認廠務申請進度...）"
+            class="flex-1 px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-cyan-400" />
+          <button type="submit" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold text-obsidian-950 bg-cyan-400 hover:bg-cyan-300 active:scale-95 transition shrink-0 shadow-[0_0_12px_rgba(34,211,238,0.25)]">
+            送出留言
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ================= 頁尾 ================= -->
+  <footer class="bg-obsidian-900 border-t border-zinc-800/80 mt-10 py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-zinc-500">
+      <div class="font-medium">ADVANTECH LINKOU SPORTS ARENA｜研華科技假日林口室內運動場 4H 預約系統</div>
+      <div class="flex items-center gap-2 font-mono">
+        <span>UID:</span>
+        <code id="footer-uid" class="px-2 py-0.5 rounded bg-obsidian-950 border border-zinc-800 text-zinc-400 text-[11px]">LOADING...</code>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= Modal 1：新增 4 小時預約表單 ================= -->
+  <div id="modal-booking" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4 overflow-y-auto">
+    <div class="bg-obsidian-900 border border-zinc-700/80 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-modal my-auto">
+      <!-- Header -->
+      <div class="bg-obsidian-850 border-b border-zinc-800 px-5 py-4 flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-base font-extrabold text-white tracking-wide">預約場地（4 小時）</h3>
+            <span class="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">4H</span>
+          </div>
+          <p id="booking-modal-subtitle" class="font-mono text-xs text-cyan-400 mt-1"></p>
+        </div>
+        <button type="button" onclick="closeModal('modal-booking')" class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form id="booking-form" class="p-5 space-y-4">
+        <input type="hidden" id="input-slot-key" />
+        <input type="hidden" id="input-court-id" />
+        <input type="hidden" id="input-time-slot" />
+
+        <!-- 球類選擇 -->
+        <div>
+          <label class="block text-xs font-bold text-zinc-300 mb-2">選擇球類項目 <span class="text-rose-400">*</span></label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="cursor-pointer">
+              <input type="radio" name="sport" value="badminton" class="peer sr-only" checked />
+              <div class="p-3 rounded-xl border border-zinc-700 bg-obsidian-950 peer-checked:border-cyan-400 peer-checked:bg-cyan-500/10 peer-checked:shadow-[0_0_15px_rgba(34,211,238,0.15)] text-center transition">
+                <div class="text-2xl mb-1">🏸</div>
+                <div class="text-sm font-bold text-zinc-100">羽球</div>
+                <div class="font-mono text-[10px] text-zinc-400 mt-0.5">NET 1.55m</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="sport" value="pickleball" class="peer sr-only" />
+              <div class="p-3 rounded-xl border border-zinc-700 bg-obsidian-950 peer-checked:border-amber-400 peer-checked:bg-amber-500/10 peer-checked:shadow-[0_0_15px_rgba(251,191,36,0.15)] text-center transition">
+                <div class="text-2xl mb-1">🏓</div>
+                <div class="text-sm font-bold text-zinc-100">匹克球</div>
+                <div class="font-mono text-[10px] text-zinc-400 mt-0.5">NET 0.91m</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- 預約人資訊 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="input-user-name" class="block text-xs font-bold text-zinc-300 mb-1.5">預約人姓名／英文名 <span class="text-rose-400">*</span></label>
+            <input id="input-user-name" type="text" required maxlength="24" placeholder="例如：Alex Chen"
+              class="w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 placeholder-zinc-600 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400" />
+          </div>
+          <div>
+            <label for="input-dept" class="block text-xs font-bold text-zinc-300 mb-1.5">部門／分機（選填）</label>
+            <input id="input-dept" type="text" maxlength="24" placeholder="例如：RD / #1234"
+              class="w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 placeholder-zinc-600 text-sm focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400" />
+          </div>
+        </div>
+
+        <!-- 預約人數（單場 1~8 人，保障打球品質） -->
+        <div class="bg-obsidian-950 p-3.5 rounded-xl border border-zinc-800">
+          <div class="flex items-center justify-between mb-2.5">
+            <label for="input-player-count" class="text-xs font-bold text-zinc-300">
+              本場地目前人數 <span class="text-rose-400">*</span>
+            </label>
+            <span id="player-count-status" class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              ✓ 1~8 人品質保障
+            </span>
+          </div>
+          <div class="flex items-center gap-3">
+            <button type="button" id="btn-dec-players" class="w-10 h-10 rounded-xl bg-obsidian-850 border border-zinc-700 text-zinc-200 font-bold text-lg hover:bg-zinc-800 active:scale-95 transition">-</button>
+            <input id="input-player-count" type="number" min="1" max="8" value="4" required
+              class="w-full text-center font-mono font-bold text-base py-2 rounded-xl border border-zinc-700 bg-obsidian-900 text-white focus:outline-none focus:border-cyan-400" />
+            <button type="button" id="btn-inc-players" class="w-10 h-10 rounded-xl bg-obsidian-850 border border-zinc-700 text-zinc-200 font-bold text-lg hover:bg-zinc-800 active:scale-95 transition">+</button>
+          </div>
+          <p class="text-[11px] text-zinc-500 mt-2 leading-relaxed">
+            單一場地少於 6 人亦可先預約並開放同仁 +1，但上限為 <strong class="text-zinc-300">8 人</strong>以維持打球品質。全場 A~D 同時段合計需滿 <strong class="text-amber-400">6 人</strong>始達公司借用門檻。
+          </p>
+          <div class="mt-2.5 px-3 py-2 rounded-lg bg-violet-500/10 border border-violet-500/30 text-[11px] text-violet-200 leading-relaxed">
+            🛡️ <strong>安全規範提醒：</strong>因公司內部安全考量，一位研華員工只能帶 <strong>1～2 位親友</strong>入場。
+          </div>
+        </div>
+
+        <!-- 開放 +1 零打與備註 -->
+        <div class="space-y-3">
+          <label class="flex items-center gap-2.5 cursor-pointer bg-obsidian-950 p-3 rounded-xl border border-zinc-800 hover:border-emerald-500/40 transition">
+            <input id="input-looking" type="checkbox" checked class="w-4 h-4 rounded accent-emerald-400" />
+            <span class="text-xs font-semibold text-zinc-200">🙋 開放其他同仁線上 +1 加入（未滿 8 人前皆可併團）</span>
+          </label>
+
+          <div>
+            <label for="input-note" class="block text-xs font-bold text-zinc-300 mb-1.5">備註（選填，如程度需求、球拍借用）</label>
+            <input id="input-note" type="text" maxlength="60" placeholder="例如：新手友善、歡迎一起湊人數"
+              class="w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 placeholder-zinc-600 text-sm focus:outline-none focus:border-cyan-400" />
+          </div>
+
+          <div>
+            <label for="input-pin" class="block text-xs font-bold text-zinc-300 mb-1.5">設定 4 位數取消密碼 <span class="text-rose-400">*</span></label>
+            <input id="input-pin" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required placeholder="例如：1234（自助取消用）"
+              class="w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 placeholder-zinc-600 font-mono text-sm tracking-widest focus:outline-none focus:border-cyan-400" />
+          </div>
+        </div>
+
+        <!-- 錯誤提示 -->
+        <div id="booking-form-error" class="hidden text-xs font-semibold text-rose-400 bg-rose-500/10 border border-rose-500/30 rounded-xl px-3 py-2"></div>
+
+        <!-- 送出按鈕 -->
+        <div class="flex gap-2.5 pt-2">
+          <button type="button" onclick="closeModal('modal-booking')" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-zinc-300 bg-zinc-800 hover:bg-zinc-700 transition">
+            取消
+          </button>
+          <button type="submit" id="btn-submit-booking" class="flex-1 py-2.5 rounded-xl text-sm font-extrabold text-obsidian-950 bg-cyan-400 hover:bg-cyan-300 active:scale-95 transition shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+            確認預約 (4H)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= Modal 2：預約詳情、+1 併團與取消 ================= -->
+  <div id="modal-detail" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4 overflow-y-auto">
+    <div class="bg-obsidian-900 border border-zinc-700/80 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-modal my-auto">
+      <!-- Header -->
+      <div class="bg-obsidian-850 border-b border-zinc-800 px-5 py-4 flex items-center justify-between">
+        <div>
+          <h3 id="detail-title" class="text-base font-extrabold text-white tracking-wide">預約詳情</h3>
+          <p id="detail-subtitle" class="font-mono text-xs text-cyan-400 mt-1"></p>
+        </div>
+        <button type="button" onclick="closeModal('modal-detail')" class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-4">
+        <!-- 基本資訊網格 -->
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div class="bg-obsidian-950 p-3 rounded-xl border border-zinc-800">
+            <div class="font-mono text-[10px] text-zinc-500 uppercase">Sport</div>
+            <div id="detail-sport" class="font-bold text-white mt-1"></div>
+          </div>
+          <div class="bg-obsidian-950 p-3 rounded-xl border border-zinc-800">
+            <div class="font-mono text-[10px] text-zinc-500 uppercase">Players</div>
+            <div id="detail-players" class="font-mono font-bold text-cyan-300 mt-1"></div>
+          </div>
+          <div class="bg-obsidian-950 p-3 rounded-xl border border-zinc-800 col-span-2">
+            <div class="font-mono text-[10px] text-zinc-500 uppercase">Booked By</div>
+            <div id="detail-user" class="font-bold text-zinc-100 mt-1"></div>
+          </div>
+        </div>
+
+        <div class="bg-obsidian-950 p-3.5 rounded-xl border border-zinc-800 text-sm">
+          <div class="font-mono text-[10px] text-zinc-500 uppercase">Notes</div>
+          <div id="detail-note" class="text-zinc-300 mt-1"></div>
+        </div>
+
+        <!-- 線上 +1 報名加入區塊 -->
+        <div id="join-section" class="bg-emerald-500/5 border border-emerald-500/30 rounded-xl p-3.5 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+              <span>🙋 線上 +1 併團加入</span>
+            </div>
+            <span id="detail-remaining-badge" class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"></span>
+          </div>
+
+          <!-- 已加入名單 -->
+          <div id="detail-joiners-list" class="flex flex-wrap gap-1.5"></div>
+
+          <!-- 加入輸入列（未滿 8 人且開放加入時顯示） -->
+          <div id="join-form-area" class="space-y-2 pt-1">
+            <div class="flex gap-2">
+              <input id="input-joiner-name" type="text" maxlength="20" placeholder="您的姓名／英文名"
+                class="flex-1 px-3 py-2 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 placeholder-zinc-600 text-xs focus:outline-none focus:border-emerald-400" />
+              <select id="input-joiner-count" class="w-20 px-2 py-2 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 font-mono text-xs focus:outline-none focus:border-emerald-400">
+              </select>
+            </div>
+            <button type="button" id="btn-join-court" class="w-full py-2 rounded-xl text-xs font-extrabold text-obsidian-950 bg-emerald-400 hover:bg-emerald-300 active:scale-95 transition">
+              ＋ 立即報名加入此場地
+            </button>
+            <p class="text-[11px] text-violet-300/90">🛡️ 因公司內部安全考量，一位研華員工只能帶 1～2 位親友。</p>
+            <div id="join-error" class="hidden text-xs font-semibold text-rose-400"></div>
+          </div>
+
+          <!-- 滿團或不開放提示 -->
+          <div id="join-closed-msg" class="hidden text-xs text-zinc-400"></div>
+        </div>
+
+        <!-- 取消預約區塊 -->
+        <div class="border-t border-zinc-800 pt-4 space-y-3">
+          <div class="text-xs font-bold text-zinc-300">取消此筆 4 小時預約</div>
+          <div id="self-cancel-area" class="flex gap-2">
+            <input id="input-cancel-pin" type="password" inputmode="numeric" maxlength="4" placeholder="輸入 4 位數取消密碼"
+              class="flex-1 px-3 py-2 rounded-xl bg-obsidian-950 border border-zinc-700 text-zinc-100 font-mono text-sm tracking-widest focus:outline-none focus:border-rose-500" />
+            <button type="button" id="btn-confirm-cancel" class="px-4 py-2 rounded-xl text-sm font-bold text-white bg-rose-600 hover:bg-rose-500 active:scale-95 transition">
+              取消預約
+            </button>
+          </div>
+          <!-- 管理員免密碼強制取消 -->
+          <div id="admin-cancel-area" class="hidden">
+            <button type="button" id="btn-admin-force-cancel" class="w-full py-2.5 rounded-xl text-sm font-bold text-white bg-rose-600 hover:bg-rose-500 active:scale-95 transition">
+              🛡️ 管理員強制取消並釋出場地
+            </button>
+          </div>
+          <div id="cancel-error" class="hidden text-xs font-semibold text-rose-400"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Modal 3：管理員控制台 ================= -->
+  <div id="modal-admin" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4 overflow-y-auto">
+    <div class="bg-obsidian-900 border border-zinc-700/80 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-modal my-auto">
+      <div class="bg-obsidian-850 border-b border-zinc-800 px-5 py-4 flex items-center justify-between">
+        <div>
+          <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+            <span class="text-amber-400">⚙</span> 場地管理控制台
+          </h3>
+          <p class="font-mono text-[11px] text-zinc-400 mt-0.5">ADMIN CONSOLE // EVENT LOCK &amp; EXPORT</p>
+        </div>
+        <button type="button" onclick="closeModal('modal-admin')" class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- 未登入管理員：密碼驗證畫面 -->
+      <form id="admin-login-form" class="p-5 space-y-4">
+        <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-3 text-xs text-cyan-200 leading-relaxed">
+          🛡️ <strong>管理員登入說明：</strong>只要知道管理員密碼的同仁皆可登入成為管理員，進行廠務核准標記、公司活動停開、公告編輯與場地管理。<br />
+          <span class="text-cyan-300/90">（系統預設密碼：<code class="font-mono font-bold bg-obsidian-950 px-1.5 py-0.5 rounded border border-cyan-500/40 text-cyan-300">8888</code>，登入後可隨時修改）</span>
+        </div>
+        <div>
+          <label for="input-admin-name" class="block text-xs font-bold text-zinc-300 mb-1.5">管理員稱呼（選填，供留言與操作識別）</label>
+          <input id="input-admin-name" type="text" maxlength="20" placeholder="例如：Alex / 羽球社幹部"
+            class="w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-white placeholder-zinc-600 text-sm focus:outline-none focus:border-amber-400" />
+        </div>
+        <div>
+          <label for="input-admin-pass" class="block text-xs font-bold text-zinc-300 mb-1.5">輸入管理員密碼 <span class="text-rose-400">*</span></label>
+          <input id="input-admin-pass" type="password" required placeholder="請輸入管理員密碼"
+            class="w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-white font-mono text-sm focus:outline-none focus:border-amber-400" />
+        </div>
+        <div id="admin-login-error" class="hidden text-xs font-semibold text-rose-400">密碼錯誤，請重新確認。</div>
+        <button type="submit" id="btn-admin-login" class="w-full py-2.5 rounded-xl text-sm font-extrabold text-obsidian-950 bg-amber-400 hover:bg-amber-300 active:scale-95 transition">
+          🔐 驗證密碼並登入管理員
+        </button>
+      </form>
+
+      <!-- 已登入管理員：功能主面板 -->
+      <div id="admin-panel-view" class="hidden p-5 space-y-5 max-h-[75vh] overflow-y-auto custom-scrollbar">
+        <!-- 0. 廠務預約完成狀態管理 -->
+        <div class="space-y-3 bg-emerald-500/5 border border-emerald-500/30 rounded-2xl p-4">
+          <h4 class="text-sm font-bold text-emerald-300 flex items-center gap-1.5">
+            <span>🏢 廠務場地預約核准管理</span>
+          </h4>
+          <p class="text-xs text-zinc-400">當場次全場人數達 6 人門檻並向公司廠務確認核准後，可於此一鍵標記「廠務預約完成」（亦可在主看板場次標題列直接切換）。</p>
+          <div id="admin-facility-list" class="space-y-2"></div>
+        </div>
+
+        <!-- 1. 公司活動停開設定 -->
+        <div class="space-y-3 bg-rose-500/5 border border-rose-500/30 rounded-2xl p-4">
+          <h4 class="text-sm font-bold text-rose-300 flex items-center gap-1.5">
+            <span>🚫 公司活動停開設定</span>
+          </h4>
+          <p class="text-xs text-zinc-400">設定後，該日期指定時段將立即鎖定，不開放預約。</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] font-bold text-zinc-400 mb-1">選擇假日日期</label>
+              <select id="admin-event-date" class="w-full px-3 py-2 rounded-xl border border-zinc-700 bg-obsidian-950 text-zinc-100 text-xs font-mono"></select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-zinc-400 mb-1">停開範圍</label>
+              <select id="admin-event-scope" class="w-full px-3 py-2 rounded-xl border border-zinc-700 bg-obsidian-950 text-zinc-100 text-xs">
+                <option value="all">全天暫停開放</option>
+                <option value="morning">僅上午場 (08:00–12:00)</option>
+                <option value="afternoon">僅下午場 (13:00–17:00)</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-zinc-400 mb-1">公司活動名稱／停開原因</label>
+            <input id="admin-event-title" type="text" placeholder="例如：研華年度家庭日場地佈置"
+              class="w-full px-3 py-2 rounded-xl border border-zinc-700 bg-obsidian-950 text-zinc-100 placeholder-zinc-600 text-xs" />
+          </div>
+          <button type="button" id="btn-save-event" class="w-full py-2 rounded-xl text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 transition">
+            儲存並鎖定該時段
+          </button>
+
+          <!-- 已設定清單 -->
+          <div id="admin-event-list" class="space-y-2 pt-2 border-t border-rose-500/20"></div>
+        </div>
+
+        <!-- 2. 置頂公告編輯 -->
+        <div class="space-y-2.5 bg-obsidian-950 border border-zinc-800 rounded-2xl p-4">
+          <h4 class="text-sm font-bold text-zinc-200">📢 編輯置頂系統公告</h4>
+          <textarea id="admin-announcement-input" rows="3" class="w-full px-3 py-2 rounded-xl border border-zinc-700 bg-obsidian-900 text-zinc-100 text-xs focus:outline-none focus:border-cyan-400"></textarea>
+          <button type="button" id="btn-save-announcement" class="px-4 py-2 rounded-xl text-xs font-bold text-obsidian-950 bg-cyan-400 hover:bg-cyan-300 transition">
+            更新公告內容
+          </button>
+        </div>
+
+        <!-- 2.5 變更管理員共用密碼 -->
+        <div class="space-y-2.5 bg-obsidian-950 border border-zinc-800 rounded-2xl p-4">
+          <h4 class="text-sm font-bold text-zinc-200">🔑 變更管理員共用密碼</h4>
+          <p class="text-[11px] text-zinc-400">修改後，所有知道新密碼的同仁皆可透過新密碼登入成為管理員。</p>
+          <div class="flex gap-2">
+            <input id="admin-new-pass-input" type="password" minlength="4" maxlength="20" placeholder="輸入新密碼（至少 4 碼）"
+              class="flex-1 px-3 py-2 rounded-xl border border-zinc-700 bg-obsidian-900 text-zinc-100 font-mono text-xs focus:outline-none focus:border-amber-400" />
+            <button type="button" id="btn-save-passcode" class="px-4 py-2 rounded-xl text-xs font-bold text-obsidian-950 bg-amber-400 hover:bg-amber-300 transition shrink-0">
+              更新密碼
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. 紀錄匯出與登出 -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-zinc-800">
+          <button type="button" id="btn-export-csv" class="px-4 py-2 rounded-xl text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 hover:bg-emerald-500/25 transition">
+            📥 匯出全部預約紀錄 (CSV)
+          </button>
+          <button type="button" id="btn-admin-logout" class="px-4 py-2 rounded-xl text-xs font-bold text-zinc-300 bg-zinc-800 hover:bg-zinc-700 transition">
+            登出管理員
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Toast 訊息提示 ================= -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ================= 核心邏輯與 Firebase 即時同步介面 ================= -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      setDoc,
+      deleteDoc,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    /* =========================================================================
+       1. 系統常數與 4 小時場次規格定義
+       ========================================================================= */
+    const COURTS = [
+      { id: 'A', name: 'COURT A', label: 'A 場地' },
+      { id: 'B', name: 'COURT B', label: 'B 場地' },
+      { id: 'C', name: 'COURT C', label: 'C 場地' },
+      { id: 'D', name: 'COURT D', label: 'D 場地' }
+    ];
+
+    // 星期六：兩大 4 小時完整場次（含午休分隔）
+    const SATURDAY_SLOTS = [
+      {
+        id: '08:00-12:00',
+        label: '08:00 - 12:00',
+        title: '上午場次',
+        duration: '4 HRS',
+        period: 'morning'
+      },
+      {
+        id: 'LUNCH_BREAK',
+        label: '12:00 - 13:00',
+        title: '中午整理休息時段',
+        period: 'break',
+        isBreak: true
+      },
+      {
+        id: '13:00-17:00',
+        label: '13:00 - 17:00',
+        title: '下午場次',
+        duration: '4 HRS',
+        period: 'afternoon'
+      }
+    ];
+
+    // 星期日：僅開放下午 4 小時場次
+    const SUNDAY_SLOTS = [
+      {
+        id: '13:00-17:00',
+        label: '13:00 - 17:00',
+        title: '週日下午場次',
+        duration: '4 HRS',
+        period: 'afternoon'
+      }
+    ];
+
+    const MIN_SESSION_PLAYERS = 6;   // 公司規定：同時段全場 4 面場地合計需滿 6 人始可借用
+    const MAX_PLAYERS_PER_COURT = 8; // 單一場地人數上限 8 人，保障打球品質
+    const ADMIN_PASSCODE = '8888';   // 原型管理員預設密碼
+
+    /* =========================================================================
+       2. 應用程式狀態 (State)
+       ========================================================================= */
+    const state = {
+      mode: 'initializing', // 'firebase' | 'demo'
+      userId: '',
+      isAdmin: false,
+      adminName: '',
+      adminPasscode: ADMIN_PASSCODE,
+      weekendDates: [],     // 未來四週的週六與週日
+      selectedDate: '',     // YYYY-MM-DD
+      activeFilter: 'all',  // 'all' | 'available' | 'badminton' | 'pickleball' | 'looking'
+      bookings: {},         // key: `${date}_${courtId}_${timeSlot}` -> bookingObj
+      companyEvents: {},    // key: `${date}` -> { date, scope, title }
+      facilityApprovals: {},// key: `${date}_${timeSlot}` -> { date, timeSlot, approved: true, approvedAt }
+      chatMessages: [],     // array of { id, userName, text, createdAt, createdBy }
+      announcement: '歡迎使用研華科技假日林口室內運動場預約系統！A~D 四面場地皆可打羽球與匹克球，單次預約為完整 4 小時。因公司內部安全考量，一位研華員工只能帶一到兩位親友入場。當週六、日場地請務必於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。',
+      activeDetailKey: null
+    };
+
+    /* =========================================================================
+       3. Firebase 串接與資料存取層 (DataService)
+       ========================================================================= */
+    // 已串接您的專屬 Firebase 專案設定 (advantech-pickle-ball)
+    const MANUAL_FIREBASE_CONFIG = {
+      apiKey: "AIzaSyBvY-CpT8-HBScxsiz9e6EzEI0J6oyg__U",
+      authDomain: "advantech-pickle-ball.firebaseapp.com",
+      projectId: "advantech-pickle-ball",
+      storageBucket: "advantech-pickle-ball.firebasestorage.app",
+      messagingSenderId: "83957569979",
+      appId: "1:83957569979:web:df8defc814b55009ed4c9e",
+      measurementId: "G-3LHFF57WKD"
+    };
+
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    let permissionErrorNotified = false;
+    // 固定使用專案專屬路徑，確保預覽與正式部署讀取同一份 Firestore 資料
+    const appId = 'advantech-linkou-arena';
+
+    function updateSyncStatus(status, label) {
+      const dot = document.getElementById('sync-dot');
+      const text = document.getElementById('sync-text');
+      if (status === 'firebase') {
+        dot.className = 'w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]';
+        text.textContent = label || 'LIVE SYNC';
+      } else if (status === 'error') {
+        dot.className = 'w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]';
+        text.textContent = label || 'RULES ERROR';
+      } else if (status === 'demo') {
+        dot.className = 'w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]';
+        text.textContent = label || 'DEMO MODE';
+      } else {
+        dot.className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+        text.textContent = label || 'CONNECTING...';
+      }
+    }
+
+    function handleFirestoreError(source, error) {
+      if (error && (error.code === 'permission-denied' || String(error.message).includes('Missing or insufficient permissions'))) {
+        updateSyncStatus('error', '權限不足');
+        const banner = document.getElementById('firebase-permission-banner');
+        if (banner) banner.classList.remove('hidden');
+        if (!permissionErrorNotified) {
+          permissionErrorNotified = true;
+          showToast('Firestore 權限不足，請依上方提示更新 Firebase 規則', 'error');
+        }
+        return;
+      }
+      console.error(`監聽 ${source} 失敗:`, error);
+    }
+
+    async function initDataLayer() {
+      let firebaseConfig = MANUAL_FIREBASE_CONFIG;
+      if (!firebaseConfig && typeof __firebase_config !== 'undefined' && __firebase_config) {
+        try {
+          firebaseConfig = typeof __firebase_config === 'string'
+            ? JSON.parse(__firebase_config)
+            : __firebase_config;
+        } catch (err) {
+          console.warn('解析環境 Firebase 設定失敗，改用離線展示模式:', err);
+        }
+      }
+
+      if (firebaseConfig && firebaseConfig.apiKey) {
+        try {
+          const app = initializeApp(firebaseConfig);
+          auth = getAuth(app);
+          db = getFirestore(app);
+
+          try {
+            if (!MANUAL_FIREBASE_CONFIG && typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+              const cred = await signInWithCustomToken(auth, __initial_auth_token);
+              currentUser = cred.user;
+            } else {
+              const cred = await signInAnonymously(auth);
+              currentUser = cred.user;
+            }
+            state.userId = currentUser.uid;
+          } catch (authErr) {
+            // 若尚未於 Firebase Console 開啟「匿名登入」，仍允許以訪客識別碼連線（適用 Firestore 測試模式）
+            console.warn('匿名登入未啟用或失敗，改以訪客模式連線 Firestore:', authErr);
+            state.userId = 'GUEST-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            currentUser = { uid: state.userId };
+          }
+
+          state.mode = 'firebase';
+          document.getElementById('footer-uid').textContent = state.userId.slice(0, 12);
+          updateSyncStatus('firebase', 'FIREBASE LIVE');
+          renderAll();
+          attachFirestoreListeners();
+          return;
+        } catch (err) {
+          console.error('Firebase 初始化失敗，切換至本機展示模式:', err);
+        }
+      }
+
+      // 離線本機展示模式 (Demo Mode)
+      state.mode = 'demo';
+      state.userId = 'DEMO-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      document.getElementById('footer-uid').textContent = state.userId;
+      updateSyncStatus('demo', 'LOCAL DEMO');
+      seedDemoData();
+      renderAll();
+    }
+
+    function attachFirestoreListeners() {
+      // 監聽預約紀錄
+      const bookingsCol = collection(db, 'artifacts', appId, 'public', 'data', 'bookings');
+      onSnapshot(
+        bookingsCol,
+        (snap) => {
+          document.getElementById('firebase-permission-banner')?.classList.add('hidden');
+          updateSyncStatus('firebase', 'FIREBASE LIVE');
+          const next = {};
+          snap.forEach((docSnap) => {
+            next[docSnap.id] = docSnap.data();
+          });
+          state.bookings = next;
+          renderAll();
+        },
+        (error) => handleFirestoreError('bookings', error)
+      );
+
+      // 監聽公司活動停開設定
+      const eventsCol = collection(db, 'artifacts', appId, 'public', 'data', 'company_events');
+      onSnapshot(
+        eventsCol,
+        (snap) => {
+          const next = {};
+          snap.forEach((docSnap) => {
+            next[docSnap.id] = docSnap.data();
+          });
+          state.companyEvents = next;
+          renderAll();
+        },
+        (error) => handleFirestoreError('company_events', error)
+      );
+
+      // 監聽廠務核准狀態
+      const approvalsCol = collection(db, 'artifacts', appId, 'public', 'data', 'facility_approvals');
+      onSnapshot(
+        approvalsCol,
+        (snap) => {
+          const next = {};
+          snap.forEach((docSnap) => {
+            next[docSnap.id] = docSnap.data();
+          });
+          state.facilityApprovals = next;
+          renderAll();
+        },
+        (error) => handleFirestoreError('facility_approvals', error)
+      );
+
+      // 監聽即時聊天室留言
+      const chatCol = collection(db, 'artifacts', appId, 'public', 'data', 'chat_messages');
+      onSnapshot(
+        chatCol,
+        (snap) => {
+          const list = [];
+          snap.forEach((docSnap) => {
+            list.push({ id: docSnap.id, ...docSnap.data() });
+          });
+          list.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+          state.chatMessages = list;
+          renderChatMessages();
+        },
+        (error) => handleFirestoreError('chat_messages', error)
+      );
+
+      // 監聽系統置頂公告與管理員密碼設定
+      const configDoc = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'main');
+      onSnapshot(
+        configDoc,
+        (docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            if (data.announcement) {
+              state.announcement = data.announcement;
+              document.getElementById('announcement-display').textContent = state.announcement;
+            }
+            if (data.adminPasscode) {
+              state.adminPasscode = data.adminPasscode;
+            }
+          }
+        },
+        (error) => handleFirestoreError('settings', error)
+      );
+    }
+
+    // 統一資料寫入介面（支援 Firebase 與 Demo 模式無縫切換）
+    const DataService = {
+      async saveBooking(slotKey, bookingData) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'bookings', slotKey);
+          await setDoc(ref, bookingData);
+        } else {
+          state.bookings[slotKey] = bookingData;
+          renderAll();
+        }
+      },
+      async deleteBooking(slotKey) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'bookings', slotKey);
+          await deleteDoc(ref);
+        } else {
+          delete state.bookings[slotKey];
+          renderAll();
+        }
+      },
+      async saveCompanyEvent(dateStr, eventData) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'company_events', dateStr);
+          await setDoc(ref, eventData);
+        } else {
+          state.companyEvents[dateStr] = eventData;
+          renderAll();
+        }
+      },
+      async deleteCompanyEvent(dateStr) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'company_events', dateStr);
+          await deleteDoc(ref);
+        } else {
+          delete state.companyEvents[dateStr];
+          renderAll();
+        }
+      },
+      async saveAnnouncement(text) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'main');
+          await setDoc(ref, { announcement: text, updatedAt: Date.now() }, { merge: true });
+        } else {
+          state.announcement = text;
+          document.getElementById('announcement-display').textContent = text;
+        }
+      },
+      async saveAdminPasscode(newPasscode) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'main');
+          await setDoc(ref, { adminPasscode: newPasscode, updatedAt: Date.now() }, { merge: true });
+        } else {
+          state.adminPasscode = newPasscode;
+        }
+      },
+      async setFacilityApproval(sessionKey, data) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'facility_approvals', sessionKey);
+          if (data) {
+            await setDoc(ref, data);
+          } else {
+            await deleteDoc(ref);
+          }
+        } else {
+          if (data) {
+            state.facilityApprovals[sessionKey] = data;
+          } else {
+            delete state.facilityApprovals[sessionKey];
+          }
+          renderAll();
+        }
+      },
+      async addChatMessage(msgObj) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'chat_messages', msgObj.id);
+          await setDoc(ref, msgObj);
+        } else {
+          state.chatMessages.push(msgObj);
+          renderChatMessages();
+        }
+      },
+      async deleteChatMessage(msgId) {
+        if (state.mode === 'firebase') {
+          if (!currentUser) throw new Error('尚未完成身分驗證');
+          const ref = doc(db, 'artifacts', appId, 'public', 'data', 'chat_messages', msgId);
+          await deleteDoc(ref);
+        } else {
+          state.chatMessages = state.chatMessages.filter(m => m.id !== msgId);
+          renderChatMessages();
+        }
+      }
+    };
+
+    /* =========================================================================
+       4. 日期工具、當週星期三截止檢核與預設展示資料
+       ========================================================================= */
+    function formatDateYYYYMMDD(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function generateUpcomingWeekends(weeks = 4) {
+      const list = [];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      for (let i = 0; i < weeks * 7 + 7; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() + i);
+        const day = d.getDay();
+        if (day === 6 || day === 0) {
+          list.push({
+            dateStr: formatDateYYYYMMDD(d),
+            month: d.getMonth() + 1,
+            dayNum: d.getDate(),
+            dayOfWeek: day, // 6: Sat, 0: Sun
+            dayName: day === 6 ? '星期六' : '星期日',
+            shortDay: day === 6 ? 'SAT' : 'SUN'
+          });
+        }
+        if (list.length >= weeks * 2) break;
+      }
+      return list;
+    }
+
+    // 計算該假日所屬「當週星期三 23:59:59」的預約截止時間
+    function getBookingDeadline(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const target = new Date(y, m - 1, d, 23, 59, 59, 999);
+      const dayOfWeek = target.getDay(); // 6 (Sat) -> -3天為週三；0 (Sun) -> -4天為週三
+      const offsetDays = dayOfWeek === 6 ? 3 : 4;
+      const wednesday = new Date(target);
+      wednesday.setDate(target.getDate() - offsetDays);
+      return wednesday;
+    }
+
+    function isPastBookingDeadline(dateStr) {
+      const deadline = getBookingDeadline(dateStr);
+      return Date.now() > deadline.getTime();
+    }
+
+    function getSlotsForDate(dateStr) {
+      const info = state.weekendDates.find(w => w.dateStr === dateStr);
+      if (!info) return SATURDAY_SLOTS;
+      return info.dayOfWeek === 6 ? SATURDAY_SLOTS : SUNDAY_SLOTS;
+    }
+
+    function isSlotBlockedByEvent(dateStr, period) {
+      const ev = state.companyEvents[dateStr];
+      if (!ev) return null;
+      if (ev.scope === 'all') return ev;
+      if (ev.scope === 'morning' && period === 'morning') return ev;
+      if (ev.scope === 'afternoon' && period === 'afternoon') return ev;
+      return null;
+    }
+
+    function getSessionTotalPlayers(dateStr, timeSlotId) {
+      let total = 0;
+      COURTS.forEach(c => {
+        const b = state.bookings[`${dateStr}_${c.id}_${timeSlotId}`];
+        if (b) total += Number(b.playerCount) || 0;
+      });
+      return total;
+    }
+
+    function seedDemoData() {
+      const openWeekends = state.weekendDates.filter(d => !isPastBookingDeadline(d.dateStr));
+      const sat1 = (openWeekends.find(d => d.dayOfWeek === 6) || state.weekendDates.find(d => d.dayOfWeek === 6))?.dateStr;
+      const sun1 = (openWeekends.find(d => d.dayOfWeek === 0) || state.weekendDates.find(d => d.dayOfWeek === 0))?.dateStr;
+      const nextSat = state.weekendDates.filter(d => d.dayOfWeek === 6)[1]?.dateStr;
+
+      if (sat1) {
+        // 週六上午場：A場 4人 (開放+1)，全場目前 4 人（尚未達 6 人門檻，方便測試 +1 達標）
+        state.bookings[`${sat1}_A_08:00-12:00`] = {
+          date: sat1,
+          courtId: 'A',
+          timeSlot: '08:00-12:00',
+          sport: 'badminton',
+          userName: 'Kevin Lin',
+          dept: 'IIoT / #3310',
+          playerCount: 4,
+          lookingForPlayers: true,
+          note: '羽球雙打歡樂局，再湊 2 人就達全場開館門檻！',
+          cancelPin: '1234',
+          joiners: [],
+          createdAt: Date.now() - 7200000
+        };
+
+        // 週六下午場：A場(匹克球 6人) + B場(羽球 5人) = 全場 11 人（已達標 + 模擬廠務核准完成）
+        state.bookings[`${sat1}_A_13:00-17:00`] = {
+          date: sat1,
+          courtId: 'A',
+          timeSlot: '13:00-17:00',
+          sport: 'pickleball',
+          userName: 'Emily Wu',
+          dept: 'ESG / #2105',
+          playerCount: 6,
+          lookingForPlayers: true,
+          note: '匹克球新手體驗團，現場有備用球拍，歡迎 +1',
+          cancelPin: '1234',
+          joiners: [{ name: 'Jason', count: 2 }],
+          createdAt: Date.now() - 5400000
+        };
+        state.bookings[`${sat1}_B_13:00-17:00`] = {
+          date: sat1,
+          courtId: 'B',
+          timeSlot: '13:00-17:00',
+          sport: 'badminton',
+          userName: 'David Tsai',
+          dept: 'RD / #5588',
+          playerCount: 5,
+          lookingForPlayers: true,
+          note: '中階羽球雙打，尚有 3 個名額',
+          cancelPin: '1234',
+          joiners: [],
+          createdAt: Date.now() - 3600000
+        };
+        state.facilityApprovals[`${sat1}_13:00-17:00`] = {
+          date: sat1,
+          timeSlot: '13:00-17:00',
+          approved: true,
+          approvedBy: '羽球社幹部',
+          approvedAt: Date.now() - 1800000
+        };
+      }
+
+      if (sun1) {
+        // 週日下午場：B場 4 人，尚差 2 人達 6 人開館門檻
+        state.bookings[`${sun1}_B_13:00-17:00`] = {
+          date: sun1,
+          courtId: 'B',
+          timeSlot: '13:00-17:00',
+          sport: 'pickleball',
+          userName: 'Sophia Chang',
+          dept: 'HR / #1024',
+          playerCount: 4,
+          lookingForPlayers: true,
+          note: '週日下午輕鬆打匹克球，差 2 人開團！',
+          cancelPin: '1234',
+          joiners: [],
+          createdAt: Date.now() - 3000000
+        };
+      }
+
+      if (nextSat) {
+        state.companyEvents[nextSat] = {
+          date: nextSat,
+          scope: 'morning',
+          title: '研華家庭日場地佈置與安全檢測'
+        };
+      }
+
+      state.chatMessages = [
+        {
+          id: 'msg-demo-1',
+          userName: '社團管理員',
+          text: '提醒大家：因公司安全考量，每位研華員工限帶 1～2 位親友入場。當週場地請務必於星期三前完成預約喔！',
+          createdAt: Date.now() - 7200000,
+          createdBy: 'system'
+        },
+        {
+          id: 'msg-demo-2',
+          userName: 'Kevin Lin',
+          text: '週六上午場 A 場目前 4 人，還差 2 人就達全場 6 人開館門檻，歡迎大家直接點卡片 +1！',
+          createdAt: Date.now() - 3600000,
+          createdBy: 'demo-user'
+        }
+      ];
+    }
+
+    /* =========================================================================
+       5. 畫面渲染 (Rendering)
+       ========================================================================= */
+    function escapeHTML(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function renderAll() {
+      document.getElementById('announcement-display').textContent = state.announcement;
+      renderDateSelector();
+      renderDeadlineBanner();
+      renderCompanyEventBanner();
+      renderSessionsBoard();
+      renderDailySummaryList();
+      renderChatMessages();
+    }
+
+    function renderDateSelector() {
+      const container = document.getElementById('date-selector-container');
+      container.innerHTML = '';
+
+      state.weekendDates.forEach(item => {
+        const isSelected = item.dateStr === state.selectedDate;
+        const ev = state.companyEvents[item.dateStr];
+        const expired = isPastBookingDeadline(item.dateStr);
+        const deadline = getBookingDeadline(item.dateStr);
+        const deadlineStr = `${deadline.getMonth() + 1}/${deadline.getDate()}`;
+
+        // 計算當日總預約數
+        const dayBookingsCount = Object.values(state.bookings).filter(b => b.date === item.dateStr).length;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `shrink-0 w-36 sm:w-40 p-3 rounded-xl border text-left transition relative overflow-hidden ${
+          isSelected
+            ? 'bg-obsidian-800 border-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.2)]'
+            : 'bg-obsidian-850 border-zinc-800 hover:border-zinc-600'
+        }`;
+
+        btn.innerHTML = `
+          <div class="flex items-center justify-between gap-1">
+            <span class="font-mono text-[11px] font-bold px-1.5 py-0.5 rounded ${
+              item.dayOfWeek === 6 ? 'bg-cyan-500/20 text-cyan-300' : 'bg-amber-500/20 text-amber-300'
+            }">${item.shortDay}</span>
+            ${
+              ev
+                ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">停開</span>`
+                : expired
+                  ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">已截止</span>`
+                  : `<span class="font-mono text-[10px] text-emerald-400">${dayBookingsCount} 場已約</span>`
+            }
+          </div>
+          <div class="mt-2 flex items-baseline gap-1.5">
+            <span class="font-mono text-lg font-extrabold ${isSelected ? 'text-white' : 'text-zinc-200'}">${item.month}/${item.dayNum}</span>
+            <span class="text-xs text-zinc-400">${item.dayName}</span>
+          </div>
+          <div class="mt-1 font-mono text-[10px] ${expired ? 'text-amber-400/80' : 'text-zinc-500'}">
+            期限: ${deadlineStr} (三)
+          </div>
+        `;
+
+        btn.addEventListener('click', () => {
+          state.selectedDate = item.dateStr;
+          renderAll();
+        });
+
+        container.appendChild(btn);
+      });
+
+      const currentInfo = state.weekendDates.find(d => d.dateStr === state.selectedDate);
+      const summaryEl = document.getElementById('selected-date-summary');
+      if (currentInfo) {
+        const dl = getBookingDeadline(currentInfo.dateStr);
+        summaryEl.textContent = `${currentInfo.dateStr} (${currentInfo.dayName})｜預約截止：${dl.getMonth() + 1}/${dl.getDate()} (三) 23:59`;
+      }
+    }
+
+    function renderDeadlineBanner() {
+      const banner = document.getElementById('deadline-expired-banner');
+      const desc = document.getElementById('deadline-banner-desc');
+      if (isPastBookingDeadline(state.selectedDate)) {
+        const dl = getBookingDeadline(state.selectedDate);
+        banner.classList.remove('hidden');
+        desc.textContent = `本日期（${state.selectedDate}）已超過當週星期三（${dl.getMonth() + 1}/${dl.getDate()} 23:59）預約期限，一般同仁無法新增預約或線上 +1；如需緊急調整請聯繫管理員登入處理。`;
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    function renderCompanyEventBanner() {
+      const banner = document.getElementById('company-event-banner');
+      const titleEl = document.getElementById('event-banner-title');
+      const descEl = document.getElementById('event-banner-desc');
+      const ev = state.companyEvents[state.selectedDate];
+
+      if (ev) {
+        const scopeMap = {
+          all: '全天暫停開放',
+          morning: '上午場 (08:00–12:00) 暫停開放',
+          afternoon: '下午場 (13:00–17:00) 暫停開放'
+        };
+        banner.classList.remove('hidden');
+        titleEl.textContent = `公司活動通知：${ev.title}`;
+        descEl.textContent = `影響範圍：${scopeMap[ev.scope] || '暫停開放'}。該時段所有場地皆已鎖定無法預約。`;
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    function renderSessionsBoard() {
+      const container = document.getElementById('sessions-container');
+      container.innerHTML = '';
+
+      const slots = getSlotsForDate(state.selectedDate);
+      const expired = isPastBookingDeadline(state.selectedDate);
+
+      slots.forEach(slot => {
+        if (slot.isBreak) {
+          const breakEl = document.createElement('div');
+          breakEl.className = 'rounded-xl neutral-stripes border border-zinc-800/80 px-4 py-2.5 flex items-center justify-between text-xs text-zinc-400';
+          breakEl.innerHTML = `
+            <span class="font-mono font-bold text-zinc-300">⏸ ${slot.label}</span>
+            <span>${slot.title}（無開放預約）</span>
+          `;
+          container.appendChild(breakEl);
+          return;
+        }
+
+        const blockedEv = isSlotBlockedByEvent(state.selectedDate, slot.period);
+        const totalPlayers = getSessionTotalPlayers(state.selectedDate, slot.id);
+        const meetsThreshold = totalPlayers >= MIN_SESSION_PLAYERS;
+        const progressPct = Math.min(100, Math.round((totalPlayers / MIN_SESSION_PLAYERS) * 100));
+        const sessionKey = `${state.selectedDate}_${slot.id}`;
+        const approval = state.facilityApprovals[sessionKey];
+
+        const section = document.createElement('div');
+        section.className = 'bg-obsidian-850 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl';
+
+        // 場次標題列 + 全場 6 人門檻進度條 + 廠務核准狀態
+        let thresholdBadgeHTML = '';
+        if (blockedEv) {
+          thresholdBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40">🚫 公司活動停開</span>`;
+        } else if (meetsThreshold) {
+          thresholdBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/40">✓ 已達 6 人開館門檻（累計 ${totalPlayers} 人）</span>`;
+        } else {
+          const diff = MIN_SESSION_PLAYERS - totalPlayers;
+          thresholdBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/40">⚠️ 全場累計 ${totalPlayers} / 6 人（尚差 ${diff} 人，未滿 6 人全場無法借用）</span>`;
+        }
+
+        // 廠務預約完成狀態徽章與管理員快捷切換按鈕
+        let facilityBadgeHTML = '';
+        if (!blockedEv) {
+          if (approval && approval.approved) {
+            facilityBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-200 border border-emerald-400/50 shadow-[0_0_10px_rgba(16,185,129,0.2)]">🏢✅ 廠務預約完成</span>`;
+          } else if (meetsThreshold) {
+            facilityBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">🏢⏳ 待廠務核准</span>`;
+          }
+        }
+
+        const adminToggleBtnHTML = state.isAdmin && !blockedEv
+          ? `<button type="button" data-toggle-approval="${sessionKey}" data-date="${state.selectedDate}" data-slot="${slot.id}"
+              class="text-xs font-bold px-3 py-1 rounded-lg transition active:scale-95 ${
+                approval && approval.approved
+                  ? 'bg-zinc-800 text-zinc-300 border border-zinc-600 hover:bg-zinc-700'
+                  : 'bg-emerald-500 text-obsidian-950 hover:bg-emerald-400'
+              }">
+              ${approval && approval.approved ? '取消廠務核准' : '✔ 標記廠務預約完成'}
+            </button>`
+          : '';
+
+        const headerEl = document.createElement('div');
+        headerEl.className = 'bg-obsidian-900/90 border-b border-zinc-800 p-4 space-y-3';
+        headerEl.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2.5">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="font-mono text-sm sm:text-base font-extrabold text-white tracking-wide">${slot.label}</span>
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">${slot.title}</span>
+              <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">${slot.duration}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              ${thresholdBadgeHTML}
+              ${facilityBadgeHTML}
+              ${adminToggleBtnHTML}
+            </div>
+          </div>
+          ${!blockedEv ? `
+            <div class="w-full h-1.5 rounded-full bg-obsidian-950 overflow-hidden border border-zinc-800">
+              <div class="h-full transition-all duration-300 ${meetsThreshold ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]' : 'bg-amber-400'}" style="width: ${progressPct}%"></div>
+            </div>
+          ` : ''}
+        `;
+
+        // 綁定管理員快捷切換廠務核准按鈕
+        const toggleBtn = headerEl.querySelector('[data-toggle-approval]');
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', () => {
+            handleToggleFacilityApproval(state.selectedDate, slot.id);
+          });
+        }
+
+        section.appendChild(headerEl);
+
+        // 四面場地卡片矩陣 (A~D)
+        const grid = document.createElement('div');
+        grid.className = 'p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5';
+
+        COURTS.forEach(court => {
+          const slotKey = `${state.selectedDate}_${court.id}_${slot.id}`;
+          const booking = state.bookings[slotKey];
+
+          // 篩選檢查
+          if (!matchesFilter(booking, blockedEv)) {
+            const dimmed = document.createElement('div');
+            dimmed.className = 'rounded-xl border border-zinc-800/60 bg-obsidian-950/40 p-4 flex flex-col items-center justify-center text-zinc-600 text-xs min-h-[168px]';
+            dimmed.innerHTML = `<span class="font-mono font-bold">${court.name}</span><span class="mt-1">已由篩選隱藏</span>`;
+            grid.appendChild(dimmed);
+            return;
+          }
+
+          // 檢查週六下午是否與上午球種不同（需換網提醒）
+          let needNetChange = false;
+          if (booking && slot.period === 'afternoon') {
+            const morningBooking = state.bookings[`${state.selectedDate}_${court.id}_08:00-12:00`];
+            if (morningBooking && morningBooking.sport !== booking.sport) {
+              needNetChange = true;
+            }
+          }
+
+          const card = document.createElement('div');
+
+          if (blockedEv) {
+            card.className = 'rounded-xl hazard-stripes border border-rose-500/40 p-4 flex flex-col justify-between min-h-[168px] opacity-80';
+            card.innerHTML = `
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-extrabold text-rose-300">${court.name}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300">LOCKED</span>
+              </div>
+              <div class="my-4 text-center">
+                <div class="text-rose-400 font-bold text-sm">🚫 暫停開放</div>
+                <div class="text-xs text-rose-200/70 mt-1 line-clamp-2">${escapeHTML(blockedEv.title)}</div>
+              </div>
+              <div class="font-mono text-[10px] text-rose-300/60 text-center">COMPANY EVENT</div>
+            `;
+          } else if (booking) {
+            const isBadminton = booking.sport === 'badminton';
+            const isFull = booking.playerCount >= MAX_PLAYERS_PER_COURT;
+            const accentBorder = isBadminton ? 'border-cyan-500/50 hover:border-cyan-400' : 'border-amber-500/50 hover:border-amber-400';
+            const accentBg = isBadminton ? 'bg-cyan-500/5' : 'bg-amber-500/5';
+            const sportBadge = isBadminton
+              ? `<span class="text-xs font-bold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">🏸 羽球</span>`
+              : `<span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">🏓 匹克球</span>`;
+
+            card.className = `rounded-xl border ${accentBorder} ${accentBg} p-4 flex flex-col justify-between min-h-[168px] cursor-pointer transition active:scale-[0.99] shadow-md`;
+            card.innerHTML = `
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="font-mono text-xs font-extrabold text-zinc-200">${court.name}</span>
+                  ${sportBadge}
+                </div>
+
+                <div>
+                  <div class="text-sm font-extrabold text-white truncate">${escapeHTML(booking.userName)}</div>
+                  <div class="text-[11px] text-zinc-400 truncate">${escapeHTML(booking.dept || '研華同仁')}</div>
+                </div>
+
+                ${booking.note ? `<p class="text-xs text-zinc-300/90 bg-obsidian-950/70 rounded-lg px-2.5 py-1.5 border border-zinc-800/80 line-clamp-2">${escapeHTML(booking.note)}</p>` : ''}
+              </div>
+
+              <div class="pt-3 mt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-1.5">
+                <span class="font-mono text-xs font-bold ${isFull ? 'text-rose-300' : 'text-emerald-300'}">
+                  👥 ${booking.playerCount}/${MAX_PLAYERS_PER_COURT} 人
+                </span>
+                <div class="flex items-center gap-1">
+                  ${needNetChange ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40" title="與上午場球種不同，請調整球網高度">🔄 換網</span>` : ''}
+                  ${
+                    isFull
+                      ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400">已滿團</span>`
+                      : booking.lookingForPlayers
+                        ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">+1 開放加入</span>`
+                        : `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400">已預約</span>`
+                  }
+                </div>
+              </div>
+            `;
+            card.addEventListener('click', () => openDetailModal(slotKey));
+          } else {
+            // 可預約空場
+            const canBook = !expired || state.isAdmin;
+            card.className = `rounded-xl border border-dashed ${
+              canBook
+                ? 'border-emerald-500/40 bg-emerald-500/[0.03] hover:bg-emerald-500/10 hover:border-emerald-400 cursor-pointer active:scale-[0.99]'
+                : 'border-zinc-800 bg-obsidian-950/50 opacity-60 cursor-not-allowed'
+            } p-4 flex flex-col justify-between min-h-[168px] transition`;
+
+            card.innerHTML = `
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-extrabold text-zinc-300">${court.name}</span>
+                <span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded ${
+                  canBook ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' : 'bg-zinc-800 text-zinc-500'
+                }">${canBook ? 'AVAILABLE' : 'CLOSED'}</span>
+              </div>
+              <div class="my-4 text-center">
+                <div class="text-sm font-bold ${canBook ? 'text-emerald-300' : 'text-zinc-500'}">
+                  ${canBook ? '＋ 點擊預約 4H' : '已過預約期限'}
+                </div>
+                <div class="text-[11px] text-zinc-500 mt-1">羽球 / 匹克球共用</div>
+              </div>
+              <div class="font-mono text-[10px] text-zinc-500 text-center">1~8 PLAYERS</div>
+            `;
+
+            if (canBook) {
+              card.addEventListener('click', () => openBookingModal(court.id, slot.id, slot.label));
+            }
+          }
+
+          grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        container.appendChild(section);
+      });
+    }
+
+    function matchesFilter(booking, blockedEv) {
+      if (state.activeFilter === 'all') return true;
+      if (state.activeFilter === 'available') return !booking && !blockedEv;
+      if (state.activeFilter === 'badminton') return booking && booking.sport === 'badminton';
+      if (state.activeFilter === 'pickleball') return booking && booking.sport === 'pickleball';
+      if (state.activeFilter === 'looking') return booking && booking.lookingForPlayers && booking.playerCount < MAX_PLAYERS_PER_COURT;
+      return true;
+    }
+
+    function renderDailySummaryList() {
+      const listEl = document.getElementById('daily-booking-list');
+      const countBadge = document.getElementById('daily-count-badge');
+      const dayBookings = Object.entries(state.bookings)
+        .filter(([, b]) => b.date === state.selectedDate)
+        .sort((a, b) => a[0].localeCompare(b[0]));
+
+      countBadge.textContent = `${dayBookings.length} 筆`;
+      listEl.innerHTML = '';
+
+      if (dayBookings.length === 0) {
+        listEl.innerHTML = `<div class="col-span-full text-center py-6 text-xs text-zinc-500 bg-obsidian-950/60 rounded-xl border border-zinc-800/80">當日目前尚無預約紀錄</div>`;
+        return;
+      }
+
+      dayBookings.forEach(([key, b]) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'text-left bg-obsidian-950 hover:bg-obsidian-900 border border-zinc-800 hover:border-zinc-600 rounded-xl p-3 transition space-y-1.5';
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-mono font-bold text-cyan-400">COURT ${b.courtId}｜${b.timeSlot}</span>
+            <span>${b.sport === 'badminton' ? '🏸' : '🏓'}</span>
+          </div>
+          <div class="text-sm font-bold text-white truncate">${escapeHTML(b.userName)}</div>
+          <div class="flex items-center justify-between text-[11px] text-zinc-400">
+            <span>👥 ${b.playerCount} 人</span>
+            <span>${b.lookingForPlayers && b.playerCount < MAX_PLAYERS_PER_COURT ? '🙋 歡迎 +1' : '已定案'}</span>
+          </div>
+        `;
+        card.addEventListener('click', () => openDetailModal(key));
+        listEl.appendChild(card);
+      });
+    }
+
+    function renderChatMessages() {
+      const container = document.getElementById('chat-messages-container');
+      const countBadge = document.getElementById('chat-count-badge');
+      countBadge.textContent = `${state.chatMessages.length} 則留言`;
+      container.innerHTML = '';
+
+      if (state.chatMessages.length === 0) {
+        container.innerHTML = `<div class="text-center py-6 text-xs text-zinc-500">目前還沒有留言，快來發起揪團或打聲招呼吧！</div>`;
+        return;
+      }
+
+      state.chatMessages.forEach(msg => {
+        const timeStr = msg.createdAt
+          ? new Date(msg.createdAt).toLocaleString('zh-TW', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })
+          : '';
+        const item = document.createElement('div');
+        item.className = 'bg-obsidian-900 border border-zinc-800 rounded-xl p-3 flex items-start justify-between gap-3';
+        item.innerHTML = `
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-extrabold text-cyan-300">${escapeHTML(msg.userName)}</span>
+              <span class="font-mono text-[10px] text-zinc-500">${timeStr}</span>
+            </div>
+            <p class="text-xs sm:text-sm text-zinc-200 mt-1 break-words leading-relaxed">${escapeHTML(msg.text)}</p>
+          </div>
+          ${state.isAdmin ? `<button type="button" data-del-msg="${msg.id}" class="shrink-0 text-[11px] text-rose-400 hover:text-rose-300 px-2 py-1 rounded bg-rose-500/10 border border-rose-500/30">刪除</button>` : ''}
+        `;
+
+        const delBtn = item.querySelector('[data-del-msg]');
+        if (delBtn) {
+          delBtn.addEventListener('click', async () => {
+            try {
+              await DataService.deleteChatMessage(msg.id);
+              showToast('已刪除該則留言', 'info');
+            } catch (err) {
+              showToast('刪除留言失敗', 'error');
+            }
+          });
+        }
+        container.appendChild(item);
+      });
+
+      container.scrollTop = container.scrollHeight;
+    }
+
+    /* =========================================================================
+       6. Modal 互動邏輯（新增預約、詳情檢視、+1 併團、取消預約）
+       ========================================================================= */
+    window.openModal = function (id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+    };
+
+    window.closeModal = function (id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('hidden');
+      el.classList.remove('flex');
+    };
+
+    function openBookingModal(courtId, timeSlotId, timeSlotLabel) {
+      const slotKey = `${state.selectedDate}_${courtId}_${timeSlotId}`;
+      document.getElementById('input-slot-key').value = slotKey;
+      document.getElementById('input-court-id').value = courtId;
+      document.getElementById('input-time-slot').value = timeSlotId;
+      document.getElementById('booking-modal-subtitle').textContent = `${state.selectedDate}｜COURT ${courtId}｜${timeSlotLabel}`;
+      document.getElementById('booking-form').reset();
+      document.getElementById('input-player-count').value = 4;
+      document.getElementById('input-looking').checked = true;
+      document.getElementById('booking-form-error').classList.add('hidden');
+      updatePlayerCountStatusUI();
+      openModal('modal-booking');
+    }
+
+    function updatePlayerCountStatusUI() {
+      const input = document.getElementById('input-player-count');
+      const status = document.getElementById('player-count-status');
+      const val = parseInt(input.value, 10) || 1;
+      if (val >= 1 && val <= MAX_PLAYERS_PER_COURT) {
+        status.textContent = val === MAX_PLAYERS_PER_COURT ? '✓ 已達單場上限 8 人' : `✓ 1~8 人品質保障（尚可 +${MAX_PLAYERS_PER_COURT - val}）`;
+        status.className = 'font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+      } else {
+        status.textContent = '⚠ 單場限制 1~8 人';
+        status.className = 'font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30';
+      }
+    }
+
+    document.getElementById('btn-dec-players').addEventListener('click', () => {
+      const input = document.getElementById('input-player-count');
+      const cur = parseInt(input.value, 10) || 1;
+      if (cur > 1) input.value = cur - 1;
+      updatePlayerCountStatusUI();
+    });
+
+    document.getElementById('btn-inc-players').addEventListener('click', () => {
+      const input = document.getElementById('input-player-count');
+      const cur = parseInt(input.value, 10) || 1;
+      if (cur < MAX_PLAYERS_PER_COURT) input.value = cur + 1;
+      updatePlayerCountStatusUI();
+    });
+
+    document.getElementById('input-player-count').addEventListener('input', updatePlayerCountStatusUI);
+
+    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('booking-form-error');
+      errEl.classList.add('hidden');
+
+      const slotKey = document.getElementById('input-slot-key').value;
+      const courtId = document.getElementById('input-court-id').value;
+      const timeSlot = document.getElementById('input-time-slot').value;
+      const sport = document.querySelector('input[name="sport"]:checked')?.value || 'badminton';
+      const userName = document.getElementById('input-user-name').value.trim();
+      const dept = document.getElementById('input-dept').value.trim();
+      const playerCount = parseInt(document.getElementById('input-player-count').value, 10);
+      const lookingForPlayers = document.getElementById('input-looking').checked;
+      const note = document.getElementById('input-note').value.trim();
+      const cancelPin = document.getElementById('input-pin').value.trim();
+
+      if (isPastBookingDeadline(state.selectedDate) && !state.isAdmin) {
+        errEl.textContent = '已超過當週星期三預約截止時間，無法新增預約。';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      if (state.bookings[slotKey]) {
+        errEl.textContent = '此時段場地剛剛已被他人預約，請選擇其他場地。';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      if (!userName || isNaN(playerCount) || playerCount < 1 || playerCount > MAX_PLAYERS_PER_COURT) {
+        errEl.textContent = `請確認姓名與人數（單一場地限制 1～${MAX_PLAYERS_PER_COURT} 人）。`;
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      if (!/^\d{4}$/.test(cancelPin)) {
+        errEl.textContent = '請輸入 4 位數字作為自助取消密碼。';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      const bookingObj = {
+        date: state.selectedDate,
+        courtId,
+        timeSlot,
+        sport,
+        userName,
+        dept,
+        playerCount,
+        lookingForPlayers,
+        note,
+        cancelPin,
+        joiners: [],
+        createdAt: Date.now(),
+        createdBy: state.userId
+      };
+
+      try {
+        await DataService.saveBooking(slotKey, bookingObj);
+        closeModal('modal-booking');
+        showToast(`預約成功！已鎖定 ${state.selectedDate} COURT ${courtId}`, 'success');
+      } catch (err) {
+        console.error(err);
+        errEl.textContent = '送出預約時發生錯誤，請稍後再試。';
+        errEl.classList.remove('hidden');
+      }
+    });
+
+    function openDetailModal(slotKey) {
+      const b = state.bookings[slotKey];
+      if (!b) return;
+      state.activeDetailKey = slotKey;
+
+      document.getElementById('detail-title').textContent = `COURT ${b.courtId} 預約詳情`;
+      document.getElementById('detail-subtitle').textContent = `${b.date}｜${b.timeSlot} (4H)`;
+      document.getElementById('detail-sport').textContent = b.sport === 'badminton' ? '🏸 羽球 (網高 1.55m)' : '🏓 匹克球 (網高 0.91m)';
+      document.getElementById('detail-players').textContent = `${b.playerCount} / ${MAX_PLAYERS_PER_COURT} 人`;
+      document.getElementById('detail-user').textContent = b.dept ? `${b.userName}（${b.dept}）` : b.userName;
+      document.getElementById('detail-note').textContent = b.note || '無特別備註';
+
+      // 已加入名單
+      const joinersListEl = document.getElementById('detail-joiners-list');
+      const joiners = Array.isArray(b.joiners) ? b.joiners : [];
+      if (joiners.length > 0) {
+        joinersListEl.innerHTML = joiners
+          .map(j => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-obsidian-950 border border-emerald-500/30 text-emerald-300">+${j.count} ${escapeHTML(j.name)}</span>`)
+          .join('');
+      } else {
+        joinersListEl.innerHTML = `<span class="text-[11px] text-zinc-500">目前尚無額外 +1 併團紀錄</span>`;
+      }
+
+      const remaining = MAX_PLAYERS_PER_COURT - b.playerCount;
+      const expired = isPastBookingDeadline(b.date);
+      document.getElementById('detail-remaining-badge').textContent = remaining > 0 ? `尚餘 ${remaining} 名額` : '已滿團 8/8';
+
+      const joinFormArea = document.getElementById('join-form-area');
+      const joinClosedMsg = document.getElementById('join-closed-msg');
+      document.getElementById('join-error').classList.add('hidden');
+      document.getElementById('input-joiner-name').value = '';
+
+      if (remaining <= 0) {
+        joinFormArea.classList.add('hidden');
+        joinClosedMsg.classList.remove('hidden');
+        joinClosedMsg.textContent = '本場地已達 8 人上限，為維持打球品質暫停接受加入。';
+      } else if (!b.lookingForPlayers) {
+        joinFormArea.classList.add('hidden');
+        joinClosedMsg.classList.remove('hidden');
+        joinClosedMsg.textContent = '預約人未勾選開放 +1 併團。';
+      } else if (expired && !state.isAdmin) {
+        joinFormArea.classList.add('hidden');
+        joinClosedMsg.classList.remove('hidden');
+        joinClosedMsg.textContent = '已過當週星期三預約截止時間，停止線上 +1 加入。';
+      } else {
+        joinFormArea.classList.remove('hidden');
+        joinClosedMsg.classList.add('hidden');
+        const sel = document.getElementById('input-joiner-count');
+        sel.innerHTML = '';
+        for (let i = 1; i <= remaining; i++) {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = `+${i} 人`;
+          sel.appendChild(opt);
+        }
+      }
+
+      // 取消區塊（一般使用者 vs 管理員）
+      document.getElementById('input-cancel-pin').value = '';
+      document.getElementById('cancel-error').classList.add('hidden');
+      if (state.isAdmin) {
+        document.getElementById('self-cancel-area').classList.add('hidden');
+        document.getElementById('admin-cancel-area').classList.remove('hidden');
+      } else {
+        document.getElementById('self-cancel-area').classList.remove('hidden');
+        document.getElementById('admin-cancel-area').classList.add('hidden');
+      }
+
+      openModal('modal-detail');
+    }
+
+    // 線上 +1 加入處理
+    document.getElementById('btn-join-court').addEventListener('click', async () => {
+      const key = state.activeDetailKey;
+      const b = state.bookings[key];
+      const errEl = document.getElementById('join-error');
+      errEl.classList.add('hidden');
+      if (!b) return;
+
+      const joinerName = document.getElementById('input-joiner-name').value.trim();
+      const addCount = parseInt(document.getElementById('input-joiner-count').value, 10) || 1;
+
+      if (!joinerName) {
+        errEl.textContent = '請輸入您的姓名或英文名。';
+        errEl.classList.remove('hidden');
+        return;
+      }
+      if (b.playerCount + addCount > MAX_PLAYERS_PER_COURT) {
+        errEl.textContent = `人數超過單場上限 ${MAX_PLAYERS_PER_COURT} 人！`;
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      const updated = {
+        ...b,
+        playerCount: b.playerCount + addCount,
+        joiners: [...(Array.isArray(b.joiners) ? b.joiners : []), { name: joinerName, count: addCount, joinedAt: Date.now() }]
+      };
+
+      try {
+        await DataService.saveBooking(key, updated);
+        openDetailModal(key);
+        showToast(`${joinerName} 已成功 +${addCount} 加入 COURT ${b.courtId}！`, 'success');
+      } catch (err) {
+        console.error(err);
+        errEl.textContent = '加入失敗，請稍後再試。';
+        errEl.classList.remove('hidden');
+      }
+    });
+
+    // 一般使用者憑 PIN 碼取消預約
+    document.getElementById('btn-confirm-cancel').addEventListener('click', async () => {
+      const key = state.activeDetailKey;
+      const b = state.bookings[key];
+      const errEl = document.getElementById('cancel-error');
+      errEl.classList.add('hidden');
+      if (!b) return;
+
+      const pin = document.getElementById('input-cancel-pin').value.trim();
+      if (pin !== String(b.cancelPin)) {
+        errEl.textContent = '取消密碼錯誤，請重新確認。';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        await DataService.deleteBooking(key);
+        closeModal('modal-detail');
+        showToast(`已取消 COURT ${b.courtId} 預約並釋出場地`, 'info');
+      } catch (err) {
+        errEl.textContent = '取消失敗，請稍後再試。';
+        errEl.classList.remove('hidden');
+      }
+    });
+
+    // 管理員免密碼強制取消
+    document.getElementById('btn-admin-force-cancel').addEventListener('click', async () => {
+      const key = state.activeDetailKey;
+      const b = state.bookings[key];
+      if (!b || !state.isAdmin) return;
+      try {
+        await DataService.deleteBooking(key);
+        closeModal('modal-detail');
+        showToast(`管理員已強制取消 COURT ${b.courtId} 預約`, 'info');
+      } catch (err) {
+        showToast('取消失敗，請稍後再試', 'error');
+      }
+    });
+
+    /* =========================================================================
+       7. 管理員控制台邏輯（密碼登入、廠務核准、公司活動停開、公告編輯、CSV 匯出）
+       ========================================================================= */
+    function updateAdminHeaderUI() {
+      const btn = document.getElementById('btn-admin-toggle');
+      const label = document.getElementById('admin-btn-label');
+      if (state.isAdmin) {
+        label.textContent = state.adminName ? `管理控制台 (${state.adminName})` : '管理控制台 (已登入)';
+        btn.className = 'flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 active:scale-95 transition text-xs sm:text-sm font-bold text-amber-300 border border-amber-400/60 shadow-[0_0_12px_rgba(251,191,36,0.2)]';
+      } else {
+        label.textContent = '管理員登入';
+        btn.className = 'flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 active:scale-95 transition text-xs sm:text-sm font-semibold text-zinc-100 border border-zinc-700 hover:border-zinc-500';
+      }
+    }
+
+    document.getElementById('btn-admin-toggle').addEventListener('click', () => {
+      document.getElementById('admin-login-error').classList.add('hidden');
+      document.getElementById('input-admin-pass').value = '';
+      document.getElementById('admin-new-pass-input').value = '';
+      document.getElementById('admin-announcement-input').value = state.announcement;
+
+      // 填充公司活動日期下拉選單
+      const dateSelect = document.getElementById('admin-event-date');
+      dateSelect.innerHTML = '';
+      state.weekendDates.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d.dateStr;
+        opt.textContent = `${d.dateStr} (${d.dayName})`;
+        if (d.dateStr === state.selectedDate) opt.selected = true;
+        dateSelect.appendChild(opt);
+      });
+
+      if (state.isAdmin) {
+        document.getElementById('admin-login-form').classList.add('hidden');
+        document.getElementById('admin-panel-view').classList.remove('hidden');
+        renderAdminEventList();
+        renderAdminFacilityList();
+      } else {
+        document.getElementById('admin-login-form').classList.remove('hidden');
+        document.getElementById('admin-panel-view').classList.add('hidden');
+      }
+      openModal('modal-admin');
+    });
+
+    document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pass = document.getElementById('input-admin-pass').value.trim();
+      const name = document.getElementById('input-admin-name').value.trim();
+
+      if (pass === state.adminPasscode) {
+        state.isAdmin = true;
+        state.adminName = name;
+        try {
+          sessionStorage.setItem('adv_arena_is_admin', '1');
+          sessionStorage.setItem('adv_arena_admin_name', name);
+        } catch (err) { /* ignore storage errors */ }
+
+        if (name && !document.getElementById('chat-input-name').value.trim()) {
+          document.getElementById('chat-input-name').value = name;
+        }
+        updateAdminHeaderUI();
+        document.getElementById('admin-login-form').classList.add('hidden');
+        document.getElementById('admin-panel-view').classList.remove('hidden');
+        renderAdminEventList();
+        renderAdminFacilityList();
+        renderAll();
+        showToast(name ? `歡迎管理員 ${name} 登入！` : '已驗證密碼並登入管理員模式', 'success');
+      } else {
+        document.getElementById('admin-login-error').classList.remove('hidden');
+      }
+    });
+
+    document.getElementById('btn-admin-logout').addEventListener('click', () => {
+      state.isAdmin = false;
+      state.adminName = '';
+      try {
+        sessionStorage.removeItem('adv_arena_is_admin');
+        sessionStorage.removeItem('adv_arena_admin_name');
+      } catch (err) { /* ignore storage errors */ }
+      updateAdminHeaderUI();
+      closeModal('modal-admin');
+      renderAll();
+      showToast('已登出管理員模式', 'info');
+    });
+
+    // 變更管理員共用密碼
+    document.getElementById('btn-save-passcode').addEventListener('click', async () => {
+      const input = document.getElementById('admin-new-pass-input');
+      const newPass = input.value.trim();
+      if (newPass.length < 4) {
+        showToast('新密碼至少需要 4 個字元', 'error');
+        return;
+      }
+      try {
+        await DataService.saveAdminPasscode(newPass);
+        input.value = '';
+        showToast('管理員共用密碼已更新並同步！', 'success');
+      } catch (err) {
+        console.error(err);
+        showToast('更新密碼失敗，請稍後再試', 'error');
+      }
+    });
+
+    async function handleToggleFacilityApproval(dateStr, timeSlotId) {
+      const sessionKey = `${dateStr}_${timeSlotId}`;
+      const existing = state.facilityApprovals[sessionKey];
+      try {
+        if (existing && existing.approved) {
+          await DataService.setFacilityApproval(sessionKey, null);
+          showToast(`已取消 ${dateStr} ${timeSlotId} 廠務核准標記`, 'info');
+        } else {
+          await DataService.setFacilityApproval(sessionKey, {
+            date: dateStr,
+            timeSlot: timeSlotId,
+            approved: true,
+            approvedBy: state.adminName || '管理員',
+            approvedAt: Date.now()
+          });
+          showToast(`已標記 ${dateStr} ${timeSlotId} 為「廠務預約完成」`, 'success');
+        }
+        renderAdminFacilityList();
+      } catch (err) {
+        showToast('更新廠務狀態失敗', 'error');
+      }
+    }
+
+    function renderAdminFacilityList() {
+      const listEl = document.getElementById('admin-facility-list');
+      listEl.innerHTML = '';
+
+      const slots = getSlotsForDate(state.selectedDate).filter(s => !s.isBreak);
+      slots.forEach(slot => {
+        const total = getSessionTotalPlayers(state.selectedDate, slot.id);
+        const sessionKey = `${state.selectedDate}_${slot.id}`;
+        const approved = Boolean(state.facilityApprovals[sessionKey]?.approved);
+
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-2 bg-obsidian-950 border border-zinc-800 rounded-xl p-2.5 text-xs';
+        row.innerHTML = `
+          <div>
+            <div class="font-mono font-bold text-zinc-200">${state.selectedDate}｜${slot.label}</div>
+            <div class="text-[11px] ${total >= MIN_SESSION_PLAYERS ? 'text-emerald-400' : 'text-amber-400'}">
+              全場累計 ${total} 人（${total >= MIN_SESSION_PLAYERS ? '已達 6 人門檻' : '未達 6 人門檻'}）
+            </div>
+          </div>
+          <button type="button" class="px-3 py-1.5 rounded-lg font-bold transition ${
+            approved
+              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-rose-500/20 hover:text-rose-300'
+              : 'bg-emerald-500 text-obsidian-950 hover:bg-emerald-400'
+          }">
+            ${approved ? '🏢✅ 已核准 (點擊取消)' : '標記廠務預約完成'}
+          </button>
+        `;
+        row.querySelector('button').addEventListener('click', () => handleToggleFacilityApproval(state.selectedDate, slot.id));
+        listEl.appendChild(row);
+      });
+    }
+
+    function renderAdminEventList() {
+      const listEl = document.getElementById('admin-event-list');
+      const entries = Object.values(state.companyEvents);
+      listEl.innerHTML = '';
+
+      if (entries.length === 0) {
+        listEl.innerHTML = `<div class="text-[11px] text-zinc-500">目前尚未設定任何公司活動停開時段。</div>`;
+        return;
+      }
+
+      const scopeMap = { all: '全天', morning: '上午場', afternoon: '下午場' };
+      entries.forEach(ev => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-2 bg-obsidian-950 border border-rose-500/30 rounded-xl px-3 py-2 text-xs';
+        row.innerHTML = `
+          <div class="min-w-0">
+            <span class="font-mono font-bold text-rose-300">${ev.date} (${scopeMap[ev.scope] || ev.scope})</span>
+            <div class="text-zinc-300 truncate">${escapeHTML(ev.title)}</div>
+          </div>
+          <button type="button" class="shrink-0 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-bold text-[11px]">移除</button>
+        `;
+        row.querySelector('button').addEventListener('click', async () => {
+          try {
+            await DataService.deleteCompanyEvent(ev.date);
+            renderAdminEventList();
+            showToast(`已移除 ${ev.date} 停開設定`, 'info');
+          } catch (err) {
+            showToast('移除失敗', 'error');
+          }
+        });
+        listEl.appendChild(row);
+      });
+    }
+
+    document.getElementById('btn-save-event').addEventListener('click', async () => {
+      const dateStr = document.getElementById('admin-event-date').value;
+      const scope = document.getElementById('admin-event-scope').value;
+      const title = document.getElementById('admin-event-title').value.trim() || '公司活動暫停開放';
+      try {
+        await DataService.saveCompanyEvent(dateStr, { date: dateStr, scope, title, updatedAt: Date.now() });
+        document.getElementById('admin-event-title').value = '';
+        renderAdminEventList();
+        showToast(`已設定 ${dateStr} 公司活動停開`, 'success');
+      } catch (err) {
+        showToast('儲存停開設定失敗', 'error');
+      }
+    });
+
+    document.getElementById('btn-save-announcement').addEventListener('click', async () => {
+      const text = document.getElementById('admin-announcement-input').value.trim();
+      if (!text) return;
+      try {
+        await DataService.saveAnnouncement(text);
+        showToast('系統公告已更新！', 'success');
+      } catch (err) {
+        showToast('更新公告失敗', 'error');
+      }
+    });
+
+    document.getElementById('btn-export-csv').addEventListener('click', () => {
+      const rows = [['日期', '時段', '場地', '球類', '預約人', '部門分機', '總人數', '開放+1', '備註']];
+      Object.values(state.bookings)
+        .sort((a, b) => `${a.date}_${a.timeSlot}_${a.courtId}`.localeCompare(`${b.date}_${b.timeSlot}_${b.courtId}`))
+        .forEach(b => {
+          rows.push([
+            b.date,
+            b.timeSlot,
+            `COURT ${b.courtId}`,
+            b.sport === 'badminton' ? '羽球' : '匹克球',
+            b.userName,
+            b.dept || '',
+            b.playerCount,
+            b.lookingForPlayers ? '是' : '否',
+            (b.note || '').replace(/,/g, '，')
+          ]);
+        });
+
+      const csvContent = '\uFEFF' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `advantech_linkou_arena_bookings_${formatDateYYYYMMDD(new Date())}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('已匯出全部預約紀錄 CSV', 'success');
+    });
+
+    /* =========================================================================
+       8. 篩選按鈕、即時聊天室送出與 Toast 提示
+       ========================================================================= */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.activeFilter = btn.dataset.filter;
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          if (b.dataset.filter === state.activeFilter) {
+            b.className = 'filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-cyan-500 text-obsidian-950 shadow-[0_0_12px_rgba(6,182,212,0.35)]';
+          } else {
+            b.className = 'filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-950 text-zinc-400 border border-zinc-800 hover:border-zinc-600 hover:text-zinc-200';
+          }
+        });
+        renderSessionsBoard();
+      });
+    });
+
+    document.getElementById('chat-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nameInput = document.getElementById('chat-input-name');
+      const msgInput = document.getElementById('chat-input-message');
+      const userName = nameInput.value.trim();
+      const text = msgInput.value.trim();
+      if (!userName || !text) return;
+
+      const msgObj = {
+        id: 'msg-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+        userName: state.isAdmin ? `${userName} [管理員]` : userName,
+        text,
+        createdAt: Date.now(),
+        createdBy: state.userId
+      };
+
+      try {
+        await DataService.addChatMessage(msgObj);
+        msgInput.value = '';
+      } catch (err) {
+        showToast('留言送出失敗，請稍後再試', 'error');
+      }
+    });
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const colorMap = {
+        success: 'bg-emerald-950/95 border-emerald-500/60 text-emerald-200',
+        error: 'bg-rose-950/95 border-rose-500/60 text-rose-200',
+        info: 'bg-obsidian-900/95 border-cyan-500/50 text-cyan-200'
+      };
+      toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-bold shadow-xl backdrop-blur-md animate-modal ${colorMap[type] || colorMap.info}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.25s';
+        setTimeout(() => toast.remove(), 260);
+      }, 3000);
+    }
+
+    /* =========================================================================
+       9. 基礎前端安全防護（停用右鍵選單與常見原始碼檢視快捷鍵）與啟動初始化
+       ========================================================================= */
+    function initSecurityProtection() {
+      // 1. 停用全頁滑鼠右鍵選單
+      document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+      });
+
+      // 2. 阻擋常見開發者工具與檢視原始碼快捷鍵
+      document.addEventListener('keydown', (e) => {
+        const key = (e.key || '').toUpperCase();
+        const isCtrlOrMeta = e.ctrlKey || e.metaKey;
+
+        // F12
+        if (e.key === 'F12') {
+          e.preventDefault();
+          return;
+        }
+        // Ctrl+U / Cmd+U (檢視原始碼)
+        if (isCtrlOrMeta && !e.shiftKey && !e.altKey && key === 'U') {
+          e.preventDefault();
+          return;
+        }
+        // Ctrl+Shift+I/J/C (Windows/Linux 開發者工具) 或 Cmd+Option+I/J/C (Mac)
+        if ((e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(key)) ||
+            (e.metaKey && e.altKey && ['I', 'J', 'C'].includes(key))) {
+          e.preventDefault();
+          return;
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initSecurityProtection();
+
+      // 一鍵複製 Firestore 規則按鈕
+      document.getElementById('btn-copy-rules')?.addEventListener('click', () => {
+        const rulesText = document.getElementById('firestore-rules-snippet')?.textContent || '';
+        const textarea = document.createElement('textarea');
+        textarea.value = rulesText;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          showToast('已複製 Firestore 規則！請貼到 Firebase Console 發布', 'success');
+        } catch (err) {
+          showToast('複製失敗，請手動選取複製', 'error');
+        }
+        textarea.remove();
+      });
+
+      state.weekendDates = generateUpcomingWeekends(4);
+      const firstOpen = state.weekendDates.find(d => !isPastBookingDeadline(d.dateStr));
+      state.selectedDate = (firstOpen || state.weekendDates[0])?.dateStr || '';
+      try {
+        if (sessionStorage.getItem('adv_arena_is_admin') === '1') {
+          state.isAdmin = true;
+          state.adminName = sessionStorage.getItem('adv_arena_admin_name') || '';
+          updateAdminHeaderUI();
+        }
+      } catch (err) { /* ignore storage errors */ }
+      initDataLayer();
+    });
+  </script>
+</body>
+</html>
