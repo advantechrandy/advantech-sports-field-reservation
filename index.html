@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ADVANTECH LINKOU ARENA｜研華科技假日林口室內運動場即時預約系統</title>
+  <title>研華科技假日林口室內運動場即時預約系統</title>
 
   <!-- Google Fonts: Inter, Noto Sans TC, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,17 +61,6 @@
         rgba(244, 63, 94, 0.14) 10px,
         rgba(15, 23, 42, 0.85) 10px,
         rgba(15, 23, 42, 0.85) 20px
-      );
-    }
-
-    /* 午休中性斜紋 */
-    .neutral-stripes {
-      background-image: repeating-linear-gradient(
-        -45deg,
-        rgba(113, 113, 122, 0.12),
-        rgba(113, 113, 122, 0.12) 8px,
-        rgba(13, 17, 23, 0.9) 8px,
-        rgba(13, 17, 23, 0.9) 16px
       );
     }
 
@@ -179,34 +168,31 @@
             <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-cyan-400">SYSTEM NOTICE</span>
             <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">📅 預約期限：當週星期三 23:59 前</span>
             <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">👥 全場滿 6 人開館｜單場上限 8 人</span>
-            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-violet-500/15 text-violet-300 border border-violet-500/30">🛡️ 安全考量：1 位研華員工限帶 1～3位親友</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-violet-500/15 text-violet-300 border border-violet-500/30">🛡️ 安全考量：1 位研華員工最多可帶 3 位親友</span>
             <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">⏱️ 每次預約固定 2 小時</span>
             <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">⚖️ 同時段單一球類上限 3 場</span>
           </div>
           <p id="announcement-display" class="text-sm text-zinc-300 mt-2 leading-relaxed">
-            歡迎使用研華科技假日林口室內運動場預約系統！A~D 四面場地皆可打羽球與匹克球，每次預約為 2 小時；為保障不同球友權益，同時段羽球或匹克球各最多預約 3 場。因公司內部安全考量，一位研華員工只能帶1~3位親友入場。當週六、日場地請務必於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。
+            歡迎使用研華科技假日林口室內運動場預約系統！研華廠務目前傾向僅開放「星期日下午」預約時段，A~D 四面場地皆可打羽球與匹克球，每次預約為 2 小時；為保障不同球友權益，同時段羽球或匹克球各最多預約 3 場。因公司內部安全考量，一位研華員工最多可以帶三位親友入場。當週星期日場地請務必於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。
           </p>
         </div>
       </div>
 
       <!-- 開放時段資訊卡 -->
-      <div class="flex flex-col sm:flex-row lg:flex-col gap-2 shrink-0 bg-obsidian-950 rounded-xl p-3.5 border border-zinc-800 text-xs font-mono justify-center">
+      <div class="flex flex-col gap-1.5 shrink-0 bg-obsidian-950 rounded-xl p-3.5 border border-zinc-800 text-xs font-mono justify-center">
         <div class="flex items-center gap-2.5">
-          <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 font-bold">SAT</span>
-          <span class="text-zinc-300">08-10 / 10-12 / 13-15 / 15-17</span>
+          <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">SUN ONLY</span>
+          <span class="text-zinc-200 font-bold">13:00-15:00 / 15:00-17:00</span>
         </div>
-        <div class="flex items-center gap-2.5">
-          <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">SUN</span>
-          <span class="text-zinc-300">13-15 / 15-17 <span class="text-zinc-500 font-sans">(僅下午場)</span></span>
-        </div>
+        <div class="text-[11px] text-zinc-500 font-sans">僅開放星期日下午場次（星期六暫不開放）</div>
       </div>
     </section>
 
-    <!-- 2. 假日日期選擇器（未來四週六日） -->
+    <!-- 2. 假日日期選擇器（未來八個星期日） -->
     <section class="space-y-2.5">
       <div class="flex items-center justify-between">
         <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400">
-          // SELECT WEEKEND DATE
+          // SELECT SUNDAY DATE
         </h2>
         <span id="selected-date-summary" class="font-mono text-xs text-cyan-400 font-bold"></span>
       </div>
@@ -268,7 +254,7 @@
       <form id="chat-form" class="p-3.5 sm:p-4 bg-obsidian-900/90 border-t border-zinc-800 flex flex-col sm:flex-row gap-2.5">
         <input id="chat-input-name" type="text" maxlength="20" required placeholder="您的暱稱 / 英文名"
           class="sm:w-44 px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-400 transition" />
-        <input id="chat-input-text" type="text" maxlength="200" required placeholder="輸入留言（例如：週六上午缺 2 位羽球球友、有人要拼車嗎？）"
+        <input id="chat-input-text" type="text" maxlength="200" required placeholder="輸入留言（例如：週日下午缺 2 位羽球球友、有人要拼車嗎？）"
           class="flex-1 px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-400 transition" />
         <button type="submit" id="btn-chat-submit"
           class="px-5 py-2.5 rounded-xl text-sm font-extrabold bg-cyan-400 hover:bg-cyan-300 text-obsidian-950 transition active:scale-95 shrink-0 shadow-[0_0_12px_rgba(34,211,238,0.25)]">
@@ -317,7 +303,7 @@
 
         <!-- 安全考量提醒 -->
         <div class="p-3 rounded-xl bg-violet-500/10 border border-violet-500/30 text-xs text-violet-200 leading-relaxed">
-          🛡️ <strong>安全規範提醒：</strong>因公司內部安全考量，一位研華員工只能帶1~3位親友入場。
+          🛡️ <strong>安全規範提醒：</strong>因公司內部安全考量，一位研華員工最多可以帶三位親友入場。
         </div>
 
         <!-- 球類選擇（同時段單一球類上限 3 場） -->
@@ -437,7 +423,7 @@
             <span class="text-xs font-extrabold text-emerald-300">🙋 開放線上 +1 報名加入</span>
             <span id="join-remaining-text" class="font-mono text-[11px] text-emerald-200"></span>
           </div>
-          <p class="text-[11px] text-violet-200">🛡️ 安全規範：一位研華員工限帶 1～2 位親友。</p>
+          <p class="text-[11px] text-violet-200">🛡️ 安全規範：一位研華員工最多可帶 3 位親友。</p>
           <div class="grid grid-cols-3 gap-2">
             <input id="join-input-name" type="text" maxlength="20" placeholder="您的姓名"
               class="col-span-2 px-3 py-2 rounded-lg bg-obsidian-950 border border-zinc-700 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-400" />
@@ -529,9 +515,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
             <select id="admin-event-date" class="px-3 py-2 rounded-lg bg-obsidian-900 border border-zinc-700 text-xs text-white focus:outline-none focus:border-amber-400"></select>
             <select id="admin-event-scope" class="px-3 py-2 rounded-lg bg-obsidian-900 border border-zinc-700 text-xs text-white focus:outline-none focus:border-amber-400">
-              <option value="full">全天停開</option>
-              <option value="morning">僅上午停開 (08:00-12:00)</option>
-              <option value="afternoon">僅下午停開 (13:00-17:00)</option>
+              <option value="full">週日下午停開 (13:00-17:00)</option>
             </select>
             <input id="admin-event-title" type="text" maxlength="40" placeholder="活動名稱（如：家庭日）"
               class="px-3 py-2 rounded-lg bg-obsidian-900 border border-zinc-700 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400" />
@@ -586,7 +570,7 @@
   <!-- ================= 主應用程式腳本 (Firebase v11 Modular SDK) ================= -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
-    import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+    import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
     import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
     /* =========================================================================
@@ -623,7 +607,7 @@
     const APP_ID = 'advantech-linkou-arena';
 
     /* =========================================================================
-       2. 系統常數與 2 小時場次規格定義
+       2. 系統常數與 2 小時場次規格定義（僅開放星期日下午）
        ========================================================================= */
     const COURTS = [
       { id: 'A', name: 'COURT A', label: 'A 場地' },
@@ -632,16 +616,6 @@
       { id: 'D', name: 'COURT D', label: 'D 場地' }
     ];
 
-    // 星期六：四個 2 小時場次（含午休分隔）
-    const SATURDAY_SLOTS = [
-      { id: '08:00-10:00', label: '08:00 - 10:00', title: '上午第一場', duration: '2 HRS', period: 'morning' },
-      { id: '10:00-12:00', label: '10:00 - 12:00', title: '上午第二場', duration: '2 HRS', period: 'morning' },
-      { id: 'LUNCH_BREAK', label: '12:00 - 13:00', title: '中午整理休息時段', period: 'break', isBreak: true },
-      { id: '13:00-15:00', label: '13:00 - 15:00', title: '下午第一場', duration: '2 HRS', period: 'afternoon' },
-      { id: '15:00-17:00', label: '15:00 - 17:00', title: '下午第二場', duration: '2 HRS', period: 'afternoon' }
-    ];
-
-    // 星期日：僅開放下午兩個 2 小時場次
     const SUNDAY_SLOTS = [
       { id: '13:00-15:00', label: '13:00 - 15:00', title: '週日下午第一場', duration: '2 HRS', period: 'afternoon' },
       { id: '15:00-17:00', label: '15:00 - 17:00', title: '週日下午第二場', duration: '2 HRS', period: 'afternoon' }
@@ -668,42 +642,59 @@
       companyEvents: {},
       facilityApprovals: {},
       chatMessages: [],
-      announcement: '歡迎使用研華科技假日林口室內運動場預約系統！A~D 四面場地皆可打羽球與匹克球，每次預約為 2 小時；為保障不同球友權益，同時段羽球或匹克球各最多預約 3 場。因公司內部安全考量，一位研華員工只能帶1~3位親友入場。當週六、日場地請務必於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。',
+      announcement: '歡迎使用研華科技假日林口室內運動場預約系統！目前僅開放「星期日下午」時段，A~D 四面場地皆可打羽球與匹克球，每次預約為 2 小時；為保障不同球友權益，同時段羽球或匹克球各最多預約 3 場。因公司內部安全考量，一位研華員工最多可以帶三位親友入場。當週星期日場地請務必於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。',
       activeDetailKey: null
     };
 
     let db = null;
-    let auth = null;
-    let permissionErrorShown = false;
 
     /* =========================================================================
-       4. 日期與當週星期三預約期限計算
+       4. 工具函式
        ========================================================================= */
-    function formatDateYMD(dateObj) {
-      const y = dateObj.getFullYear();
-      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
-      const d = String(dateObj.getDate()).padStart(2, '0');
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatDateYMD(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
       return `${y}-${m}-${d}`;
     }
 
-    function generateUpcomingWeekends(weeks = 4) {
+    function formatTimeHM(ts) {
+      const d = new Date(ts || Date.now());
+      const m = d.getMonth() + 1;
+      const day = d.getDate();
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      return `${m}/${day} ${hh}:${mm}`;
+    }
+
+    // 自動產生未來 8 個星期日
+    function generateUpcomingWeekends(count = 8) {
       const result = [];
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      for (let i = 0; i < weeks * 7 + 7; i++) {
+      for (let i = 0; i < count * 7 + 7; i++) {
         const d = new Date(today);
         d.setDate(today.getDate() + i);
         const dow = d.getDay();
-        if (dow === 6 || dow === 0) {
+        if (dow === 0) {
           result.push({
             dateStr: formatDateYMD(d),
             dayOfWeek: dow,
             monthDay: `${d.getMonth() + 1}/${d.getDate()}`,
-            weekdayText: dow === 6 ? '星期六' : '星期日'
+            weekdayText: '星期日'
           });
         }
-        if (result.length >= weeks * 2) break;
+        if (result.length >= count) break;
       }
       return result;
     }
@@ -712,10 +703,8 @@
     function getBookingDeadline(dateStr) {
       const [y, m, d] = dateStr.split('-').map(Number);
       const target = new Date(y, m - 1, d, 0, 0, 0);
-      const dow = target.getDay(); // 6 = Sat, 0 = Sun
-      const daysBackToWed = dow === 6 ? 3 : 4;
       const wed = new Date(target);
-      wed.setDate(target.getDate() - daysBackToWed);
+      wed.setDate(target.getDate() - 4); // 星期日往前 4 天為當週星期三
       wed.setHours(23, 59, 59, 999);
       return wed;
     }
@@ -724,882 +713,636 @@
       return Date.now() > getBookingDeadline(dateStr).getTime();
     }
 
-    function getSlotsForDate(dateStr) {
-      const found = state.weekendDates.find((w) => w.dateStr === dateStr);
-      if (!found) return SATURDAY_SLOTS;
-      return found.dayOfWeek === 6 ? SATURDAY_SLOTS : SUNDAY_SLOTS;
+    function getSlotsForDate() {
+      return SUNDAY_SLOTS;
     }
 
-    function isSlotBlockedByEvent(dateStr, period) {
-      const ev = state.companyEvents[dateStr];
-      if (!ev) return null;
-      if (ev.scope === 'full') return ev;
-      if (ev.scope === 'morning' && period === 'morning') return ev;
-      if (ev.scope === 'afternoon' && period === 'afternoon') return ev;
-      return null;
+    function getSportCountsForSession(dateStr, timeSlotId) {
+      let badminton = 0;
+      let pickleball = 0;
+      for (const court of COURTS) {
+        const b = state.bookings[`${dateStr}_${court.id}_${timeSlotId}`];
+        if (b) {
+          if (b.sport === 'badminton') badminton++;
+          else if (b.sport === 'pickleball') pickleball++;
+        }
+      }
+      return { badminton, pickleball };
     }
 
     function getSessionTotalPlayers(dateStr, timeSlotId) {
       let total = 0;
-      COURTS.forEach((c) => {
-        const b = state.bookings[`${dateStr}_${c.id}_${timeSlotId}`];
+      for (const court of COURTS) {
+        const b = state.bookings[`${dateStr}_${court.id}_${timeSlotId}`];
         if (b) total += Number(b.playerCount) || 0;
-      });
+      }
       return total;
     }
 
-    function getSessionSportCounts(dateStr, timeSlotId) {
-      const counts = { badminton: 0, pickleball: 0 };
-      COURTS.forEach((c) => {
-        const b = state.bookings[`${dateStr}_${c.id}_${timeSlotId}`];
-        if (b && b.sport === 'badminton') counts.badminton += 1;
-        if (b && b.sport === 'pickleball') counts.pickleball += 1;
-      });
-      return counts;
+    function needsNetChange(dateStr, courtId, timeSlotId) {
+      if (timeSlotId !== '15:00-17:00') return false;
+      const prev = state.bookings[`${dateStr}_${courtId}_13:00-15:00`];
+      const curr = state.bookings[`${dateStr}_${courtId}_15:00-17:00`];
+      return !!(prev && curr && prev.sport !== curr.sport);
     }
 
-    /* =========================================================================
-       5. 資料同步服務 (Firebase Firestore / 本機備援)
-       ========================================================================= */
-    function updateSyncStatusUI(status, text) {
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      const styles = {
+        success: 'bg-emerald-950/95 border-emerald-500/60 text-emerald-200',
+        error: 'bg-rose-950/95 border-rose-500/60 text-rose-200',
+        warning: 'bg-amber-950/95 border-amber-500/60 text-amber-200',
+        info: 'bg-obsidian-900/95 border-cyan-500/50 text-cyan-200'
+      };
+      el.className = `pointer-events-auto px-4 py-3 rounded-xl border shadow-2xl text-xs font-bold backdrop-blur-md transition-all duration-300 ${styles[type] || styles.info}`;
+      el.textContent = message;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(8px)';
+        setTimeout(() => el.remove(), 300);
+      }, 3200);
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function setSyncStatus(mode, text) {
+      state.mode = mode;
       const dot = document.getElementById('sync-status-dot');
       const label = document.getElementById('sync-status-text');
       const footer = document.getElementById('footer-mode-label');
-
-      label.textContent = text;
-      footer.textContent = text;
-      dot.className = 'w-2 h-2 rounded-full';
-
-      if (status === 'live') {
-        dot.classList.add('bg-emerald-400', 'shadow-[0_0_8px_#34d399]');
-      } else if (status === 'error') {
-        dot.classList.add('bg-rose-500');
+      if (mode === 'firebase') {
+        dot.className = 'w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]';
+        label.textContent = text || 'FIREBASE LIVE';
+        label.className = 'text-emerald-400';
+        footer.textContent = 'FIREBASE LIVE SYNC';
       } else {
-        dot.classList.add('bg-amber-400', 'animate-pulse');
+        dot.className = 'w-2 h-2 rounded-full bg-amber-400';
+        label.textContent = text || 'DEMO MODE';
+        label.className = 'text-amber-300';
+        footer.textContent = 'LOCAL DEMO MODE';
       }
     }
 
-    function handleFirestoreError(source, error) {
-      console.error(`[Firestore:${source}]`, error);
-      if (error && error.code === 'permission-denied' && !permissionErrorShown) {
-        permissionErrorShown = true;
-        state.mode = 'demo';
-        document.getElementById('firebase-permission-banner').classList.remove('hidden');
-        updateSyncStatusUI('error', 'PERMISSION DENIED (DEMO)');
-        seedDemoData();
-        renderAll();
-      }
+    /* =========================================================================
+       5. 資料存取服務 (Firebase Firestore + Demo Fallback)
+       ========================================================================= */
+    function getDataCol(colName) {
+      return collection(db, 'artifacts', APP_ID, 'public', 'data', colName);
     }
 
-    function attachFirestoreListeners() {
-      // 1. 預約紀錄
-      const bookingsCol = collection(db, 'artifacts', APP_ID, 'public', 'data', 'bookings');
-      onSnapshot(
-        bookingsCol,
-        (snap) => {
-          const next = {};
-          snap.forEach((d) => { next[d.id] = d.data(); });
-          state.bookings = next;
-          state.mode = 'firebase';
-          document.getElementById('firebase-permission-banner').classList.add('hidden');
-          updateSyncStatusUI('live', 'FIREBASE LIVE');
-          renderAll();
-        },
-        (err) => handleFirestoreError('bookings', err)
-      );
-
-      // 2. 公司活動停開
-      const eventsCol = collection(db, 'artifacts', APP_ID, 'public', 'data', 'company_events');
-      onSnapshot(
-        eventsCol,
-        (snap) => {
-          const next = {};
-          snap.forEach((d) => { next[d.id] = d.data(); });
-          state.companyEvents = next;
-          renderAll();
-        },
-        (err) => handleFirestoreError('company_events', err)
-      );
-
-      // 3. 廠務核准狀態
-      const approvalsCol = collection(db, 'artifacts', APP_ID, 'public', 'data', 'facility_approvals');
-      onSnapshot(
-        approvalsCol,
-        (snap) => {
-          const next = {};
-          snap.forEach((d) => { next[d.id] = d.data(); });
-          state.facilityApprovals = next;
-          renderSessions();
-        },
-        (err) => handleFirestoreError('facility_approvals', err)
-      );
-
-      // 4. 系統設定（公告與共用管理員密碼）
-      const settingsDoc = doc(db, 'artifacts', APP_ID, 'public', 'data', 'config', 'settings');
-      onSnapshot(
-        settingsDoc,
-        (snap) => {
-          if (snap.exists()) {
-            const data = snap.data();
-            if (data.announcement) {
-              state.announcement = data.announcement;
-              document.getElementById('announcement-display').textContent = state.announcement;
-            }
-            if (data.adminPasscode) {
-              state.adminPasscode = String(data.adminPasscode);
-            }
-          }
-        },
-        (err) => handleFirestoreError('settings', err)
-      );
-
-      // 5. 即時聊天室留言（僅保留最新 30 則）
-      const chatCol = collection(db, 'artifacts', APP_ID, 'public', 'data', 'chat_messages');
-      onSnapshot(
-        chatCol,
-        (snap) => {
-          const list = [];
-          snap.forEach((d) => { list.push({ id: d.id, ...d.data() }); });
-          list.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
-          state.chatMessages = list.slice(-MAX_CHAT_MESSAGES);
-          renderChatMessages();
-        },
-        (err) => handleFirestoreError('chat_messages', err)
-      );
-    }
-
-    async function initFirebase() {
-      try {
-        const app = initializeApp(MANUAL_FIREBASE_CONFIG);
-        db = getFirestore(app);
-        auth = getAuth(app);
-
-        try {
-          await signInAnonymously(auth);
-        } catch (authErr) {
-          // 若 Firebase 尚未開啟 Anonymous Auth，仍可於 Firestore 公開規則下連線
-          console.warn('匿名登入未啟用，改以直接連線 Firestore:', authErr.code);
-        }
-
-        onAuthStateChanged(auth, () => {});
-        attachFirestoreListeners();
-      } catch (err) {
-        console.error('Firebase 初始化失敗，切換至展示模式:', err);
-        state.mode = 'demo';
-        updateSyncStatusUI('error', 'DEMO MODE');
-        seedDemoData();
-        renderAll();
-      }
+    function getDataDoc(colName, docId) {
+      return doc(db, 'artifacts', APP_ID, 'public', 'data', colName, docId);
     }
 
     const DataService = {
-      async saveBooking(slotKey, bookingObj) {
-        if (state.mode === 'firebase') {
-          await setDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'bookings', slotKey), bookingObj);
+      async saveBooking(slotKey, payload) {
+        if (state.mode === 'firebase' && db) {
+          await setDoc(getDataDoc('bookings', slotKey), payload);
         } else {
-          state.bookings[slotKey] = bookingObj;
+          state.bookings[slotKey] = payload;
           renderAll();
         }
       },
 
       async deleteBooking(slotKey) {
-        if (state.mode === 'firebase') {
-          await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'bookings', slotKey));
+        if (state.mode === 'firebase' && db) {
+          await deleteDoc(getDataDoc('bookings', slotKey));
         } else {
           delete state.bookings[slotKey];
           renderAll();
         }
       },
 
-      async saveCompanyEvent(dateStr, eventObj) {
-        if (state.mode === 'firebase') {
-          await setDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'company_events', dateStr), eventObj);
+      async saveCompanyEvent(dateStr, payload) {
+        if (state.mode === 'firebase' && db) {
+          await setDoc(getDataDoc('company_events', dateStr), payload);
         } else {
-          state.companyEvents[dateStr] = eventObj;
+          state.companyEvents[dateStr] = payload;
           renderAll();
         }
       },
 
-      async removeCompanyEvent(dateStr) {
-        if (state.mode === 'firebase') {
-          await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'company_events', dateStr));
+      async deleteCompanyEvent(dateStr) {
+        if (state.mode === 'firebase' && db) {
+          await deleteDoc(getDataDoc('company_events', dateStr));
         } else {
           delete state.companyEvents[dateStr];
           renderAll();
         }
       },
 
-      async setFacilityApproval(sessionKey, approvalObj) {
-        if (state.mode === 'firebase') {
-          if (approvalObj) {
-            await setDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'facility_approvals', sessionKey), approvalObj);
-          } else {
-            await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'facility_approvals', sessionKey));
-          }
+      async saveFacilityApproval(key, payload) {
+        if (state.mode === 'firebase' && db) {
+          await setDoc(getDataDoc('facility_approvals', key), payload);
         } else {
-          if (approvalObj) state.facilityApprovals[sessionKey] = approvalObj;
-          else delete state.facilityApprovals[sessionKey];
-          renderSessions();
+          state.facilityApprovals[key] = payload;
+          renderAll();
         }
       },
 
-      async saveSettings(partialObj) {
-        if (state.mode === 'firebase') {
-          await setDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'config', 'settings'), partialObj, { merge: true });
+      async deleteFacilityApproval(key) {
+        if (state.mode === 'firebase' && db) {
+          await deleteDoc(getDataDoc('facility_approvals', key));
         } else {
-          if (partialObj.announcement !== undefined) {
-            state.announcement = partialObj.announcement;
-            document.getElementById('announcement-display').textContent = state.announcement;
-          }
-          if (partialObj.adminPasscode !== undefined) {
-            state.adminPasscode = partialObj.adminPasscode;
-          }
+          delete state.facilityApprovals[key];
+          renderAll();
         }
       },
 
-      async addChatMessage(msgObj) {
-        if (state.mode === 'firebase') {
-          await setDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'chat_messages', msgObj.id), msgObj);
-          // 超過 30 則自動刪除最舊留言
-          const combined = [...state.chatMessages, msgObj].sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+      async saveSettings(partial) {
+        if (state.mode === 'firebase' && db) {
+          await setDoc(getDataDoc('config', 'settings'), partial, { merge: true });
+        } else {
+          if (typeof partial.announcement === 'string') state.announcement = partial.announcement;
+          if (typeof partial.adminPasscode === 'string') state.adminPasscode = partial.adminPasscode;
+          renderAll();
+        }
+      },
+
+      async addChatMessage(msg) {
+        if (state.mode === 'firebase' && db) {
+          await setDoc(getDataDoc('chat_messages', msg.id), msg);
+          // 超過 30 則自動清理最舊訊息
+          const combined = [...state.chatMessages.filter((m) => m.id !== msg.id), msg]
+            .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
           if (combined.length > MAX_CHAT_MESSAGES) {
-            const overflow = combined.slice(0, combined.length - MAX_CHAT_MESSAGES);
-            await Promise.allSettled(
-              overflow.map((oldMsg) =>
-                deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'chat_messages', oldMsg.id))
-              )
-            );
+            const toDelete = combined.slice(0, combined.length - MAX_CHAT_MESSAGES);
+            await Promise.all(toDelete.map((old) => deleteDoc(getDataDoc('chat_messages', old.id)).catch(() => {})));
           }
         } else {
-          state.chatMessages.push(msgObj);
+          state.chatMessages.push(msg);
+          state.chatMessages.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
           if (state.chatMessages.length > MAX_CHAT_MESSAGES) {
             state.chatMessages = state.chatMessages.slice(-MAX_CHAT_MESSAGES);
           }
-          renderChatMessages();
+          renderChat();
         }
       },
 
-      async deleteChatMessage(msgId) {
-        if (state.mode === 'firebase') {
-          await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'chat_messages', msgId));
+      async deleteChatMessage(id) {
+        if (state.mode === 'firebase' && db) {
+          await deleteDoc(getDataDoc('chat_messages', id));
         } else {
-          state.chatMessages = state.chatMessages.filter((m) => m.id !== msgId);
-          renderChatMessages();
+          state.chatMessages = state.chatMessages.filter((m) => m.id !== id);
+          renderChat();
         }
       }
     };
 
     /* =========================================================================
-       6. 展示備援資料（僅於無法連線 Firebase 時載入）
+       6. Firebase 初始化與即時監聽
        ========================================================================= */
     function seedDemoData() {
-      const openWeekends = state.weekendDates.filter((d) => !isPastBookingDeadline(d.dateStr));
-      const sat1 = (openWeekends.find((d) => d.dayOfWeek === 6) || state.weekendDates.find((d) => d.dayOfWeek === 6))?.dateStr;
-      const sun1 = (openWeekends.find((d) => d.dayOfWeek === 0) || state.weekendDates.find((d) => d.dayOfWeek === 0))?.dateStr;
+      const openSundays = state.weekendDates.filter((d) => !isPastBookingDeadline(d.dateStr));
+      const sun1 = (openSundays[0] || state.weekendDates[0])?.dateStr;
 
-      if (sat1) {
-        state.bookings[`${sat1}_A_08:00-10:00`] = {
-          date: sat1, courtId: 'A', timeSlot: '08:00-10:00', sport: 'badminton',
+      if (sun1) {
+        state.bookings[`${sun1}_A_13:00-15:00`] = {
+          date: sun1, courtId: 'A', timeSlot: '13:00-15:00', sport: 'badminton',
           userName: 'Kevin Lin', dept: 'IIoT / #3310', playerCount: 4,
           lookingForPlayers: true, note: '羽球雙打歡樂局，再湊 2 人就達全場開館門檻！',
-          cancelPin: '1234', joiners: [], createdAt: Date.now() - 7200000
+          cancelPin: '1234', joiners: [], createdAt: Date.now() - 5400000
         };
-        state.bookings[`${sat1}_A_13:00-15:00`] = {
-          date: sat1, courtId: 'A', timeSlot: '13:00-15:00', sport: 'pickleball',
-          userName: 'Emily Wu', dept: 'ESG / #2105', playerCount: 6,
-          lookingForPlayers: true, note: '匹克球新手體驗團，現場有備用球拍，歡迎 +1',
-          cancelPin: '1234', joiners: [{ name: 'Jason', count: 2 }], createdAt: Date.now() - 5400000
-        };
-        state.facilityApprovals[`${sat1}_13:00-15:00`] = {
-          date: sat1, timeSlot: '13:00-15:00', approved: true, approvedBy: '羽球社幹部', approvedAt: Date.now() - 1800000
-        };
-      }
-      if (sun1) {
         state.bookings[`${sun1}_B_13:00-15:00`] = {
           date: sun1, courtId: 'B', timeSlot: '13:00-15:00', sport: 'pickleball',
           userName: 'Sophia Chang', dept: 'HR / #1024', playerCount: 4,
-          lookingForPlayers: true, note: '週日下午輕鬆打匹克球，差 2 人開團！',
+          lookingForPlayers: true, note: '週日下午輕鬆打匹克球，歡迎 +1！',
           cancelPin: '1234', joiners: [], createdAt: Date.now() - 3000000
+        };
+        state.facilityApprovals[`${sun1}_13:00-15:00`] = {
+          date: sun1, timeSlot: '13:00-15:00', approved: true, approvedBy: '羽球社幹部', approvedAt: Date.now() - 1800000
         };
       }
       state.chatMessages = [
-        { id: 'demo_1', userName: '羽球社幹部', text: '歡迎大家使用新版 2 小時預約系統！同時段羽球、匹克球各上限 3 場喔。', createdAt: Date.now() - 3600000 }
+        { id: 'demo_1', userName: '羽球社幹部', text: '目前開放星期日下午兩個 2 小時場次，同時段羽球、匹克球各上限 3 場喔！', createdAt: Date.now() - 3600000 }
       ];
     }
 
-    /* =========================================================================
-       7. 介面渲染函式 (UI Rendering)
-       ========================================================================= */
-    function escapeHTML(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
+    function fallbackToDemo(isPermissionError = false) {
+      if (state.mode === 'demo') return;
+      setSyncStatus('demo', isPermissionError ? 'PERMISSION DENIED' : 'DEMO MODE');
+      if (isPermissionError) {
+        document.getElementById('firebase-permission-banner').classList.remove('hidden');
+      }
+      if (Object.keys(state.bookings).length === 0 && state.chatMessages.length === 0) {
+        seedDemoData();
+      }
+      renderAll();
     }
 
+    async function initFirebase() {
+      try {
+        const app = initializeApp(MANUAL_FIREBASE_CONFIG);
+        const auth = getAuth(app);
+        db = getFirestore(app);
+
+        try {
+          await signInAnonymously(auth);
+        } catch (authErr) {
+          console.warn('匿名登入未啟用或略過，嘗試直接連線 Firestore:', authErr?.code || authErr);
+        }
+
+        let liveConfirmed = false;
+        const onSnapSuccess = () => {
+          if (!liveConfirmed) {
+            liveConfirmed = true;
+            document.getElementById('firebase-permission-banner').classList.add('hidden');
+            setSyncStatus('firebase', 'FIREBASE LIVE');
+          }
+        };
+        const onSnapError = (err) => {
+          console.error('Firestore 監聽錯誤:', err);
+          fallbackToDemo(err?.code === 'permission-denied');
+        };
+
+        onSnapshot(getDataCol('bookings'), (snap) => {
+          onSnapSuccess();
+          const map = {};
+          snap.forEach((d) => { map[d.id] = d.data(); });
+          state.bookings = map;
+          renderAll();
+        }, onSnapError);
+
+        onSnapshot(getDataCol('company_events'), (snap) => {
+          onSnapSuccess();
+          const map = {};
+          snap.forEach((d) => { map[d.id] = d.data(); });
+          state.companyEvents = map;
+          renderAll();
+        }, onSnapError);
+
+        onSnapshot(getDataCol('facility_approvals'), (snap) => {
+          onSnapSuccess();
+          const map = {};
+          snap.forEach((d) => { map[d.id] = d.data(); });
+          state.facilityApprovals = map;
+          renderAll();
+        }, onSnapError);
+
+        onSnapshot(getDataDoc('config', 'settings'), (snap) => {
+          onSnapSuccess();
+          if (snap.exists()) {
+            const data = snap.data();
+            if (typeof data.announcement === 'string' && data.announcement.trim()) {
+              state.announcement = data.announcement;
+            }
+            if (typeof data.adminPasscode === 'string' && data.adminPasscode.trim()) {
+              state.adminPasscode = data.adminPasscode;
+            }
+            renderAnnouncement();
+          }
+        }, onSnapError);
+
+        onSnapshot(getDataCol('chat_messages'), (snap) => {
+          onSnapSuccess();
+          const list = [];
+          snap.forEach((d) => {
+            list.push({ id: d.id, ...d.data() });
+          });
+          list.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+          state.chatMessages = list.slice(-MAX_CHAT_MESSAGES);
+          renderChat();
+        }, onSnapError);
+      } catch (err) {
+        console.error('Firebase 初始化失敗:', err);
+        fallbackToDemo(false);
+      }
+    }
+
+    /* =========================================================================
+       7. 畫面渲染函式
+       ========================================================================= */
     function renderAll() {
+      renderAnnouncement();
       renderDateSelector();
       renderDateAlertBanner();
       renderSessions();
-      renderChatMessages();
+      renderChat();
+    }
+
+    function renderAnnouncement() {
+      const el = document.getElementById('announcement-display');
+      if (el) el.textContent = state.announcement;
     }
 
     function renderDateSelector() {
       const container = document.getElementById('date-selector');
-      container.innerHTML = '';
-
-      state.weekendDates.forEach((d) => {
-        const isSelected = d.dateStr === state.selectedDate;
-        const expired = isPastBookingDeadline(d.dateStr);
-        const hasEvent = Boolean(state.companyEvents[d.dateStr]);
-
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.onclick = () => {
-          state.selectedDate = d.dateStr;
-          renderAll();
-        };
-
-        btn.className = `shrink-0 min-w-[118px] px-3.5 py-2.5 rounded-xl border text-left transition active:scale-95 ${
-          isSelected
-            ? 'bg-cyan-500/15 border-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.18)]'
-            : 'bg-obsidian-850 border-zinc-800 hover:border-zinc-600'
-        }`;
-
-        btn.innerHTML = `
-          <div class="flex items-center justify-between gap-2">
-            <span class="font-mono text-sm font-extrabold ${isSelected ? 'text-cyan-300' : 'text-white'}">${d.monthDay}</span>
-            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${
-              d.dayOfWeek === 6 ? 'bg-cyan-500/20 text-cyan-300' : 'bg-amber-500/20 text-amber-300'
-            }">${d.weekdayText}</span>
-          </div>
-          <div class="mt-1.5 flex items-center gap-1.5 font-mono text-[10px]">
-            ${hasEvent ? '<span class="text-rose-400 font-bold">🚫 活動</span>' : ''}
-            ${expired
-              ? '<span class="text-zinc-500 font-bold">已截止</span>'
-              : '<span class="text-emerald-400 font-bold">開放預約</span>'
-            }
-          </div>
-        `;
-        container.appendChild(btn);
-      });
-
-      const current = state.weekendDates.find((w) => w.dateStr === state.selectedDate);
-      if (current) {
-        const deadline = getBookingDeadline(current.dateStr);
-        const dlText = `${deadline.getMonth() + 1}/${deadline.getDate()} (三) 23:59`;
-        document.getElementById('selected-date-summary').textContent = `${current.dateStr} ${current.weekdayText}｜預約期限：${dlText}`;
+      const summary = document.getElementById('selected-date-summary');
+      const selectedObj = state.weekendDates.find((d) => d.dateStr === state.selectedDate);
+      if (summary && selectedObj) {
+        const deadline = getBookingDeadline(selectedObj.dateStr);
+        summary.textContent = `${selectedObj.dateStr} (${selectedObj.weekdayText})｜截止：${deadline.getMonth() + 1}/${deadline.getDate()} 23:59`;
       }
+
+      container.innerHTML = state.weekendDates.map((item) => {
+        const isSelected = item.dateStr === state.selectedDate;
+        const isExpired = isPastBookingDeadline(item.dateStr);
+        const eventObj = state.companyEvents[item.dateStr];
+        const slots = getSlotsForDate();
+        let bookedCount = 0;
+        for (const s of slots) {
+          for (const c of COURTS) {
+            if (state.bookings[`${item.dateStr}_${c.id}_${s.id}`]) bookedCount++;
+          }
+        }
+
+        const baseCls = isSelected
+          ? 'bg-cyan-500/15 border-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.18)]'
+          : 'bg-obsidian-900/90 border-zinc-800 hover:border-zinc-600';
+
+        let statusBadge = `<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400">已約 ${bookedCount}/8</span>`;
+        if (eventObj) {
+          statusBadge = `<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold">停開</span>`;
+        } else if (isExpired) {
+          statusBadge = `<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-500 border border-zinc-700">已截止</span>`;
+        }
+
+        return `
+          <button type="button" onclick="selectDate('${item.dateStr}')"
+            class="shrink-0 w-36 text-left p-3 rounded-xl border transition active:scale-95 ${baseCls}">
+            <div class="flex items-center justify-between gap-1">
+              <span class="font-mono text-xs font-bold ${isSelected ? 'text-cyan-300' : 'text-amber-400'}">SUN</span>
+              ${statusBadge}
+            </div>
+            <div class="text-lg font-mono font-black text-white mt-1 tracking-tight">${item.monthDay}</div>
+            <div class="text-[11px] text-zinc-400">${item.weekdayText} 下午</div>
+          </button>
+        `;
+      }).join('');
     }
 
     function renderDateAlertBanner() {
       const banner = document.getElementById('date-alert-banner');
-      const expired = isPastBookingDeadline(state.selectedDate);
-      const ev = state.companyEvents[state.selectedDate];
+      const eventObj = state.companyEvents[state.selectedDate];
+      const isExpired = isPastBookingDeadline(state.selectedDate);
 
-      if (ev) {
-        const scopeLabel = ev.scope === 'full' ? '全天' : ev.scope === 'morning' ? '上午場' : '下午場';
-        banner.className = 'rounded-xl border border-rose-500/40 bg-rose-500/10 p-3.5 text-sm text-rose-200 flex flex-wrap items-center justify-between gap-2';
-        banner.innerHTML = `<span>🚫 <strong>公司活動公告：</strong>本日（${scopeLabel}）因「${escapeHTML(ev.title || '公司活動')}」暫停開放預約。</span>`;
-        banner.classList.remove('hidden');
-      } else if (expired) {
-        banner.className = 'rounded-xl border border-amber-500/40 bg-amber-500/10 p-3.5 text-sm text-amber-200 flex flex-wrap items-center justify-between gap-2';
-        banner.innerHTML = `<span>⏳ <strong>已超過當週星期三 23:59 預約期限：</strong>一般同仁已停止新增預約與線上 +1${state.isAdmin ? '（您目前為管理員模式，仍可協助補登調整）' : ''}。</span>`;
-        banner.classList.remove('hidden');
-      } else {
-        banner.classList.add('hidden');
+      if (eventObj) {
+        banner.className = 'rounded-xl border border-rose-500/50 bg-rose-950/60 p-3.5 text-sm text-rose-200 flex items-center justify-between gap-3';
+        banner.innerHTML = `
+          <div>🚫 <strong>公司活動場地停開：</strong>${escapeHtml(eventObj.title || '公司活動')}（本日星期日下午時段暫停對外開放預約）</div>
+        `;
+        return;
       }
+
+      if (isExpired) {
+        const deadline = getBookingDeadline(state.selectedDate);
+        banner.className = 'rounded-xl border border-amber-500/40 bg-amber-950/40 p-3.5 text-xs sm:text-sm text-amber-200 flex items-center justify-between gap-3';
+        banner.innerHTML = `
+          <div>⏰ <strong>本週預約已截止：</strong>該場次已超過當週星期三 (${deadline.getMonth() + 1}/${deadline.getDate()} 23:59) 預約期限，一般同仁僅供檢視；如需異動請洽管理員。</div>
+        `;
+        return;
+      }
+
+      banner.className = 'hidden';
+      banner.innerHTML = '';
     }
 
     function renderSessions() {
       const container = document.getElementById('sessions-container');
-      container.innerHTML = '';
+      const dateStr = state.selectedDate;
+      const slots = getSlotsForDate();
+      const eventObj = state.companyEvents[dateStr];
+      const isExpired = isPastBookingDeadline(dateStr);
 
-      const slots = getSlotsForDate(state.selectedDate);
-      const playableSlots = slots.filter((s) => !s.isBreak);
-      const expired = isPastBookingDeadline(state.selectedDate);
-
-      slots.forEach((slot) => {
-        if (slot.isBreak) {
-          const breakEl = document.createElement('div');
-          breakEl.className = 'rounded-xl neutral-stripes border border-zinc-800/80 px-4 py-2.5 flex items-center justify-between text-xs text-zinc-400';
-          breakEl.innerHTML = `
-            <span class="font-mono font-bold text-zinc-300">⏸ ${slot.label}</span>
-            <span>${slot.title}（無開放預約）</span>
-          `;
-          container.appendChild(breakEl);
-          return;
-        }
-
-        const blockedEv = isSlotBlockedByEvent(state.selectedDate, slot.period);
-        const totalPlayers = getSessionTotalPlayers(state.selectedDate, slot.id);
-        const sportCounts = getSessionSportCounts(state.selectedDate, slot.id);
-        const meetsThreshold = totalPlayers >= MIN_SESSION_PLAYERS;
+      container.innerHTML = slots.map((slot) => {
+        const totalPlayers = getSessionTotalPlayers(dateStr, slot.id);
+        const isReached = totalPlayers >= MIN_SESSION_PLAYERS;
         const progressPct = Math.min(100, Math.round((totalPlayers / MIN_SESSION_PLAYERS) * 100));
-        const sessionKey = `${state.selectedDate}_${slot.id}`;
-        const approval = state.facilityApprovals[sessionKey];
+        const sportCounts = getSportCountsForSession(dateStr, slot.id);
+        const approvalKey = `${dateStr}_${slot.id}`;
+        const approval = state.facilityApprovals[approvalKey];
+        const isApproved = !!(approval && approval.approved);
 
-        const section = document.createElement('div');
-        section.className = 'bg-obsidian-850 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl';
-
-        let thresholdBadgeHTML = '';
-        if (blockedEv) {
-          thresholdBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40">🚫 公司活動停開</span>`;
-        } else if (meetsThreshold) {
-          thresholdBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/40">✓ 已達 6 人開館門檻（累計 ${totalPlayers} 人）</span>`;
-        } else {
-          const diff = MIN_SESSION_PLAYERS - totalPlayers;
-          thresholdBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/40">⚠️ 全場累計 ${totalPlayers} / 6 人（尚差 ${diff} 人，未滿 6 人全場無法借用）</span>`;
+        // 廠務核准狀態與管理員切換按鈕
+        let facilityBadgeHtml = '';
+        if (eventObj) {
+          facilityBadgeHtml = `<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">🚫 公司活動停開</span>`;
+        } else if (isApproved) {
+          facilityBadgeHtml = `
+            <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+              🏢✅ 廠務預約完成
+            </span>
+          `;
+        } else if (isReached) {
+          facilityBadgeHtml = `
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">
+              🏢⏳ 已達標，待廠務核准
+            </span>
+          `;
         }
 
-        const quotaBadgesHTML = !blockedEv
-          ? `<span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded ${sportCounts.badminton >= MAX_COURTS_PER_SPORT ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' : 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30'}">🏸 ${sportCounts.badminton}/${MAX_COURTS_PER_SPORT}</span>
-             <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded ${sportCounts.pickleball >= MAX_COURTS_PER_SPORT ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' : 'bg-amber-500/10 text-amber-300 border border-amber-500/30'}">🏓 ${sportCounts.pickleball}/${MAX_COURTS_PER_SPORT}</span>`
-          : '';
+        const adminApprovalBtn = (state.isAdmin && !eventObj) ? `
+          <button type="button" onclick="toggleFacilityApproval('${dateStr}', '${slot.id}')"
+            class="px-3 py-1 rounded-lg text-xs font-extrabold transition active:scale-95 ${
+              isApproved
+                ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-600'
+                : 'bg-emerald-400 hover:bg-emerald-300 text-obsidian-950'
+            }">
+            ${isApproved ? '取消廠務標記' : '✓ 標記廠務預約完成'}
+          </button>
+        ` : '';
 
-        let facilityBadgeHTML = '';
-        if (!blockedEv) {
-          if (approval && approval.approved) {
-            facilityBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-200 border border-emerald-400/50 shadow-[0_0_10px_rgba(16,185,129,0.2)]">🏢✅ 廠務預約完成</span>`;
-          } else if (meetsThreshold) {
-            facilityBadgeHTML = `<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">🏢⏳ 待廠務核准</span>`;
-          }
-        }
-
-        const adminToggleBtnHTML = state.isAdmin && !blockedEv
-          ? `<button type="button" onclick="toggleFacilityApproval('${sessionKey}', '${state.selectedDate}', '${slot.id}')"
-              class="text-xs font-bold px-3 py-1 rounded-lg transition active:scale-95 ${
-                approval && approval.approved
-                  ? 'bg-zinc-800 text-zinc-300 border border-zinc-600 hover:bg-zinc-700'
-                  : 'bg-emerald-500 text-obsidian-950 hover:bg-emerald-400'
-              }">
-              ${approval && approval.approved ? '取消廠務核准' : '✔ 標記廠務預約完成'}
-            </button>`
-          : '';
-
-        const headerEl = document.createElement('div');
-        headerEl.className = 'bg-obsidian-900/90 border-b border-zinc-800 p-4 space-y-3';
-        headerEl.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2.5">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="font-mono text-sm sm:text-base font-extrabold text-white tracking-wide">${slot.label}</span>
-              <span class="text-xs font-bold px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">${slot.title}</span>
-              <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">${slot.duration}</span>
-              ${quotaBadgesHTML}
-            </div>
-            <div class="flex flex-wrap items-center gap-2">
-              ${thresholdBadgeHTML}
-              ${facilityBadgeHTML}
-              ${adminToggleBtnHTML}
-            </div>
-          </div>
-          ${!blockedEv ? `
-            <div class="w-full h-1.5 rounded-full bg-obsidian-950 overflow-hidden border border-zinc-800">
-              <div class="h-full transition-all duration-300 ${meetsThreshold ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]' : 'bg-amber-400'}" style="width: ${progressPct}%"></div>
-            </div>
-          ` : ''}
-        `;
-        section.appendChild(headerEl);
-
-        // 四面場地卡片矩陣
-        const gridEl = document.createElement('div');
-        gridEl.className = 'p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5';
-
-        COURTS.forEach((court) => {
-          const slotKey = `${state.selectedDate}_${court.id}_${slot.id}`;
+        // 4 面場地卡片
+        const courtCardsHtml = COURTS.map((court) => {
+          const slotKey = `${dateStr}_${court.id}_${slot.id}`;
           const booking = state.bookings[slotKey];
 
-          // 篩選條件比對
-          let isDimmed = false;
-          if (state.activeFilter === 'available' && (booking || blockedEv || expired)) isDimmed = true;
-          if (state.activeFilter === 'badminton' && (!booking || booking.sport !== 'badminton')) isDimmed = true;
-          if (state.activeFilter === 'pickleball' && (!booking || booking.sport !== 'pickleball')) isDimmed = true;
-          if (state.activeFilter === 'looking' && (!booking || !booking.lookingForPlayers || booking.playerCount >= MAX_PLAYERS_PER_COURT)) isDimmed = true;
-
-          // 檢查是否與前一個相鄰時段球種不同（需換網提醒）
-          let needNetChange = false;
-          const playableIdx = playableSlots.findIndex((s) => s.id === slot.id);
-          if (booking && playableIdx > 0) {
-            const prevSlot = playableSlots[playableIdx - 1];
-            const prevBooking = state.bookings[`${state.selectedDate}_${court.id}_${prevSlot.id}`];
-            if (prevBooking && prevBooking.sport !== booking.sport) {
-              needNetChange = true;
-            }
+          // 篩選條件檢查
+          if (!eventObj) {
+            if (state.activeFilter === 'available' && booking) return '';
+            if (state.activeFilter === 'badminton' && (!booking || booking.sport !== 'badminton')) return '';
+            if (state.activeFilter === 'pickleball' && (!booking || booking.sport !== 'pickleball')) return '';
+            if (state.activeFilter === 'looking' && (!booking || !booking.lookingForPlayers || Number(booking.playerCount) >= MAX_PLAYERS_PER_COURT)) return '';
           }
 
-          const card = document.createElement('div');
-          const dimClass = isDimmed ? 'opacity-25 scale-[0.98]' : '';
-
-          if (blockedEv) {
-            card.className = `rounded-xl hazard-stripes border border-rose-500/35 p-4 flex flex-col justify-between min-h-[168px] ${dimClass}`;
-            card.innerHTML = `
-              <div class="flex items-center justify-between">
-                <span class="font-mono text-xs font-extrabold text-rose-300">${court.name}</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-200">停開</span>
+          if (eventObj) {
+            return `
+              <div class="hazard-stripes rounded-xl border border-rose-500/40 p-4 flex flex-col justify-between min-h-[168px]">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-xs font-extrabold text-rose-300">${court.name}</span>
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">CLOSED</span>
+                </div>
+                <div class="text-center my-3">
+                  <div class="text-sm font-extrabold text-rose-200">公司活動停開</div>
+                  <div class="text-xs text-rose-300/80 mt-1">${escapeHtml(eventObj.title || '暫停開放')}</div>
+                </div>
+                <div class="text-[11px] font-mono text-zinc-500 text-center">UNAVAILABLE</div>
               </div>
-              <div class="my-4 text-center">
-                <div class="text-sm font-bold text-rose-200">🚫 公司活動暫停開放</div>
-                <div class="text-xs text-rose-300/80 mt-1">${escapeHTML(blockedEv.title || '公司內部活動')}</div>
-              </div>
-              <div class="font-mono text-[10px] text-rose-300/60 text-center">LOCKED BY ADMIN</div>
             `;
-          } else if (booking) {
-            const isBadminton = booking.sport === 'badminton';
-            const isFull = booking.playerCount >= MAX_PLAYERS_PER_COURT;
-            const accentBorder = isBadminton ? 'border-cyan-500/50 hover:border-cyan-400' : 'border-amber-500/50 hover:border-amber-400';
-            const accentBg = isBadminton ? 'bg-cyan-500/[0.06]' : 'bg-amber-500/[0.06]';
-            const sportTag = isBadminton
-              ? '<span class="text-[11px] font-extrabold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">🏸 羽球</span>'
-              : '<span class="text-[11px] font-extrabold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">🏓 匹克球</span>';
+          }
 
-            card.className = `rounded-xl ${accentBg} border ${accentBorder} p-4 flex flex-col justify-between min-h-[168px] cursor-pointer transition hover:-translate-y-0.5 shadow-md ${dimClass}`;
-            card.onclick = () => openDetailModal(slotKey);
+          if (!booking) {
+            const canBook = !isExpired || state.isAdmin;
+            return `
+              <button type="button" ${canBook ? `onclick="openBookingModal('${dateStr}', '${court.id}', '${slot.id}')"` : 'disabled'}
+                class="group text-left rounded-xl border p-4 flex flex-col justify-between min-h-[168px] transition ${
+                  canBook
+                    ? 'bg-obsidian-950/90 border-zinc-800 hover:border-emerald-400/70 hover:bg-emerald-500/[0.06] cursor-pointer active:scale-[0.99]'
+                    : 'bg-obsidian-950/50 border-zinc-800/60 opacity-55 cursor-not-allowed'
+                }">
+                <div class="flex items-center justify-between w-full">
+                  <span class="font-mono text-xs font-extrabold text-zinc-300 group-hover:text-emerald-300 transition">${court.name}</span>
+                  <span class="flex items-center gap-1 font-mono text-[10px] font-bold px-2 py-0.5 rounded ${
+                    canBook ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' : 'bg-zinc-800 text-zinc-500'
+                  }">
+                    ${canBook ? 'OPEN' : 'LOCKED'}
+                  </span>
+                </div>
+                <div class="my-4 text-center">
+                  <div class="w-10 h-10 mx-auto rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl font-bold group-hover:scale-110 transition">
+                    ＋
+                  </div>
+                  <div class="text-xs font-bold text-zinc-300 mt-2">${canBook ? '點擊預約 2 小時' : '已超過週三預約期限'}</div>
+                </div>
+                <div class="font-mono text-[10px] text-zinc-500 flex justify-between w-full">
+                  <span>羽球 / 匹克球</span>
+                  <span>1–8 人</span>
+                </div>
+              </button>
+            `;
+          }
 
-            card.innerHTML = `
-              <div class="space-y-2.5">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="font-mono text-xs font-extrabold text-zinc-200">${court.name}</span>
-                  <div class="flex items-center gap-1.5">
-                    ${needNetChange ? '<span title="與前一時段球種不同，現場需調整球網高度" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">🔄 換網</span>' : ''}
-                    ${sportTag}
+          const isBadminton = booking.sport === 'badminton';
+          const isFull = Number(booking.playerCount) >= MAX_PLAYERS_PER_COURT;
+          const netAlert = needsNetChange(dateStr, court.id, slot.id);
+          const cardTheme = isBadminton
+            ? 'bg-cyan-500/[0.07] border-cyan-500/40 hover:border-cyan-400'
+            : 'bg-amber-500/[0.07] border-amber-500/40 hover:border-amber-400';
+          const sportBadge = isBadminton
+            ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
+            : 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+
+          return `
+            <button type="button" onclick="openDetailModal('${slotKey}')"
+              class="text-left rounded-xl border p-4 flex flex-col justify-between min-h-[168px] transition active:scale-[0.99] ${cardTheme}">
+              <div class="flex items-center justify-between gap-2 w-full">
+                <span class="font-mono text-xs font-extrabold text-white">${court.name}</span>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded border ${sportBadge}">
+                  ${isBadminton ? '🏸 羽球' : '🏓 匹克球'}
+                </span>
+              </div>
+
+              <div class="my-2.5 space-y-1.5">
+                <div class="text-sm font-extrabold text-white truncate">${escapeHtml(booking.userName)}</div>
+                ${booking.dept ? `<div class="font-mono text-[11px] text-zinc-400 truncate">${escapeHtml(booking.dept)}</div>` : ''}
+                ${booking.note ? `<div class="text-xs text-zinc-300 line-clamp-2 leading-snug">${escapeHtml(booking.note)}</div>` : ''}
+              </div>
+
+              <div class="flex flex-wrap items-center justify-between gap-1.5 pt-2 border-t border-white/10 w-full">
+                <span class="font-mono text-xs font-extrabold ${isFull ? 'text-rose-300' : 'text-emerald-300'}">
+                  👥 ${booking.playerCount}/${MAX_PLAYERS_PER_COURT} 人
+                </span>
+                <div class="flex items-center gap-1">
+                  ${netAlert ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">🔄 需換網</span>` : ''}
+                  ${booking.lookingForPlayers && !isFull
+                    ? `<span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-400 text-obsidian-950">+1 開放</span>`
+                    : (isFull ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400">已滿團</span>` : '')
+                  }
+                </div>
+              </div>
+            </button>
+          `;
+        }).filter(Boolean).join('');
+
+        return `
+          <div class="bg-obsidian-850/95 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl">
+            <!-- 場次標題列 -->
+            <div class="bg-obsidian-900/95 border-b border-zinc-800 px-4 sm:px-5 py-4 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <span class="font-mono text-base sm:text-lg font-black text-white tracking-tight">${slot.label}</span>
+                  <span class="text-xs font-bold px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">${slot.title}</span>
+                  <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">🏸 ${sportCounts.badminton}/${MAX_COURTS_PER_SPORT}</span>
+                  <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">🏓 ${sportCounts.pickleball}/${MAX_COURTS_PER_SPORT}</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  ${facilityBadgeHtml}
+                  ${adminApprovalBtn}
+                </div>
+              </div>
+
+              <!-- 全場 6 人借用門檻進度條 -->
+              ${!eventObj ? `
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="font-bold ${isReached ? 'text-emerald-400' : 'text-amber-300'}">
+                      ${isReached
+                        ? `✓ 全場累計 ${totalPlayers} 人（已達 ${MIN_SESSION_PLAYERS} 人開館門檻）`
+                        : `⚠️ 全場累計 ${totalPlayers} / ${MIN_SESSION_PLAYERS} 人（尚差 ${MIN_SESSION_PLAYERS - totalPlayers} 人，未滿 ${MIN_SESSION_PLAYERS} 人全場無法借用）`
+                      }
+                    </span>
+                    <span class="font-mono text-[11px] text-zinc-400">${progressPct}%</span>
+                  </div>
+                  <div class="w-full h-1.5 rounded-full bg-obsidian-950 overflow-hidden border border-zinc-800">
+                    <div class="h-full transition-all duration-300 ${isReached ? 'bg-emerald-400 shadow-[0_0_10px_#34d399]' : 'bg-amber-400'}" style="width: ${progressPct}%"></div>
                   </div>
                 </div>
-                <div>
-                  <div class="text-sm font-extrabold text-white truncate">${escapeHTML(booking.userName)}</div>
-                  ${booking.dept ? `<div class="font-mono text-[11px] text-zinc-400 truncate">${escapeHTML(booking.dept)}</div>` : ''}
-                </div>
-                ${booking.note ? `<p class="text-xs text-zinc-300/90 line-clamp-2 leading-relaxed">${escapeHTML(booking.note)}</p>` : ''}
-              </div>
-              <div class="pt-3 mt-3 border-t border-zinc-800/80 flex items-center justify-between gap-2">
-                <span class="font-mono text-xs font-extrabold ${isFull ? 'text-rose-400' : 'text-emerald-400'}">
-                  👥 ${booking.playerCount} / ${MAX_PLAYERS_PER_COURT} 人
-                </span>
-                ${isFull
-                  ? '<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30">已滿團</span>'
-                  : (booking.lookingForPlayers
-                      ? '<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">＋1 歡迎加入</span>'
-                      : '<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">私人團</span>')
-                }
-              </div>
-            `;
-          } else {
-            const canBook = !expired || state.isAdmin;
-            card.className = `rounded-xl bg-obsidian-950/80 border border-dashed ${
-              canBook ? 'border-emerald-500/40 hover:border-emerald-400 hover:bg-emerald-500/[0.04] cursor-pointer' : 'border-zinc-800 opacity-60 cursor-not-allowed'
-            } p-4 flex flex-col justify-between min-h-[168px] transition ${dimClass}`;
+              ` : ''}
+            </div>
 
-            if (canBook) {
-              card.onclick = () => openBookingModal(court.id, slot.id, slot.label);
-            }
-
-            card.innerHTML = `
-              <div class="flex items-center justify-between">
-                <span class="font-mono text-xs font-extrabold text-zinc-300">${court.name}</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded ${canBook ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' : 'bg-zinc-800 text-zinc-500'}">
-                  ${canBook ? 'AVAILABLE' : 'CLOSED'}
-                </span>
-              </div>
-              <div class="my-4 text-center">
-                <div class="text-sm font-bold ${canBook ? 'text-emerald-300' : 'text-zinc-500'}">
-                  ${canBook ? '＋ 點擊預約 2H' : '已過預約期限'}
-                </div>
-                <div class="text-[11px] text-zinc-500 mt-1">羽球 / 匹克球共用</div>
-              </div>
-              <div class="font-mono text-[10px] text-zinc-500 text-center">1–8 PLAYERS</div>
-            `;
-          }
-
-          gridEl.appendChild(card);
-        });
-
-        section.appendChild(gridEl);
-        container.appendChild(section);
-      });
+            <!-- A~D 四面場地格線 -->
+            <div class="p-4 sm:p-5">
+              ${courtCardsHtml
+                ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">${courtCardsHtml}</div>`
+                : `<div class="text-center py-8 text-xs text-zinc-500 font-mono">沒有符合目前篩選條件的場地</div>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
-    function renderChatMessages() {
+    function renderChat() {
       const container = document.getElementById('chat-messages-container');
-      const countBadge = document.getElementById('chat-count-badge');
-      countBadge.textContent = `${state.chatMessages.length} / ${MAX_CHAT_MESSAGES} 則`;
-      container.innerHTML = '';
+      const badge = document.getElementById('chat-count-badge');
+      const msgs = state.chatMessages.slice(-MAX_CHAT_MESSAGES);
+      badge.textContent = `${msgs.length} / ${MAX_CHAT_MESSAGES} 則`;
 
-      if (state.chatMessages.length === 0) {
-        container.innerHTML = `<div class="text-center py-8 text-xs text-zinc-500">目前還沒有留言，快來揪團或打聲招呼吧！</div>`;
+      if (msgs.length === 0) {
+        container.innerHTML = `<div class="text-center py-6 text-xs text-zinc-500">目前還沒有留言，歡迎搶頭香揪球友！</div>`;
         return;
       }
 
-      state.chatMessages.forEach((msg) => {
-        const dt = msg.createdAt ? new Date(msg.createdAt) : new Date();
-        const timeStr = `${String(dt.getMonth() + 1).padStart(2, '0')}/${String(dt.getDate()).padStart(2, '0')} ${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}`;
-
-        const row = document.createElement('div');
-        row.className = 'bg-obsidian-900/90 border border-zinc-800/90 rounded-xl px-3.5 py-2.5 flex items-start justify-between gap-3';
-        row.innerHTML = `
-          <div class="min-w-0 space-y-1">
+      container.innerHTML = msgs.map((m) => `
+        <div class="flex items-start justify-between gap-3 bg-obsidian-900/90 border border-zinc-800/80 rounded-xl px-3.5 py-2.5">
+          <div class="min-w-0">
             <div class="flex items-center gap-2">
-              <span class="text-xs font-extrabold text-cyan-300">${escapeHTML(msg.userName)}</span>
-              <span class="font-mono text-[10px] text-zinc-500">${timeStr}</span>
+              <span class="text-xs font-extrabold text-cyan-300">${escapeHtml(m.userName)}</span>
+              <span class="font-mono text-[10px] text-zinc-500">${formatTimeHM(m.createdAt)}</span>
             </div>
-            <p class="text-sm text-zinc-200 break-words leading-relaxed">${escapeHTML(msg.text)}</p>
+            <p class="text-sm text-zinc-200 mt-1 break-words leading-relaxed">${escapeHtml(m.text)}</p>
           </div>
-          ${state.isAdmin
-            ? `<button type="button" onclick="handleDeleteChatMessage('${msg.id}')" class="shrink-0 text-[11px] font-bold px-2 py-1 rounded bg-rose-500/15 hover:bg-rose-500 text-rose-300 hover:text-white transition">刪除</button>`
-            : ''
-          }
-        `;
-        container.appendChild(row);
-      });
+          ${state.isAdmin ? `
+            <button type="button" onclick="deleteChatMessage('${escapeHtml(m.id)}')" title="刪除留言"
+              class="shrink-0 text-[11px] px-2 py-1 rounded bg-rose-500/15 hover:bg-rose-500 text-rose-300 hover:text-white transition">
+              刪除
+            </button>
+          ` : ''}
+        </div>
+      `).join('');
 
       container.scrollTop = container.scrollHeight;
     }
 
-    /* =========================================================================
-       8. 預約、+1 併團與取消邏輯
-       ========================================================================= */
-    function updatePlayerCountStatusUI() {
-      const count = parseInt(document.getElementById('input-player-count').value, 10) || 0;
-      const timeSlot = document.getElementById('input-time-slot').value;
-      const currentTotal = getSessionTotalPlayers(state.selectedDate, timeSlot);
-      const projected = currentTotal + count;
-      const statusEl = document.getElementById('player-count-status');
-
-      if (count < 1 || count > MAX_PLAYERS_PER_COURT) {
-        statusEl.className = 'text-xs px-3 py-2 rounded-lg bg-rose-500/15 border border-rose-500/40 text-rose-300';
-        statusEl.textContent = `單一場地人數須介於 1～${MAX_PLAYERS_PER_COURT} 人之間。`;
-      } else if (projected >= MIN_SESSION_PLAYERS) {
-        statusEl.className = 'text-xs px-3 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/40 text-emerald-300';
-        statusEl.textContent = `✓ 送出後此時段全場累計將達 ${projected} 人（已達 6 人開館借用門檻）！`;
-      } else {
-        const diff = MIN_SESSION_PLAYERS - projected;
-        statusEl.className = 'text-xs px-3 py-2 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300';
-        statusEl.textContent = `⚠️ 送出後全場累計 ${projected} / 6 人（尚差 ${diff} 人），建議勾選下方「開放 +1」一起湊團！`;
-      }
-    }
-
-    window.openBookingModal = function (courtId, timeSlotId, timeSlotLabel) {
-      const slotKey = `${state.selectedDate}_${courtId}_${timeSlotId}`;
-      document.getElementById('input-slot-key').value = slotKey;
-      document.getElementById('input-court-id').value = courtId;
-      document.getElementById('input-time-slot').value = timeSlotId;
-      document.getElementById('booking-modal-subtitle').textContent = `${state.selectedDate}｜COURT ${courtId}｜${timeSlotLabel}`;
-      document.getElementById('booking-form').reset();
-      document.getElementById('input-player-count').value = 4;
-      document.getElementById('input-looking').checked = true;
-      document.getElementById('booking-form-error').classList.add('hidden');
-
-      // 同時段各球類上限 3 場檢核
-      const counts = getSessionSportCounts(state.selectedDate, timeSlotId);
-      const badRadio = document.getElementById('radio-sport-badminton');
-      const pickRadio = document.getElementById('radio-sport-pickleball');
-      const badQuotaEl = document.getElementById('quota-badminton');
-      const pickQuotaEl = document.getElementById('quota-pickleball');
-
-      const badFull = counts.badminton >= MAX_COURTS_PER_SPORT;
-      const pickFull = counts.pickleball >= MAX_COURTS_PER_SPORT;
-
-      badRadio.disabled = badFull;
-      pickRadio.disabled = pickFull;
-
-      badQuotaEl.textContent = badFull ? `已達上限 ${counts.badminton}/${MAX_COURTS_PER_SPORT} 場` : `已約 ${counts.badminton}/${MAX_COURTS_PER_SPORT} 場`;
-      badQuotaEl.className = `font-mono text-[10px] font-bold mt-1 ${badFull ? 'text-rose-400' : 'text-cyan-300'}`;
-
-      pickQuotaEl.textContent = pickFull ? `已達上限 ${counts.pickleball}/${MAX_COURTS_PER_SPORT} 場` : `已約 ${counts.pickleball}/${MAX_COURTS_PER_SPORT} 場`;
-      pickQuotaEl.className = `font-mono text-[10px] font-bold mt-1 ${pickFull ? 'text-rose-400' : 'text-amber-300'}`;
-
-      if (badFull && !pickFull) {
-        pickRadio.checked = true;
-      } else {
-        badRadio.checked = true;
-      }
-
-      updatePlayerCountStatusUI();
-      openModal('modal-booking');
-    };
-
-    document.getElementById('input-player-count').addEventListener('input', updatePlayerCountStatusUI);
-
-    document.getElementById('booking-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const errEl = document.getElementById('booking-form-error');
-      errEl.classList.add('hidden');
-
-      const slotKey = document.getElementById('input-slot-key').value;
-      const courtId = document.getElementById('input-court-id').value;
-      const timeSlot = document.getElementById('input-time-slot').value;
-      const sportInput = document.querySelector('input[name="sport"]:checked');
-      const sport = sportInput ? sportInput.value : '';
-      const userName = document.getElementById('input-user-name').value.trim();
-      const dept = document.getElementById('input-dept').value.trim();
-      const playerCount = parseInt(document.getElementById('input-player-count').value, 10);
-      const cancelPin = document.getElementById('input-cancel-pin').value.trim();
-      const lookingForPlayers = document.getElementById('input-looking').checked;
-      const note = document.getElementById('input-note').value.trim();
-
-      if (isPastBookingDeadline(state.selectedDate) && !state.isAdmin) {
-        errEl.textContent = '已超過當週星期三 23:59 預約期限，無法新增預約。';
-        errEl.classList.remove('hidden');
-        return;
-      }
-
-      if (state.bookings[slotKey]) {
-        errEl.textContent = '此時段場地剛剛已被他人預約，請選擇其他場地。';
-        errEl.classList.remove('hidden');
-        return;
-      }
-
-      const sportCounts = getSessionSportCounts(state.selectedDate, timeSlot);
-      if (!sport || sportCounts[sport] >= MAX_COURTS_PER_SPORT) {
-        const sportLabel = sport === 'badminton' ? '羽球' : '匹克球';
-        errEl.textContent = `此時段「${sportLabel}」已達上限 ${MAX_COURTS_PER_SPORT} 場，為保留其他球友權益，請改選另一球類或其他時段。`;
-        errEl.classList.remove('hidden');
-        return;
-      }
-
-      if (!userName || isNaN(playerCount) || playerCount < 1 || playerCount > MAX_PLAYERS_PER_COURT) {
-        errEl.textContent = `請填寫姓名，且單場人數須為 1～${MAX_PLAYERS_PER_COURT} 人。`;
-        errEl.classList.remove('hidden');
-        return;
-      }
-
-      if (!/^\d{4}$/.test(cancelPin)) {
-        errEl.textContent = '請設定 4 位數字作為日後自助取消密碼。';
-        errEl.classList.remove('hidden');
-        return;
-      }
-
-      try {
-        await DataService.saveBooking(slotKey, {
-          date: state.selectedDate,
-          courtId,
-          timeSlot,
-          sport,
-          userName,
-          dept,
-          playerCount,
-          lookingForPlayers,
-          note,
-          cancelPin,
-          joiners: [],
-          createdAt: Date.now()
-        });
-        closeModal('modal-booking');
-        showToast(`✅ 預約成功！COURT ${courtId} (${timeSlot})`, 'success');
-      } catch (err) {
-        console.error(err);
-        errEl.textContent = '預約寫入失敗，請確認網路連線或稍後再試。';
-        errEl.classList.remove('hidden');
-      }
-    });
-
-    window.openDetailModal = function (slotKey) {
-      const b = state.bookings[slotKey];
-      if (!b) return;
-      state.activeDetailKey = slotKey;
-
-      document.getElementById('detail-title').textContent = `COURT ${b.courtId} 預約詳情`;
-      document.getElementById('detail-subtitle').textContent = `${b.date}｜${b.timeSlot} (2H)`;
-      document.getElementById('detail-sport').textContent = b.sport === 'badminton' ? '🏸 羽球 (網高 1.55m)' : '🏓 匹克球 (網高 0.91m)';
-      document.getElementById('detail-user').textContent = b.dept ? `${b.userName} (${b.dept})` : b.userName;
-      document.getElementById('detail-players').textContent = `${b.playerCount} / ${MAX_PLAYERS_PER_COURT} 人`;
-
-      const noteRow = document.getElementById('detail-note-row');
-      noteRow.textContent = b.note ? `📝 備註：${b.note}` : '📝 無額外備註';
-
-      const joinersRow = document.getElementById('detail-joiners-row');
-      if (Array.isArray(b.joiners) && b.joiners.length > 0) {
-        joinersRow.textContent = `🙋 已 +1 球友：${b.joiners.map((j) => `${j.name} (+${j.count})`).join('、')}`;
-        joinersRow.classList.remove('hidden');
-      } else {
-        joinersRow.classList.add('hidden');
-      }
-
-      const remaining = MAX_PLAYERS_PER_COURT - b.playerCount;
-      const expired = isPastBookingDeadline(b.date);
-      const joinSection = document.getElementById('join-section');
-
-      if (b.lookingForPlayers && remaining > 0 && (!expired || state.isAdmin)) {
-        document.getElementById('join-remaining-text').textContent = `尚餘 ${remaining} 位名額`;
-        const countInput = document.getElementById('join-input-count');
-        countInput.max = remaining;
-        countInput.value = 1;
-        document.getElementById('join-input-name').value = '';
-        joinSection.classList.remove('hidden');
-      } else {
-        joinSection.classList.add('hidden');
-      }
-
-      document.getElementById('input-verify-pin').value = '';
-      document.getElementById('admin-force-cancel-area').classList.toggle('hidden', !state.isAdmin);
-      openModal('modal-detail');
-    };
-
-    window.handleJoinBooking = async function () {
-      const slotKey = state.activeDetailKey;
-      const b = state.bookings[slotKey];
-      if (!b) return;
-
-      const name = document.getElementById('join-input-name').value.trim();
-      const addCount = parseInt(document.getElementById('join-input-count').value, 10);
-      const remaining = MAX_PLAYERS_PER_COURT - b.playerCount;
-
-      if (!name) {
-        showToast('請輸入您的姓名或英文名', 'error');
-        return;
-      }
-      if (isNaN(addCount) || addCount < 1 || addCount > remaining) {
-        showToast(`報名人數須介於 1～${remaining} 人之間`, 'error');
-        return;
-      }
-
-      const updated = {
-        ...b,
-        playerCount: b.playerCount + addCount,
-        joiners: [...(b.joiners || []), { name, count: addCount, joinedAt: Date.now() }]
-      };
-
-      try {
-        await DataService.saveBooking(slotKey, updated);
-        closeModal('modal-detail');
-        showToast(`🎉 ${name} (+${addCount}) 已成功加入 COURT ${b.courtId}！`, 'success');
-      } catch (err) {
-        console.error(err);
-        showToast('加入失敗，請稍後再試', 'error');
-      }
-    };
-
-    window.handleCancelBooking = async function (isAdminForce) {
-      const slotKey = state.activeDetailKey;
-      const b = state.bookings[slotKey];
-      if (!b) return;
-
-      if (!isAdminForce) {
-        const inputPin = document.getElementById('input-verify-pin').value.trim();
-        if (inputPin !== String(b.cancelPin)) {
-          showToast('❌ 取消密碼錯誤，請重新輸入', 'error');
-          return;
-        }
-      }
-
-      try {
-        await DataService.deleteBooking(slotKey);
-        closeModal('modal-detail');
-        showToast(`🗑️ 已取消 COURT ${b.courtId} (${b.timeSlot}) 預約`, 'info');
-      } catch (err) {
-        console.error(err);
-        showToast('取消失敗，請稍後再試', 'error');
-      }
-    };
-
-    /* =========================================================================
-       9. 管理員功能、廠務核准與 CSV 匯出
-       ========================================================================= */
     function updateAdminButtonUI() {
       const btn = document.getElementById('btn-admin-entry');
       const label = document.getElementById('btn-admin-label');
       if (state.isAdmin) {
-        btn.className = 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-400 hover:bg-amber-300 text-obsidian-950 transition active:scale-95 shadow-[0_0_14px_rgba(251,191,36,0.3)]';
+        btn.className = 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-400 hover:bg-amber-300 text-obsidian-950 border border-amber-300 transition active:scale-95 shadow-[0_0_14px_rgba(251,191,36,0.3)]';
         label.textContent = `管理控制台 (${state.adminName || '已登入'})`;
       } else {
         btn.className = 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 transition active:scale-95';
@@ -1607,154 +1350,306 @@
       }
     }
 
-    window.handleAdminButtonClick = function () {
-      if (state.isAdmin) {
-        openAdminConsole();
+    function updatePlayerCountHint() {
+      const count = Number(document.getElementById('input-player-count').value) || 0;
+      const timeSlot = document.getElementById('input-time-slot').value;
+      const hint = document.getElementById('player-count-status');
+      const currentOthers = getSessionTotalPlayers(state.selectedDate, timeSlot);
+      const projected = currentOthers + count;
+
+      if (count < 1 || count > MAX_PLAYERS_PER_COURT) {
+        hint.className = 'text-xs px-3 py-2 rounded-lg bg-rose-500/15 border border-rose-500/40 text-rose-300 font-bold';
+        hint.textContent = `⚠️ 單一場地人數須介於 1 ～ ${MAX_PLAYERS_PER_COURT} 人之間（確保打球品質）。`;
+      } else if (projected >= MIN_SESSION_PLAYERS) {
+        hint.className = 'text-xs px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300';
+        hint.textContent = `✓ 本筆送出後，該時段全場累計 ${projected} 人（已達 ${MIN_SESSION_PLAYERS} 人開館門檻）。`;
       } else {
-        document.getElementById('admin-login-form').reset();
-        document.getElementById('admin-login-error').classList.add('hidden');
-        openModal('modal-admin-login');
+        hint.className = 'text-xs px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300';
+        hint.textContent = `ℹ️ 本筆送出後全場累計 ${projected} 人（尚差 ${MIN_SESSION_PLAYERS - projected} 人達開館門檻，建議勾選開放 +1 併團）。`;
       }
-    };
+    }
 
-    document.getElementById('admin-login-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('admin-login-name').value.trim() || '管理員';
-      const passcode = document.getElementById('admin-login-passcode').value.trim();
-      const errEl = document.getElementById('admin-login-error');
+    /* =========================================================================
+       8. 互動事件與操作處理
+       ========================================================================= */
+    function selectDate(dateStr) {
+      state.selectedDate = dateStr;
+      renderAll();
+    }
 
-      if (passcode !== state.adminPasscode) {
-        errEl.textContent = '管理員密碼錯誤，請確認後再試。';
-        errEl.classList.remove('hidden');
+    function openBookingModal(dateStr, courtId, timeSlot) {
+      if (isPastBookingDeadline(dateStr) && !state.isAdmin) {
+        showToast('已超過當週星期三 23:59 預約期限', 'warning');
+        return;
+      }
+      const counts = getSportCountsForSession(dateStr, timeSlot);
+      const badFull = counts.badminton >= MAX_COURTS_PER_SPORT;
+      const pickFull = counts.pickleball >= MAX_COURTS_PER_SPORT;
+
+      document.getElementById('input-slot-key').value = `${dateStr}_${courtId}_${timeSlot}`;
+      document.getElementById('input-court-id').value = courtId;
+      document.getElementById('input-time-slot').value = timeSlot;
+      document.getElementById('booking-modal-subtitle').textContent = `${dateStr} (日)｜COURT ${courtId}｜${timeSlot}`;
+
+      const radioBad = document.getElementById('radio-sport-badminton');
+      const radioPick = document.getElementById('radio-sport-pickleball');
+      radioBad.disabled = badFull;
+      radioPick.disabled = pickFull;
+
+      document.getElementById('quota-badminton').textContent = badFull ? `已額滿 (${counts.badminton}/3)` : `已約 ${counts.badminton}/3 場`;
+      document.getElementById('quota-pickleball').textContent = pickFull ? `已額滿 (${counts.pickleball}/3)` : `已約 ${counts.pickleball}/3 場`;
+
+      if (badFull && !pickFull) {
+        radioPick.checked = true;
+      } else if (!badFull) {
+        radioBad.checked = true;
+      }
+
+      document.getElementById('booking-form-error').classList.add('hidden');
+      document.getElementById('input-player-count').value = 4;
+      document.getElementById('input-cancel-pin').value = '';
+      document.getElementById('input-note').value = '';
+      document.getElementById('input-looking').checked = true;
+
+      updatePlayerCountHint();
+      openModal('modal-booking');
+    }
+
+    function openDetailModal(slotKey) {
+      const booking = state.bookings[slotKey];
+      if (!booking) return;
+      state.activeDetailKey = slotKey;
+
+      const isBadminton = booking.sport === 'badminton';
+      const remaining = MAX_PLAYERS_PER_COURT - Number(booking.playerCount);
+      const isExpired = isPastBookingDeadline(booking.date);
+
+      document.getElementById('detail-title').textContent = `COURT ${booking.courtId} 預約詳情`;
+      document.getElementById('detail-subtitle').textContent = `${booking.date} (日)｜${booking.timeSlot} (2 HRS)`;
+      document.getElementById('detail-sport').textContent = isBadminton ? '🏸 羽球 (Badminton)' : '🏓 匹克球 (Pickleball)';
+      document.getElementById('detail-user').textContent = booking.dept ? `${booking.userName} (${booking.dept})` : booking.userName;
+      document.getElementById('detail-players').textContent = `${booking.playerCount} / ${MAX_PLAYERS_PER_COURT} 人`;
+
+      const noteRow = document.getElementById('detail-note-row');
+      noteRow.textContent = booking.note ? `📝 備註：${booking.note}` : '📝 備註：無';
+
+      const joinersRow = document.getElementById('detail-joiners-row');
+      if (Array.isArray(booking.joiners) && booking.joiners.length > 0) {
+        joinersRow.classList.remove('hidden');
+        joinersRow.textContent = `🙋 已 +1 球友：${booking.joiners.map((j) => `${j.name} (+${j.count})`).join('、')}`;
+      } else {
+        joinersRow.classList.add('hidden');
+      }
+
+      const joinSection = document.getElementById('join-section');
+      if (booking.lookingForPlayers && remaining > 0 && (!isExpired || state.isAdmin)) {
+        joinSection.classList.remove('hidden');
+        document.getElementById('join-remaining-text').textContent = `尚可加入 ${remaining} 人`;
+        const joinCountInput = document.getElementById('join-input-count');
+        joinCountInput.max = remaining;
+        joinCountInput.value = 1;
+        document.getElementById('join-input-name').value = '';
+      } else {
+        joinSection.classList.add('hidden');
+      }
+
+      document.getElementById('input-verify-pin').value = '';
+      document.getElementById('admin-force-cancel-area').classList.toggle('hidden', !state.isAdmin);
+      openModal('modal-detail');
+    }
+
+    async function handleJoinBooking() {
+      const slotKey = state.activeDetailKey;
+      const booking = state.bookings[slotKey];
+      if (!booking) return;
+
+      const name = document.getElementById('join-input-name').value.trim();
+      const addCount = parseInt(document.getElementById('join-input-count').value, 10) || 0;
+      const remaining = MAX_PLAYERS_PER_COURT - Number(booking.playerCount);
+
+      if (!name) {
+        showToast('請輸入您的姓名', 'warning');
+        return;
+      }
+      if (addCount < 1 || addCount > remaining) {
+        showToast(`本場最多還可加入 ${remaining} 人`, 'warning');
         return;
       }
 
-      state.isAdmin = true;
-      state.adminName = name;
-      sessionStorage.setItem('adv_is_admin', '1');
-      sessionStorage.setItem('adv_admin_name', name);
+      const updated = {
+        ...booking,
+        playerCount: Number(booking.playerCount) + addCount,
+        joiners: [...(booking.joiners || []), { name, count: addCount, joinedAt: Date.now() }]
+      };
 
-      closeModal('modal-admin-login');
-      updateAdminButtonUI();
-      renderAll();
-      showToast(`🛡️ 歡迎回來，${name}！已啟用管理員權限`, 'success');
-    });
-
-    window.handleAdminLogout = function () {
-      state.isAdmin = false;
-      state.adminName = '';
-      sessionStorage.removeItem('adv_is_admin');
-      sessionStorage.removeItem('adv_admin_name');
-      closeModal('modal-admin-console');
-      updateAdminButtonUI();
-      renderAll();
-      showToast('已登出管理員模式', 'info');
-    };
-
-    function openAdminConsole() {
-      document.getElementById('admin-console-whoami').textContent = `LOGGED IN AS: ${state.adminName || 'ADMIN'}`;
-      document.getElementById('admin-announcement-input').value = state.announcement;
-      document.getElementById('admin-new-passcode').value = '';
-
-      const dateSel = document.getElementById('admin-event-date');
-      dateSel.innerHTML = state.weekendDates
-        .map((d) => `<option value="${d.dateStr}" ${d.dateStr === state.selectedDate ? 'selected' : ''}>${d.dateStr} (${d.weekdayText})</option>`)
-        .join('');
-
-      openModal('modal-admin-console');
+      try {
+        await DataService.saveBooking(slotKey, updated);
+        showToast(`已成功 +${addCount} 加入 COURT ${booking.courtId}！`, 'success');
+        closeModal('modal-detail');
+      } catch (err) {
+        showToast('報名加入失敗，請稍後再試', 'error');
+      }
     }
 
-    window.toggleFacilityApproval = async function (sessionKey, dateStr, timeSlot) {
-      if (!state.isAdmin) return;
-      const current = state.facilityApprovals[sessionKey];
+    async function handleCancelBooking(isAdminForce) {
+      const slotKey = state.activeDetailKey;
+      const booking = state.bookings[slotKey];
+      if (!booking) return;
+
+      if (!isAdminForce) {
+        if (isPastBookingDeadline(booking.date)) {
+          showToast('已超過當週星期三截止時間，請聯繫管理員協助取消', 'warning');
+          return;
+        }
+        const pin = document.getElementById('input-verify-pin').value.trim();
+        if (pin !== String(booking.cancelPin)) {
+          showToast('取消密碼不正確', 'error');
+          return;
+        }
+      }
+
       try {
-        if (current && current.approved) {
-          await DataService.setFacilityApproval(sessionKey, null);
-          showToast(`已取消 ${dateStr} ${timeSlot} 的廠務核准標記`, 'info');
+        await DataService.deleteBooking(slotKey);
+        showToast(`已取消 COURT ${booking.courtId} (${booking.timeSlot}) 預約`, 'success');
+        closeModal('modal-detail');
+      } catch (err) {
+        showToast('取消失敗，請稍後再試', 'error');
+      }
+    }
+
+    async function toggleFacilityApproval(dateStr, timeSlot) {
+      if (!state.isAdmin) return;
+      const key = `${dateStr}_${timeSlot}`;
+      const existing = state.facilityApprovals[key];
+      try {
+        if (existing && existing.approved) {
+          await DataService.deleteFacilityApproval(key);
+          showToast('已取消廠務預約完成標記', 'info');
         } else {
-          await DataService.setFacilityApproval(sessionKey, {
+          await DataService.saveFacilityApproval(key, {
             date: dateStr,
             timeSlot,
             approved: true,
             approvedBy: state.adminName || '管理員',
             approvedAt: Date.now()
           });
-          showToast(`🏢✅ 已標記 ${dateStr} ${timeSlot} 為「廠務預約完成」`, 'success');
+          showToast('已標記為「🏢✅ 廠務預約完成」', 'success');
         }
       } catch (err) {
-        console.error(err);
         showToast('更新廠務狀態失敗', 'error');
       }
-    };
+    }
 
-    window.handleSaveCompanyEvent = async function () {
+    async function deleteChatMessage(id) {
+      if (!state.isAdmin) return;
+      try {
+        await DataService.deleteChatMessage(id);
+        showToast('已刪除該則留言', 'info');
+      } catch (err) {
+        showToast('刪除留言失敗', 'error');
+      }
+    }
+
+    /* =========================================================================
+       9. 管理員登入與控制台操作
+       ========================================================================= */
+    function handleAdminButtonClick() {
+      if (state.isAdmin) {
+        openAdminConsole();
+      } else {
+        document.getElementById('admin-login-passcode').value = '';
+        document.getElementById('admin-login-error').classList.add('hidden');
+        openModal('modal-admin-login');
+      }
+    }
+
+    function openAdminConsole() {
+      document.getElementById('admin-console-whoami').textContent = `已登入管理員：${state.adminName || '管理員'}`;
+      const dateSel = document.getElementById('admin-event-date');
+      dateSel.innerHTML = state.weekendDates.map((d) =>
+        `<option value="${d.dateStr}">${d.dateStr} (${d.weekdayText})</option>`
+      ).join('');
+      dateSel.value = state.selectedDate;
+      document.getElementById('admin-announcement-input').value = state.announcement;
+      document.getElementById('admin-new-passcode').value = '';
+      openModal('modal-admin-console');
+    }
+
+    function handleAdminLogout() {
+      state.isAdmin = false;
+      state.adminName = '';
+      sessionStorage.removeItem('adv_is_admin');
+      sessionStorage.removeItem('adv_admin_name');
+      updateAdminButtonUI();
+      closeModal('modal-admin-console');
+      renderAll();
+      showToast('已登出管理員模式', 'info');
+    }
+
+    async function handleSaveCompanyEvent() {
       const dateStr = document.getElementById('admin-event-date').value;
       const scope = document.getElementById('admin-event-scope').value;
-      const title = document.getElementById('admin-event-title').value.trim() || '公司內部活動';
+      const title = document.getElementById('admin-event-title').value.trim() || '公司活動';
       try {
         await DataService.saveCompanyEvent(dateStr, { date: dateStr, scope, title, updatedAt: Date.now() });
-        showToast(`🚫 已設定 ${dateStr} 停開：${title}`, 'success');
+        showToast(`已設定 ${dateStr} 公司活動停開`, 'success');
       } catch (err) {
-        showToast('設定失敗，請稍後再試', 'error');
+        showToast('儲存失敗', 'error');
       }
-    };
+    }
 
-    window.handleRemoveCompanyEvent = async function () {
+    async function handleRemoveCompanyEvent() {
       const dateStr = document.getElementById('admin-event-date').value;
       try {
-        await DataService.removeCompanyEvent(dateStr);
-        showToast(`✅ 已恢復 ${dateStr} 正常開放`, 'success');
+        await DataService.deleteCompanyEvent(dateStr);
+        showToast(`已恢復 ${dateStr} 場地開放`, 'success');
       } catch (err) {
-        showToast('操作失敗，請稍後再試', 'error');
+        showToast('操作失敗', 'error');
       }
-    };
+    }
 
-    window.handleSaveAnnouncement = async function () {
+    async function handleSaveAnnouncement() {
       const text = document.getElementById('admin-announcement-input').value.trim();
       if (!text) return;
       try {
         await DataService.saveSettings({ announcement: text });
-        showToast('📢 置頂公告已更新並同步給所有球友', 'success');
+        showToast('系統公告已更新並同步', 'success');
       } catch (err) {
-        showToast('更新公告失敗', 'error');
+        showToast('公告儲存失敗', 'error');
       }
-    };
+    }
 
-    window.handleUpdateAdminPasscode = async function () {
-      const newPass = document.getElementById('admin-new-passcode').value.trim();
-      if (newPass.length < 4) {
-        showToast('新密碼長度至少需 4 碼', 'error');
+    async function handleUpdateAdminPasscode() {
+      const nextCode = document.getElementById('admin-new-passcode').value.trim();
+      if (nextCode.length < 4) {
+        showToast('新密碼長度至少須為 4 碼', 'warning');
         return;
       }
       try {
-        await DataService.saveSettings({ adminPasscode: newPass });
-        state.adminPasscode = newPass;
+        await DataService.saveSettings({ adminPasscode: nextCode });
+        state.adminPasscode = nextCode;
         document.getElementById('admin-new-passcode').value = '';
-        showToast('🔑 管理員共用密碼已更新並同步至雲端', 'success');
+        showToast('管理員共用密碼已更新！', 'success');
       } catch (err) {
         showToast('密碼更新失敗', 'error');
       }
-    };
+    }
 
-    window.exportBookingsCSV = function () {
-      const rows = [['日期', '時段', '場地', '球類', '預約人', '部門分機', '人數', '開放+1', '備註']];
-      Object.values(state.bookings)
-        .sort((a, b) => `${a.date}_${a.timeSlot}_${a.courtId}`.localeCompare(`${b.date}_${b.timeSlot}_${b.courtId}`))
-        .forEach((b) => {
-          rows.push([
-            b.date,
-            b.timeSlot,
-            `COURT ${b.courtId}`,
-            b.sport === 'badminton' ? '羽球' : '匹克球',
-            b.userName,
-            b.dept || '',
-            b.playerCount,
-            b.lookingForPlayers ? '是' : '否',
-            (b.note || '').replace(/[\r\n,]/g, ' ')
-          ]);
-        });
-
-      const csv = '\uFEFF' + rows.map((r) => r.join(',')).join('\n');
+    function exportBookingsCSV() {
+      const rows = [['日期', '時段', '場地', '球類', '預約人', '部門/分機', '人數', '開放+1', '備註', '已+1名單']];
+      const list = Object.values(state.bookings).sort((a, b) =>
+        `${a.date}_${a.timeSlot}_${a.courtId}`.localeCompare(`${b.date}_${b.timeSlot}_${b.courtId}`)
+      );
+      for (const b of list) {
+        const joinerText = (b.joiners || []).map((j) => `${j.name}(+${j.count})`).join('; ');
+        rows.push([
+          b.date, b.timeSlot, `COURT ${b.courtId}`,
+          b.sport === 'badminton' ? '羽球' : '匹克球',
+          b.userName, b.dept || '', b.playerCount,
+          b.lookingForPlayers ? '是' : '否', b.note || '', joinerText
+        ]);
+      }
+      const csv = '\uFEFF' + rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -1762,12 +1657,107 @@
       a.download = `advantech_linkou_bookings_${formatDateYMD(new Date())}.csv`;
       a.click();
       URL.revokeObjectURL(url);
-      showToast('📊 CSV 報表已下載', 'success');
-    };
+      showToast('已匯出 CSV 預約紀錄', 'success');
+    }
+
+    function copySuggestedFirestoreRules() {
+      const rules = `rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /artifacts/advantech-linkou-arena/public/data/{document=**} {\n      allow read, write: if true;\n    }\n  }\n}`;
+      navigator.clipboard?.writeText(rules).then(() => {
+        showToast('已複製建議的 Firestore 規則！', 'success');
+      }).catch(() => {
+        showToast('複製失敗，請手動前往 Firebase Console 設定', 'warning');
+      });
+    }
 
     /* =========================================================================
-       10. 聊天室表單與管理
+       10. 表單送出與事件監聽綁定
        ========================================================================= */
+    document.getElementById('input-player-count').addEventListener('input', updatePlayerCountHint);
+
+    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errBox = document.getElementById('booking-form-error');
+      errBox.classList.add('hidden');
+
+      const slotKey = document.getElementById('input-slot-key').value;
+      const courtId = document.getElementById('input-court-id').value;
+      const timeSlot = document.getElementById('input-time-slot').value;
+      const sport = document.querySelector('input[name="sport"]:checked')?.value;
+      const userName = document.getElementById('input-user-name').value.trim();
+      const dept = document.getElementById('input-dept').value.trim();
+      const playerCount = parseInt(document.getElementById('input-player-count').value, 10);
+      const cancelPin = document.getElementById('input-cancel-pin').value.trim();
+      const lookingForPlayers = document.getElementById('input-looking').checked;
+      const note = document.getElementById('input-note').value.trim();
+
+      const showErr = (msg) => {
+        errBox.textContent = msg;
+        errBox.classList.remove('hidden');
+      };
+
+      if (state.bookings[slotKey]) return showErr('此場地剛剛已被其他同仁預約，請選擇其他場地。');
+      if (!sport) return showErr('請選擇球類項目。');
+
+      const counts = getSportCountsForSession(state.selectedDate, timeSlot);
+      if (sport === 'badminton' && counts.badminton >= MAX_COURTS_PER_SPORT) {
+        return showErr('此時段羽球已達上限 3 場，請保留場地給匹克球友或改約其他時段。');
+      }
+      if (sport === 'pickleball' && counts.pickleball >= MAX_COURTS_PER_SPORT) {
+        return showErr('此時段匹克球已達上限 3 場，請保留場地給羽球球友或改約其他時段。');
+      }
+
+      if (!userName) return showErr('請填寫預約人姓名。');
+      if (isNaN(playerCount) || playerCount < 1 || playerCount > MAX_PLAYERS_PER_COURT) {
+        return showErr(`單一場地人數須為 1 ～ ${MAX_PLAYERS_PER_COURT} 人。`);
+      }
+      if (!/^\d{4}$/.test(cancelPin)) return showErr('請輸入 4 位數字作為取消密碼。');
+
+      const payload = {
+        date: state.selectedDate,
+        courtId,
+        timeSlot,
+        sport,
+        userName,
+        dept,
+        playerCount,
+        lookingForPlayers,
+        note,
+        cancelPin,
+        joiners: [],
+        createdAt: Date.now()
+      };
+
+      try {
+        await DataService.saveBooking(slotKey, payload);
+        showToast(`預約成功！COURT ${courtId} (${timeSlot})`, 'success');
+        closeModal('modal-booking');
+      } catch (err) {
+        showErr('寫入失敗，請檢查網路連線或 Firebase 權限設定。');
+      }
+    });
+
+    document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('admin-login-name').value.trim() || '管理員';
+      const code = document.getElementById('admin-login-passcode').value.trim();
+      const errBox = document.getElementById('admin-login-error');
+
+      if (code !== state.adminPasscode) {
+        errBox.textContent = '管理員密碼錯誤，請重新輸入。';
+        errBox.classList.remove('hidden');
+        return;
+      }
+
+      state.isAdmin = true;
+      state.adminName = name;
+      sessionStorage.setItem('adv_is_admin', '1');
+      sessionStorage.setItem('adv_admin_name', name);
+      updateAdminButtonUI();
+      closeModal('modal-admin-login');
+      renderAll();
+      showToast(`歡迎管理員 ${name} 登入！`, 'success');
+    });
+
     document.getElementById('chat-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const nameInput = document.getElementById('chat-input-name');
@@ -1777,78 +1767,22 @@
       if (!userName || !text) return;
 
       localStorage.setItem('adv_chat_nickname', userName);
-      const msgObj = {
+      const msg = {
         id: `msg_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
         userName,
         text,
         createdAt: Date.now()
       };
 
+      textInput.value = '';
       try {
-        textInput.value = '';
-        await DataService.addChatMessage(msgObj);
+        await DataService.addChatMessage(msg);
       } catch (err) {
-        console.error(err);
         showToast('留言發送失敗，請稍後再試', 'error');
       }
     });
 
-    window.handleDeleteChatMessage = async function (msgId) {
-      if (!state.isAdmin) return;
-      try {
-        await DataService.deleteChatMessage(msgId);
-        showToast('已刪除該則留言', 'info');
-      } catch (err) {
-        showToast('刪除留言失敗', 'error');
-      }
-    };
-
-    /* =========================================================================
-       11. 通用工具：Modal、Toast、篩選列與規則複製
-       ========================================================================= */
-    window.openModal = function (id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.classList.remove('hidden');
-      el.classList.add('flex');
-    };
-
-    window.closeModal = function (id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.classList.add('hidden');
-      el.classList.remove('flex');
-    };
-
-    window.copySuggestedFirestoreRules = async function () {
-      const rules = `rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /artifacts/advantech-linkou-arena/public/data/{document=**} {\n      allow read, write: if true;\n    }\n  }\n}`;
-      try {
-        await navigator.clipboard.writeText(rules);
-        showToast('📋 已複製 Firestore 規則，請貼至 Firebase Console 發布', 'success');
-      } catch {
-        showToast('無法自動複製，請手動從對話中複製規則', 'error');
-      }
-    };
-
-    function showToast(message, type = 'info') {
-      const container = document.getElementById('toast-container');
-      const el = document.createElement('div');
-      const styles = {
-        success: 'bg-emerald-500/95 text-obsidian-950 border-emerald-300',
-        error: 'bg-rose-500/95 text-white border-rose-300',
-        info: 'bg-zinc-800/95 text-zinc-100 border-zinc-600'
-      };
-      el.className = `pointer-events-auto px-4 py-2.5 rounded-xl border text-xs font-extrabold shadow-2xl animate-modal ${styles[type] || styles.info}`;
-      el.textContent = message;
-      container.appendChild(el);
-      setTimeout(() => {
-        el.style.opacity = '0';
-        el.style.transition = 'opacity 0.25s';
-        setTimeout(() => el.remove(), 260);
-      }, 3200);
-    }
-
-    // 篩選按鈕事件綁定
+    // 篩選按鈕切換
     document.querySelectorAll('.filter-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         state.activeFilter = btn.dataset.filter;
@@ -1862,11 +1796,31 @@
       });
     });
 
+    // 掛載全域函式供 HTML onclick 呼叫
+    Object.assign(window, {
+      selectDate,
+      openBookingModal,
+      openDetailModal,
+      closeModal,
+      handleJoinBooking,
+      handleCancelBooking,
+      toggleFacilityApproval,
+      deleteChatMessage,
+      handleAdminButtonClick,
+      handleAdminLogout,
+      handleSaveCompanyEvent,
+      handleRemoveCompanyEvent,
+      handleSaveAnnouncement,
+      handleUpdateAdminPasscode,
+      exportBookingsCSV,
+      copySuggestedFirestoreRules
+    });
+
     /* =========================================================================
-       12. 啟動初始化
+       11. 啟動初始化
        ========================================================================= */
     (function bootstrap() {
-      state.weekendDates = generateUpcomingWeekends(4);
+      state.weekendDates = generateUpcomingWeekends(8);
       const firstOpen = state.weekendDates.find((d) => !isPastBookingDeadline(d.dateStr));
       state.selectedDate = (firstOpen || state.weekendDates[0]).dateStr;
 
