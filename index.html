@@ -35,6 +35,11 @@
   </script>
 
   <style>
+    /* 啟用原生深色表單控制項（修正 Windows 下拉選單與日期選擇器白底反白問題） */
+    html {
+      color-scheme: dark;
+    }
+
     /* 工業現代風：工程細網格背景紋理 */
     body {
       background-color: #07090d;
@@ -45,6 +50,18 @@
       color: #f4f4f5;
       -webkit-user-select: none;
       user-select: none;
+    }
+
+    /* 允許輸入框正常選取文字 */
+    input, textarea, select {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    /* 明確指定下拉選單選項為深底亮字，避免各瀏覽器繼承白字白底 */
+    select option {
+      background-color: #0d1117;
+      color: #f4f4f5;
     }
 
     /* 允許輸入框正常選取文字 */
@@ -1199,12 +1216,12 @@
       container.innerHTML = Array.from({ length: safeCount }, (_, idx) => {
         const selected = existing[idx] || defaultValues[idx] || '3.0-3.5';
         const options = DUPR_TIERS.map((t) =>
-          `<option value="${t.code}" ${t.code === selected ? 'selected' : ''}>${t.range}（${t.title.split(' ')[0]}）</option>`
+          `<option class="bg-obsidian-900 text-zinc-100" value="${t.code}" ${t.code === selected ? 'selected' : ''}>${t.range}（${t.title.split(' ')[0]}）</option>`
         ).join('');
         return `
           <div class="flex items-center gap-2 bg-obsidian-950/90 border border-zinc-800 rounded-lg px-2.5 py-1.5">
             <span class="font-mono text-[11px] font-bold text-amber-300 shrink-0">${prefixLabel} #${idx + 1}</span>
-            <select class="flex-1 min-w-0 bg-transparent text-xs text-white focus:outline-none">
+            <select class="flex-1 min-w-0 bg-obsidian-950 text-xs text-white rounded px-1 py-0.5 focus:outline-none">
               ${options}
             </select>
           </div>
