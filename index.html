@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ADVANTECH LINKOU PICKLEBALL｜研華科技假日林口運動場匹克球預約系統</title>
+  <title>ADVANTECH LINKOU PICKLEBALL｜研華科技假日林口室內運動場 匹克球即時預約系統</title>
 
   <!-- Google Fonts: Inter, Noto Sans TC, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -162,138 +162,319 @@
   <!-- ================= 主要內容區 ================= -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-    <!-- 1. 系統公告與場地規範橫幅 -->
-    <section class="bg-obsidian-850/95 rounded-2xl border border-zinc-800 p-4 sm:p-5 shadow-xl flex flex-col lg:flex-row gap-4 justify-between">
-      <div class="flex items-start gap-3.5 min-w-0">
-        <div class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 mt-0.5 text-lg">
-          🏓
-        </div>
-        <div class="min-w-0">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-amber-400">PICKLEBALL NOTICE</span>
-            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">📅 預約期限：當週星期三 23:59 前</span>
-            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">👥 全場滿 6 人開館｜單場上限 8 人</span>
-            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-violet-500/15 text-violet-300 border border-violet-500/30">🛡️ 安全考量：1 位研華員工最多可帶 3 位親友</span>
-            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">⏱️ 每次預約固定 2 小時</span>
-          </div>
-          <p id="announcement-display" class="text-sm text-zinc-300 mt-2 leading-relaxed">
-            歡迎使用研華科技假日林口室內運動場「匹克球專屬」預約系統！目前開放星期日下午 A~D 四面匹克球場地，每次預約為 2 小時。報名時請填寫每位參與球友的 DUPR 等級，看板將即時顯示各場地 DUPR 方塊分佈圖，方便球友挑選合適程度併團。因公司內部安全考量，一位研華員工最多可以帶三位親友入場。當週星期日場地請於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。
-          </p>
-        </div>
-      </div>
-
-      <!-- 開放時段資訊卡 -->
-      <div class="flex flex-col gap-2 shrink-0 bg-obsidian-950 rounded-xl p-3.5 border border-zinc-800 text-xs font-mono justify-center">
-        <div class="flex items-center gap-2.5">
-          <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">SUN ONLY</span>
-          <span class="text-zinc-200 font-bold">13:00-15:00 / 15:00-17:00</span>
-        </div>
-        <div class="text-[11px] text-zinc-500 font-sans">A~D 四面皆為匹克球專用場（2H 場次）</div>
-        <button type="button" onclick="openModal('modal-dupr-guide')"
-          class="md:hidden mt-1 w-full py-1.5 px-3 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 font-sans font-bold text-xs text-center">
-          📊 查看國際 DUPR 等級對照表
-        </button>
-      </div>
-    </section>
-
-    <!-- 2. 國際匹克球 DUPR 等級區間說明表（可收合） -->
-    <section class="bg-obsidian-850/90 rounded-2xl border border-amber-500/30 overflow-hidden shadow-lg">
-      <button type="button" onclick="toggleInlineDuprTable()"
-        class="w-full px-4 sm:px-5 py-3.5 flex items-center justify-between gap-3 bg-obsidian-900/80 hover:bg-obsidian-900 transition text-left">
-        <div class="flex flex-wrap items-center gap-2.5">
-          <span class="text-base">📊</span>
-          <span class="text-sm font-extrabold text-amber-300">國際匹克球 DUPR 等級區間對照說明表</span>
-          <span class="font-mono text-[11px] text-zinc-400 hidden sm:inline">// INTERNATIONAL PICKLEBALL DUPR RATING GUIDE</span>
-        </div>
-        <div class="flex items-center gap-2 shrink-0">
-          <span id="dupr-toggle-label" class="text-xs font-bold text-amber-300">展開參考</span>
-          <svg id="dupr-toggle-icon" class="w-4 h-4 text-amber-400 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
+    <!-- 雙介面切換導覽列：假日場地預約 / 器材外借登記 -->
+    <nav class="bg-obsidian-900/90 p-1.5 rounded-2xl border border-zinc-800 grid grid-cols-2 gap-1.5 shadow-lg">
+      <button id="tab-btn-booking" type="button" onclick="switchMainTab('booking')"
+        class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-extrabold transition bg-amber-400 text-obsidian-950 shadow-[0_0_14px_rgba(251,191,36,0.28)]">
+        <span>🏓</span>
+        <span>假日場地預約</span>
       </button>
+      <button id="tab-btn-equipment" type="button" onclick="switchMainTab('equipment')"
+        class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition text-zinc-300 hover:text-white hover:bg-obsidian-850">
+        <span>🎒</span>
+        <span>器材外借登記</span>
+        <span id="tab-equipment-badge" class="hidden sm:inline-block font-mono text-[10px] font-extrabold px-2 py-0.5 rounded bg-obsidian-950 text-emerald-400 border border-zinc-700">
+          拍 7/7・網 2/2
+        </span>
+      </button>
+    </nav>
 
-      <div id="inline-dupr-table-body" class="hidden border-t border-zinc-800 p-4 sm:p-5 bg-obsidian-950/70">
-        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">
-          DUPR（Dynamic Universal Pickleball Rating）為國際通用匹克球實力分級系統（2.000～8.000）。若您尚未有官方認證分數，請參考下方技術特徵自我評估，以便找到程度最相近的場次：
-        </p>
-        <div id="inline-dupr-table-content" class="overflow-x-auto">
-          <!-- 由 JS 渲染對照表 -->
+    <!-- ==================== 介面 1：假日場地預約 ==================== -->
+    <div id="view-booking" class="space-y-6">
+
+      <!-- 1. 系統公告與場地規範橫幅 -->
+      <section class="bg-obsidian-850/95 rounded-2xl border border-zinc-800 p-4 sm:p-5 shadow-xl flex flex-col lg:flex-row gap-4 justify-between">
+        <div class="flex items-start gap-3.5 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 mt-0.5 text-lg">
+            🏓
+          </div>
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-amber-400">PICKLEBALL NOTICE</span>
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">📅 預約期限：當週星期三 23:59 前</span>
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">👥 全場滿 6 人開館｜單場上限 8 人</span>
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-violet-500/15 text-violet-300 border border-violet-500/30">🛡️ 安全考量：1 位研華員工最多可帶 3 位親友</span>
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">⏱️ 每次預約固定 2 小時</span>
+            </div>
+            <p id="announcement-display" class="text-sm text-zinc-300 mt-2 leading-relaxed">
+              歡迎使用研華科技假日林口室內運動場「匹克球專屬」預約系統！目前開放星期日下午 A~D 四面匹克球場地，每次預約為 2 小時。報名時請填寫每位參與球友的 DUPR 等級，看板將即時顯示各場地 DUPR 方塊分佈圖，方便球友挑選合適程度併團。因公司內部安全考量，一位研華員工最多可以帶三位親友入場。當週星期日場地請於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 3. 假日日期選擇器（未來八個星期日） -->
-    <section class="space-y-2.5">
-      <div class="flex items-center justify-between">
-        <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400">
-          // SELECT SUNDAY DATE
-        </h2>
-        <span id="selected-date-summary" class="font-mono text-xs text-amber-400 font-bold"></span>
-      </div>
-      <div id="date-selector" class="flex gap-2.5 overflow-x-auto pb-2">
-        <!-- 由 JS 動態生成 -->
-      </div>
-    </section>
-
-    <!-- 4. 當日預約期限警示 / 公司活動橫幅 -->
-    <div id="date-alert-banner" class="hidden rounded-xl border p-3.5 text-sm flex items-center justify-between gap-3"></div>
-
-    <!-- 5. 快速篩選列與狀態圖例 -->
-    <section class="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-obsidian-900/70 rounded-xl border border-zinc-800/80 p-3">
-      <!-- 篩選按鈕 -->
-      <div id="filter-bar" class="flex flex-wrap items-center gap-2">
-        <button type="button" data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-amber-400 text-obsidian-950">全部顯示</button>
-        <button type="button" data-filter="available" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-850 text-zinc-300 border border-zinc-700 hover:border-zinc-500">🟢 僅看可預約</button>
-        <button type="button" data-filter="looking" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-850 text-zinc-300 border border-zinc-700 hover:border-zinc-500">🙋 開放 +1 併團</button>
-      </div>
-
-      <!-- 狀態圖例 -->
-      <div class="flex flex-wrap items-center gap-3.5 text-xs text-zinc-400">
-        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-400 shadow-[0_0_6px_#34d399]"></span>可預約</span>
-        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-amber-400 shadow-[0_0_6px_#fbbf24]"></span>匹克球已預約</span>
-        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-rose-500"></span>公司活動停開</span>
-        <span class="flex items-center gap-1 text-emerald-300 font-semibold">🏢✅ 廠務預約完成</span>
-        <span class="flex items-center gap-1 text-amber-300 font-semibold">▊ 每 1 方塊 = 1 位球友</span>
-      </div>
-    </section>
-
-    <!-- 6. 主要場地 2 小時場次看板 -->
-    <section id="sessions-container" class="space-y-6">
-      <!-- 由 JavaScript 動態渲染 2 小時場次與 A~D 四面匹克球場地（含 DUPR 方塊簡圖） -->
-    </section>
-
-    <!-- 7. 球友即時聊天室／留言視窗 -->
-    <section id="chat-section" class="bg-obsidian-850 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl">
-      <div class="bg-obsidian-900/90 border-b border-zinc-800 px-4 sm:px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
-        <div class="flex items-center gap-2.5">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
-          <h2 class="text-sm sm:text-base font-bold text-zinc-100">匹克球友即時聊天室／留言板</h2>
-          <span class="font-mono text-[11px] text-zinc-500 hidden sm:inline">// LIVE MESSAGE BOARD (MAX 30)</span>
+        <!-- 開放時段資訊卡 -->
+        <div class="flex flex-col gap-2 shrink-0 bg-obsidian-950 rounded-xl p-3.5 border border-zinc-800 text-xs font-mono justify-center">
+          <div class="flex items-center gap-2.5">
+            <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">SUN ONLY</span>
+            <span class="text-zinc-200 font-bold">13:00-15:00 / 15:00-17:00</span>
+          </div>
+          <div class="text-[11px] text-zinc-500 font-sans">A~D 四面皆為匹克球專用場（2H 場次）</div>
+          <button type="button" onclick="openModal('modal-dupr-guide')"
+            class="md:hidden mt-1 w-full py-1.5 px-3 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 font-sans font-bold text-xs text-center">
+            📊 查看國際 DUPR 等級對照表
+          </button>
         </div>
-        <div class="flex items-center gap-2">
-          <span class="text-[11px] text-zinc-400">僅保留最新 30 則</span>
-          <span id="chat-count-badge" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-zinc-800 text-amber-400 border border-zinc-700">0 / 30 則</span>
-        </div>
-      </div>
+      </section>
 
-      <!-- 留言列表 -->
-      <div id="chat-messages-container" class="p-4 sm:p-5 space-y-3 max-h-80 overflow-y-auto bg-obsidian-950/60">
-        <!-- 由 JS 動態渲染 -->
-      </div>
-
-      <!-- 發送留言表單 -->
-      <form id="chat-form" class="p-3.5 sm:p-4 bg-obsidian-900/90 border-t border-zinc-800 flex flex-col sm:flex-row gap-2.5">
-        <input id="chat-input-name" type="text" maxlength="20" required placeholder="您的暱稱 / 英文名"
-          class="sm:w-44 px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 transition" />
-        <input id="chat-input-text" type="text" maxlength="200" required placeholder="輸入留言（例如：週日下午 3.0-3.5 缺 2 位匹克球球友、有人要拼車嗎？）"
-          class="flex-1 px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 transition" />
-        <button type="submit" id="btn-chat-submit"
-          class="px-5 py-2.5 rounded-xl text-sm font-extrabold bg-amber-400 hover:bg-amber-300 text-obsidian-950 transition active:scale-95 shrink-0 shadow-[0_0_12px_rgba(251,191,36,0.25)]">
-          發送留言
+      <!-- 2. 國際匹克球 DUPR 等級區間說明表（可收合） -->
+      <section class="bg-obsidian-850/90 rounded-2xl border border-amber-500/30 overflow-hidden shadow-lg">
+        <button type="button" onclick="toggleInlineDuprTable()"
+          class="w-full px-4 sm:px-5 py-3.5 flex items-center justify-between gap-3 bg-obsidian-900/80 hover:bg-obsidian-900 transition text-left">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="text-base">📊</span>
+            <span class="text-sm font-extrabold text-amber-300">國際匹克球 DUPR 等級區間對照說明表</span>
+            <span class="font-mono text-[11px] text-zinc-400 hidden sm:inline">// INTERNATIONAL PICKLEBALL DUPR RATING GUIDE</span>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <span id="dupr-toggle-label" class="text-xs font-bold text-amber-300">展開參考</span>
+            <svg id="dupr-toggle-icon" class="w-4 h-4 text-amber-400 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </button>
-      </form>
-    </section>
+
+        <div id="inline-dupr-table-body" class="hidden border-t border-zinc-800 p-4 sm:p-5 bg-obsidian-950/70">
+          <p class="text-xs text-zinc-400 mb-3 leading-relaxed">
+            DUPR（Dynamic Universal Pickleball Rating）為國際通用匹克球實力分級系統（2.000～8.000）。若您尚未有官方認證分數，請參考下方技術特徵自我評估，以便找到程度最相近的場次：
+          </p>
+          <div id="inline-dupr-table-content" class="overflow-x-auto">
+            <!-- 由 JS 渲染對照表 -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 假日日期選擇器（未來八個星期日） -->
+      <section class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400">
+            // SELECT SUNDAY DATE
+          </h2>
+          <span id="selected-date-summary" class="font-mono text-xs text-amber-400 font-bold"></span>
+        </div>
+        <div id="date-selector" class="flex gap-2.5 overflow-x-auto pb-2">
+          <!-- 由 JS 動態生成 -->
+        </div>
+      </section>
+
+      <!-- 4. 當日預約期限警示 / 公司活動橫幅 -->
+      <div id="date-alert-banner" class="hidden rounded-xl border p-3.5 text-sm flex items-center justify-between gap-3"></div>
+
+      <!-- 5. 快速篩選列與狀態圖例 -->
+      <section class="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-obsidian-900/70 rounded-xl border border-zinc-800/80 p-3">
+        <!-- 篩選按鈕 -->
+        <div id="filter-bar" class="flex flex-wrap items-center gap-2">
+          <button type="button" data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-amber-400 text-obsidian-950">全部顯示</button>
+          <button type="button" data-filter="available" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-850 text-zinc-300 border border-zinc-700 hover:border-zinc-500">🟢 僅看可預約</button>
+          <button type="button" data-filter="looking" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-850 text-zinc-300 border border-zinc-700 hover:border-zinc-500">🙋 開放 +1 併團</button>
+        </div>
+
+        <!-- 狀態圖例 -->
+        <div class="flex flex-wrap items-center gap-3.5 text-xs text-zinc-400">
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-400 shadow-[0_0_6px_#34d399]"></span>可預約</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-amber-400 shadow-[0_0_6px_#fbbf24]"></span>匹克球已預約</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-rose-500"></span>公司活動停開</span>
+          <span class="flex items-center gap-1 text-emerald-300 font-semibold">🏢✅ 廠務預約完成</span>
+          <span class="flex items-center gap-1 text-amber-300 font-semibold">▊ 每 1 方塊 = 1 位球友</span>
+        </div>
+      </section>
+
+      <!-- 6. 主要場地 2 小時場次看板 -->
+      <section id="sessions-container" class="space-y-6">
+        <!-- 由 JavaScript 動態渲染 2 小時場次與 A~D 四面匹克球場地（含 DUPR 方塊簡圖） -->
+      </section>
+
+      <!-- 7. 球友即時聊天室／留言視窗 -->
+      <section id="chat-section" class="bg-obsidian-850 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl">
+        <div class="bg-obsidian-900/90 border-b border-zinc-800 px-4 sm:px-5 py-3.5 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+            <h2 class="text-sm sm:text-base font-bold text-zinc-100">匹克球友即時聊天室／留言板</h2>
+            <span class="font-mono text-[11px] text-zinc-500 hidden sm:inline">// LIVE MESSAGE BOARD (MAX 30)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] text-zinc-400">僅保留最新 30 則</span>
+            <span id="chat-count-badge" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-zinc-800 text-amber-400 border border-zinc-700">0 / 30 則</span>
+          </div>
+        </div>
+
+        <!-- 留言列表 -->
+        <div id="chat-messages-container" class="p-4 sm:p-5 space-y-3 max-h-80 overflow-y-auto bg-obsidian-950/60">
+          <!-- 由 JS 動態渲染 -->
+        </div>
+
+        <!-- 發送留言表單 -->
+        <form id="chat-form" class="p-3.5 sm:p-4 bg-obsidian-900/90 border-t border-zinc-800 flex flex-col sm:flex-row gap-2.5">
+          <input id="chat-input-name" type="text" maxlength="20" required placeholder="您的暱稱 / 英文名"
+            class="sm:w-44 px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 transition" />
+          <input id="chat-input-text" type="text" maxlength="200" required placeholder="輸入留言（例如：週日下午 3.0-3.5 缺 2 位匹克球球友、有人要拼車嗎？）"
+            class="flex-1 px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 transition" />
+          <button type="submit" id="btn-chat-submit"
+            class="px-5 py-2.5 rounded-xl text-sm font-extrabold bg-amber-400 hover:bg-amber-300 text-obsidian-950 transition active:scale-95 shrink-0 shadow-[0_0_12px_rgba(251,191,36,0.25)]">
+            發送留言
+          </button>
+        </form>
+      </section>
+
+    </div><!-- /#view-booking -->
+
+    <!-- ==================== 介面 2：器材外借登記 ==================== -->
+    <div id="view-equipment" class="hidden space-y-6">
+
+      <!-- 器材即時庫存總覽 -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- 公拍庫存卡 -->
+        <div class="bg-obsidian-850/95 rounded-2xl border border-amber-500/35 p-5 shadow-xl space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/35 flex items-center justify-center text-xl">🏓</div>
+              <div>
+                <h2 class="text-sm sm:text-base font-extrabold text-white">社團公拍庫存</h2>
+                <p class="font-mono text-[11px] text-zinc-400">PUBLIC PADDLES // TOTAL 7</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <div id="eq-paddle-avail" class="font-mono text-2xl font-black text-emerald-400">7 / 7</div>
+              <div class="text-[11px] text-zinc-400">目前可外借</div>
+            </div>
+          </div>
+          <div class="h-2 w-full rounded-full bg-obsidian-950 overflow-hidden border border-zinc-800">
+            <div id="eq-paddle-bar" class="h-full bg-emerald-400 transition-all duration-300" style="width: 100%"></div>
+          </div>
+          <div id="eq-paddle-detail" class="flex items-center justify-between text-xs text-zinc-400 font-mono">
+            <span>外借未歸還：0 隻</span>
+            <span>連動假日球聚報名數量</span>
+          </div>
+        </div>
+
+        <!-- 球網庫存卡 -->
+        <div class="bg-obsidian-850/95 rounded-2xl border border-cyan-500/35 p-5 shadow-xl space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/35 flex items-center justify-center text-xl">🥅</div>
+              <div>
+                <h2 class="text-sm sm:text-base font-extrabold text-white">可攜式匹克球網庫存</h2>
+                <p class="font-mono text-[11px] text-zinc-400">PORTABLE NETS // TOTAL 2</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <div id="eq-net-avail" class="font-mono text-2xl font-black text-cyan-400">2 / 2</div>
+              <div class="text-[11px] text-zinc-400">目前可外借</div>
+            </div>
+          </div>
+          <div class="h-2 w-full rounded-full bg-obsidian-950 overflow-hidden border border-zinc-800">
+            <div id="eq-net-bar" class="h-full bg-cyan-400 transition-all duration-300" style="width: 100%"></div>
+          </div>
+          <div id="eq-net-detail" class="flex items-center justify-between text-xs text-zinc-400 font-mono">
+            <span>外借未歸還：0 面</span>
+            <span>開放球友登記外借</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 近期假日球聚公拍預訂連動提示 -->
+      <section class="bg-obsidian-900/80 rounded-2xl border border-zinc-800 p-4 space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-amber-300">📅 近期假日球聚公拍預留狀況（系統即時連動）</h3>
+          <span class="font-mono text-[11px] text-zinc-500">SUNDAY PADDLE DEMAND</span>
+        </div>
+        <div id="eq-sunday-demand-list" class="flex flex-wrap gap-2 text-xs text-zinc-400">
+          <!-- 由 JS 渲染 -->
+        </div>
+      </section>
+
+      <!-- 器材外借登記表單 -->
+      <section class="bg-obsidian-850 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl">
+        <div class="bg-obsidian-900/95 border-b border-zinc-800 px-5 py-3.5 flex items-center justify-between">
+          <div>
+            <h3 class="text-sm sm:text-base font-extrabold text-white">📝 新增器材外借登記</h3>
+            <p class="font-mono text-[11px] text-zinc-400 mt-0.5">EQUIPMENT CHECKOUT FORM // FILL BORROWER INFO</p>
+          </div>
+        </div>
+
+        <form id="equipment-rental-form" class="p-5 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div>
+              <label for="eq-input-name" class="block text-xs font-bold text-zinc-300 mb-1.5">借用人姓名 / 英文名 <span class="text-rose-400">*</span></label>
+              <input id="eq-input-name" type="text" required maxlength="24" placeholder="例如：Kevin Lin"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="eq-input-ext" class="block text-xs font-bold text-zinc-300 mb-1.5">公司分機 <span class="text-rose-400">*</span></label>
+              <input id="eq-input-ext" type="text" required maxlength="16" placeholder="例如：#3310"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="eq-input-expected-date" class="block text-xs font-bold text-zinc-300 mb-1.5">預計歸還日期 <span class="text-rose-400">*</span></label>
+              <input id="eq-input-expected-date" type="date" required
+                class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm font-mono text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label for="eq-input-actual-date" class="block text-xs font-bold text-zinc-300 mb-1.5">實際歸還日期（歸還時填寫）</label>
+              <input id="eq-input-actual-date" type="date"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm font-mono text-white focus:outline-none focus:border-emerald-400" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <div class="p-3 rounded-xl bg-obsidian-950 border border-amber-500/30">
+              <label for="eq-input-paddles" class="flex items-center justify-between text-xs font-bold text-amber-300 mb-1.5">
+                <span>🏓 借用公拍數量（隻）</span>
+                <span id="eq-form-paddle-max" class="font-mono text-[11px] text-zinc-400">可借 7 隻</span>
+              </label>
+              <input id="eq-input-paddles" type="number" min="0" max="7" value="0"
+                class="w-full px-3 py-2 rounded-lg bg-obsidian-900 border border-zinc-700 text-sm font-mono font-bold text-white focus:outline-none focus:border-amber-400" />
+            </div>
+
+            <div class="p-3 rounded-xl bg-obsidian-950 border border-cyan-500/30">
+              <label for="eq-input-nets" class="flex items-center justify-between text-xs font-bold text-cyan-300 mb-1.5">
+                <span>🥅 借用球網數量（面）</span>
+                <span id="eq-form-net-max" class="font-mono text-[11px] text-zinc-400">可借 2 面</span>
+              </label>
+              <input id="eq-input-nets" type="number" min="0" max="2" value="0"
+                class="w-full px-3 py-2 rounded-lg bg-obsidian-900 border border-zinc-700 text-sm font-mono font-bold text-white focus:outline-none focus:border-cyan-400" />
+            </div>
+
+            <div class="p-3 rounded-xl bg-obsidian-950 border border-zinc-800">
+              <label for="eq-input-note" class="block text-xs font-bold text-zinc-300 mb-1.5">備註（選填）</label>
+              <input id="eq-input-note" type="text" maxlength="60" placeholder="例如：週末帶去公園打球"
+                class="w-full px-3 py-2 rounded-lg bg-obsidian-900 border border-zinc-700 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400" />
+            </div>
+          </div>
+
+          <div id="eq-form-error" class="hidden text-xs font-semibold text-rose-300 bg-rose-500/15 border border-rose-500/40 rounded-xl p-3"></div>
+
+          <div class="flex justify-end">
+            <button type="submit"
+              class="px-6 py-2.5 rounded-xl text-sm font-extrabold bg-amber-400 hover:bg-amber-300 text-obsidian-950 transition active:scale-95 shadow-[0_0_14px_rgba(251,191,36,0.28)]">
+              確認登記外借
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 器材外借與歸還紀錄清單 -->
+      <section class="bg-obsidian-850 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl">
+        <div class="bg-obsidian-900/95 border-b border-zinc-800 px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <h3 class="text-sm sm:text-base font-extrabold text-white">📋 器材外借與歸還紀錄</h3>
+            <span id="eq-record-count" class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-zinc-800 text-amber-400 border border-zinc-700">0 筆</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button type="button" data-eq-filter="active" onclick="setEquipmentFilter('active')"
+              class="eq-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-amber-400 text-obsidian-950">🔴 外借中</button>
+            <button type="button" data-eq-filter="returned" onclick="setEquipmentFilter('returned')"
+              class="eq-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-850 text-zinc-300 border border-zinc-700 hover:border-zinc-500">🟢 已歸還</button>
+            <button type="button" data-eq-filter="all" onclick="setEquipmentFilter('all')"
+              class="eq-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-850 text-zinc-300 border border-zinc-700 hover:border-zinc-500">全部紀錄</button>
+          </div>
+        </div>
+
+        <div id="eq-records-container" class="p-4 sm:p-5 space-y-3">
+          <!-- 由 JS 渲染 -->
+        </div>
+      </section>
+
+    </div><!-- /#view-equipment -->
 
   </main>
 
@@ -385,6 +566,28 @@
           <div id="booking-players-dupr-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
         </div>
 
+        <!-- 公拍借用需求（連動器材外借庫存） -->
+        <div class="p-3.5 rounded-xl bg-obsidian-950 border border-zinc-800 space-y-2.5">
+          <label class="flex items-center justify-between gap-2 cursor-pointer">
+            <span class="flex items-center gap-2 text-xs font-bold text-zinc-200">
+              <input id="input-need-paddle" type="checkbox" class="w-4 h-4 rounded accent-amber-400" />
+              <span>🏓 本場次需要借用社團公拍</span>
+            </span>
+            <span id="booking-paddle-avail-badge" class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              可借 7 隻
+            </span>
+          </label>
+          <div id="booking-paddle-qty-wrap" class="hidden pt-1 space-y-2">
+            <div class="flex items-center gap-3">
+              <label for="input-paddle-count" class="text-xs text-zinc-300 font-bold shrink-0">需要幾隻公拍：</label>
+              <input id="input-paddle-count" type="number" min="1" max="7" value="1"
+                class="w-24 px-3 py-1.5 rounded-lg bg-obsidian-900 border border-amber-500/40 text-sm font-mono font-bold text-white focus:outline-none focus:border-amber-400" />
+              <span class="text-xs text-zinc-400">隻</span>
+            </div>
+            <div id="booking-paddle-stock-hint" class="text-[11px] text-amber-300/90 leading-relaxed"></div>
+          </div>
+        </div>
+
         <!-- 開放 +1 併團 -->
         <label class="flex items-center gap-2.5 p-3 rounded-xl bg-obsidian-950 border border-zinc-800 cursor-pointer">
           <input id="input-looking" type="checkbox" checked class="w-4 h-4 rounded accent-amber-400" />
@@ -432,6 +635,7 @@
         <div class="bg-obsidian-950 rounded-xl border border-zinc-800 p-4 space-y-2.5 text-sm">
           <div class="flex justify-between"><span class="text-zinc-400">主揪同仁</span><span id="detail-user" class="font-bold text-white"></span></div>
           <div class="flex justify-between"><span class="text-zinc-400">目前人數</span><span id="detail-players" class="font-mono font-bold text-emerald-400"></span></div>
+          <div class="flex justify-between"><span class="text-zinc-400">公拍借用</span><span id="detail-paddles" class="font-mono font-bold text-amber-300"></span></div>
           <!-- 場地 DUPR 方塊簡圖（放大版） -->
           <div class="pt-2.5 border-t border-zinc-800/80 space-y-2">
             <div class="flex items-center justify-between text-xs">
@@ -465,6 +669,22 @@
               <button type="button" onclick="openModal('modal-dupr-guide')" class="text-[10px] underline">DUPR 對照</button>
             </div>
             <div id="join-players-dupr-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+          </div>
+          <!-- +1 公拍借用需求 -->
+          <div class="p-2.5 rounded-lg bg-obsidian-950/90 border border-zinc-800 space-y-2">
+            <label class="flex items-center justify-between gap-2 cursor-pointer text-[11px]">
+              <span class="flex items-center gap-2 font-bold text-zinc-200">
+                <input id="join-need-paddle" type="checkbox" class="w-3.5 h-3.5 rounded accent-amber-400" />
+                <span>🏓 需要借用公拍</span>
+              </span>
+              <span id="join-paddle-avail-badge" class="font-mono text-[10px] font-bold text-amber-300">可借 7 隻</span>
+            </label>
+            <div id="join-paddle-qty-wrap" class="hidden flex items-center gap-2 text-xs">
+              <label for="join-paddle-count" class="text-zinc-300">需要數量：</label>
+              <input id="join-paddle-count" type="number" min="1" max="7" value="1"
+                class="w-20 px-2.5 py-1 rounded bg-obsidian-900 border border-amber-500/40 text-xs font-mono font-bold text-white focus:outline-none focus:border-amber-400" />
+              <span class="text-zinc-400">隻</span>
+            </div>
           </div>
           <button type="button" onclick="handleJoinBooking()"
             class="w-full py-2 rounded-lg text-xs font-extrabold bg-emerald-400 hover:bg-emerald-300 text-obsidian-950 transition active:scale-95">
@@ -620,7 +840,7 @@
         <div class="flex items-center justify-between bg-obsidian-950 rounded-xl border border-zinc-800 p-4">
           <div>
             <h4 class="text-sm font-bold text-white">📊 匯出所有匹克球預約紀錄</h4>
-            <p class="text-[11px] text-zinc-400 mt-0.5">下載 UTF-8 CSV 報表（含各球友 DUPR 分佈）</p>
+            <p class="text-[11px] text-zinc-400 mt-0.5">下載 UTF-8 CSV 報表（含各球友 DUPR 分佈與公拍數）</p>
           </div>
           <button type="button" onclick="exportBookingsCSV()" class="px-4 py-2 rounded-lg text-xs font-extrabold bg-emerald-400 hover:bg-emerald-300 text-obsidian-950 transition">
             下載 CSV
@@ -635,6 +855,36 @@
           </div>
           <button type="button" onclick="handleCleanupLegacyBookings()" class="shrink-0 px-4 py-2 rounded-lg text-xs font-extrabold bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/40 transition">
             一鍵清理
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Modal 6：登記器材實際歸還日期 ================= -->
+  <div id="modal-return-equipment" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+    <div class="bg-obsidian-900 border border-emerald-500/40 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-modal">
+      <div class="bg-obsidian-850 border-b border-zinc-800 px-5 py-4 flex items-center justify-between">
+        <h3 class="text-base font-extrabold text-emerald-300">✅ 登記實際歸還日期</h3>
+        <button type="button" onclick="closeModal('modal-return-equipment')" class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div id="return-modal-info" class="text-xs text-zinc-300 bg-obsidian-950 border border-zinc-800 rounded-xl p-3 leading-relaxed"></div>
+        <div>
+          <label for="input-actual-return-date" class="block text-xs font-bold text-zinc-300 mb-1.5">實際歸還日期 <span class="text-rose-400">*</span></label>
+          <input id="input-actual-return-date" type="date" required
+            class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-zinc-700 text-sm font-mono text-white focus:outline-none focus:border-emerald-400" />
+        </div>
+        <div class="flex gap-2">
+          <button type="button" onclick="closeModal('modal-return-equipment')"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition">
+            取消
+          </button>
+          <button type="button" onclick="handleConfirmReturn()"
+            class="flex-1 py-2.5 rounded-xl text-xs font-extrabold bg-emerald-400 hover:bg-emerald-300 text-obsidian-950 transition active:scale-95">
+            確認已歸還
           </button>
         </div>
       </div>
@@ -695,7 +945,6 @@
       { id: '15:00-17:00', label: '15:00 - 17:00', title: '週日下午第二場', duration: '2 HRS', period: 'afternoon' }
     ];
 
-    // 僅統計目前有效的場地與 2 小時時段，避免計入舊版（如 4 小時制）殘留資料
     const VALID_COURT_IDS = new Set(COURTS.map((c) => c.id));
     const VALID_SLOT_IDS = new Set(SUNDAY_SLOTS.map((s) => s.id));
 
@@ -782,6 +1031,8 @@
     const MIN_SESSION_PLAYERS = 6;   // 同時段全場 4 面場地合計滿 6 人始可借用
     const MAX_PLAYERS_PER_COURT = 8; // 單一場地人數上限 8 人
     const MAX_CHAT_MESSAGES = 30;    // 留言板僅保留最新 30 則
+    const TOTAL_PADDLES = 7;         // 社團公拍總數 7 隻
+    const TOTAL_NETS = 2;            // 社團球網總數 2 面
     const DEFAULT_ADMIN_PASSCODE = '8888';
 
     /* =========================================================================
@@ -789,24 +1040,26 @@
        ========================================================================= */
     const state = {
       mode: 'initializing', // 'firebase' | 'demo'
+      activeTab: 'booking', // 'booking' | 'equipment'
       isAdmin: false,
       adminName: '',
       adminPasscode: DEFAULT_ADMIN_PASSCODE,
       weekendDates: [],
       selectedDate: '',
       activeFilter: 'all',
+      equipmentFilter: 'active', // 'active' | 'returned' | 'all'
       bookings: {},
       companyEvents: {},
       facilityApprovals: {},
+      equipmentRentals: [],
       chatMessages: [],
       announcement: '歡迎使用研華科技假日林口室內運動場「匹克球專屬」預約系統！目前開放星期日下午 A~D 四面匹克球場地，每次預約為 2 小時。報名時請填寫每位參與球友的 DUPR 等級，看板將即時顯示各場地 DUPR 方塊分佈圖，方便球友挑選合適程度併團。因公司內部安全考量，一位研華員工最多可以帶三位親友入場。當週星期日場地請於「當週星期三 23:59 前」完成預約；人數合計達 6 人以上時，管理員將向公司廠務申請場地，核准後即標記為「廠務預約完成」。',
-      activeDetailKey: null
+      activeDetailKey: null,
+      activeReturnRentalId: null
     };
 
-    let db = null;
-
     /* =========================================================================
-       4. 工具函式與 DUPR 解析／方塊簡圖生成器
+       4. 工具函式：日期、期限、DUPR 計算與 HTML 跳脫
        ========================================================================= */
     function escapeHtml(str) {
       return String(str ?? '')
@@ -817,25 +1070,57 @@
         .replace(/'/g, '&#39;');
     }
 
-    function formatDateYMD(date) {
-      const y = date.getFullYear();
-      const m = String(date.getMonth() + 1).padStart(2, '0');
-      const d = String(date.getDate()).padStart(2, '0');
+    function formatDateYMD(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
       return `${y}-${m}-${d}`;
     }
 
-    function formatTimeHM(ts) {
-      const d = new Date(ts || Date.now());
-      const m = d.getMonth() + 1;
-      const day = d.getDate();
-      const hh = String(d.getHours()).padStart(2, '0');
-      const mm = String(d.getMinutes()).padStart(2, '0');
-      return `${m}/${day} ${hh}:${mm}`;
+    // 產生未來 8 個星期日（自動隨今天日期往後推進）
+    function generateUpcomingSundays(count = 8) {
+      const list = [];
+      const cursor = new Date();
+      cursor.setHours(0, 0, 0, 0);
+      while (list.length < count) {
+        if (cursor.getDay() === 0) {
+          const y = cursor.getFullYear();
+          const m = cursor.getMonth() + 1;
+          const d = cursor.getDate();
+          list.push({
+            dateStr: formatDateYMD(cursor),
+            monthDay: `${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`,
+            weekday: '星期日',
+            shortWeek: '日',
+            year: y
+          });
+        }
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return list;
     }
 
-    // 將舊版文字格式正規化為標準 DUPR code
-    function normalizeDuprCode(raw) {
-      const s = String(raw || '').trim();
+    // 計算當週星期三 23:59:59 預約截止時間（星期日往前推 4 天）
+    function getBookingDeadline(sundayStr) {
+      const [y, m, d] = sundayStr.split('-').map(Number);
+      const dt = new Date(y, m - 1, d, 23, 59, 59, 999);
+      dt.setDate(dt.getDate() - 4);
+      return dt;
+    }
+
+    function isPastBookingDeadline(sundayStr) {
+      return new Date() > getBookingDeadline(sundayStr);
+    }
+
+    function formatDeadlineLabel(sundayStr) {
+      const dl = getBookingDeadline(sundayStr);
+      const m = String(dl.getMonth() + 1).padStart(2, '0');
+      const d = String(dl.getDate()).padStart(2, '0');
+      return `${m}/${d} (三) 23:59`;
+    }
+
+    function normalizeDuprCode(val) {
+      const s = String(val || '').trim();
       if (DUPR_MAP[s]) return s;
       if (s.includes('4.5')) return '4.5+';
       if (s.includes('4.0')) return '4.0-4.5';
@@ -846,244 +1131,227 @@
       return 'unrated';
     }
 
-    // 取得某筆預約所有球友的 DUPR 陣列（向下相容舊資料）
+    // 取得該筆預約所有球友的 DUPR 陣列（向下相容舊版單一欄位）
     function getBookingPlayerDuprs(booking) {
-      if (!booking) return [];
-      const count = Math.max(1, Number(booking.playerCount) || 1);
       if (Array.isArray(booking.playerDuprs) && booking.playerDuprs.length > 0) {
         return booking.playerDuprs.map(normalizeDuprCode);
       }
-      // 向下相容舊版單一欄位資料
-      const fallbackCode = normalizeDuprCode(booking.duprLevel);
-      return Array.from({ length: count }, () => fallbackCode);
+      const count = Math.max(1, Number(booking.playerCount) || 1);
+      const fallback = normalizeDuprCode(booking.duprLevel);
+      return Array.from({ length: count }, () => fallback);
     }
 
-    // 統計 DUPR 區間摘要文字（例：3.0-3.5×2, 3.5-4.0×2）
     function formatDuprSummary(duprCodes) {
       const counts = {};
-      for (const code of duprCodes) {
-        const c = normalizeDuprCode(code);
-        counts[c] = (counts[c] || 0) + 1;
+      for (const c of duprCodes) {
+        const code = normalizeDuprCode(c);
+        counts[code] = (counts[code] || 0) + 1;
       }
       return DUPR_TIERS
         .filter((t) => counts[t.code] > 0)
         .map((t) => `${t.short}×${counts[t.code]}`)
-        .join(' · ');
+        .join(' · ') || '未填寫';
     }
 
-    // 生成 DUPR 等級方塊簡圖 HTML（每 1 個堆疊方塊 = 1 位球友）
+    // 繪製 DUPR 等級方塊簡圖（每 1 個方塊 = 1 位球友）
     function renderDuprBlockChartHtml(duprCodes, compact = true) {
       const counts = {};
-      for (const code of duprCodes) {
-        const c = normalizeDuprCode(code);
-        counts[c] = (counts[c] || 0) + 1;
+      for (const c of duprCodes) {
+        const code = normalizeDuprCode(c);
+        counts[code] = (counts[code] || 0) + 1;
       }
-
-      const maxStack = Math.max(3, ...Object.values(counts), 0);
-      const blockHeightCls = compact ? 'h-2' : 'h-2.5';
-      const colHeightPx = compact ? Math.max(34, maxStack * 10 + 4) : Math.max(44, maxStack * 12 + 6);
-
+      const maxStack = compact ? 5 : 8;
+      const cellH = compact ? 'h-1.5' : 'h-2';
       const colsHtml = DUPR_TIERS.map((tier) => {
         const n = counts[tier.code] || 0;
-        const blocks = Array.from({ length: n }, () =>
-          `<div class="w-full ${blockHeightCls} rounded-[2px] ${tier.blockCls}"></div>`
-        ).join('');
-
+        const shown = Math.min(n, maxStack);
+        const blocks = [];
+        for (let i = 0; i < shown; i++) {
+          blocks.push(`<span class="w-full ${cellH} rounded-[2px] ${tier.blockCls}"></span>`);
+        }
         return `
-          <div class="flex flex-col items-center gap-1 min-w-0 flex-1" title="${tier.range} (${tier.title})：${n} 人">
-            <span class="font-mono text-[9px] font-extrabold leading-none ${n > 0 ? tier.textCls : 'text-zinc-700'}">
-              ${n > 0 ? n : '·'}
-            </span>
-            <div class="w-full flex flex-col-reverse gap-[2px] px-[2px] pb-[2px] rounded bg-obsidian-950/80 border ${n > 0 ? 'border-zinc-700/80' : 'border-zinc-800/50'}" style="height: ${colHeightPx}px;">
-              ${blocks}
+          <div class="flex flex-col items-center justify-end gap-0.5 min-w-0" title="${tier.range} ${tier.title}：${n} 人">
+            <span class="font-mono text-[9px] font-bold leading-none ${n > 0 ? tier.textCls : 'text-zinc-700'}">${n > 0 ? n : ''}</span>
+            <div class="w-full ${compact ? 'h-9' : 'h-14'} rounded bg-obsidian-950/80 border border-zinc-800/80 p-0.5 flex flex-col-reverse gap-[2px] justify-start">
+              ${blocks.join('')}
             </div>
-            <span class="font-mono text-[9px] leading-none tracking-tighter ${n > 0 ? 'text-zinc-200 font-bold' : 'text-zinc-600'}">
-              ${tier.short}
-            </span>
+            <span class="font-mono text-[9px] leading-none tracking-tighter ${n > 0 ? 'text-zinc-200 font-bold' : 'text-zinc-600'}">${tier.short}</span>
           </div>
         `;
       }).join('');
 
       return `
-        <div class="w-full rounded-lg bg-obsidian-950/70 border border-zinc-800/90 ${compact ? 'p-2' : 'p-3'}">
-          <div class="flex items-end justify-between gap-1">
+        <div class="w-full rounded-lg bg-obsidian-900/80 border border-zinc-800/90 p-2">
+          <div class="grid grid-cols-7 gap-1 items-end">
             ${colsHtml}
           </div>
         </div>
       `;
     }
 
-    // 生成 DUPR 對照表 HTML（供頁內折疊區與彈窗共用）
-    function buildDuprGuideTableHtml() {
-      const rows = DUPR_TIERS.map((t) => `
-        <tr class="border-b border-zinc-800/80 last:border-b-0 hover:bg-obsidian-900/60 transition">
-          <td class="py-2.5 px-3 whitespace-nowrap">
-            <span class="inline-flex items-center gap-1.5 font-mono text-xs font-extrabold px-2 py-0.5 rounded border ${t.badgeCls}">
-              <span class="w-2 h-2 rounded-[2px] ${t.blockCls}"></span>
-              ${t.range}
-            </span>
-          </td>
-          <td class="py-2.5 px-3 text-xs font-bold text-zinc-100 whitespace-nowrap">${t.title}</td>
-          <td class="py-2.5 px-3 text-xs text-zinc-300 leading-relaxed min-w-[260px]">${t.desc}</td>
-        </tr>
-      `).join('');
-
-      return `
-        <table class="w-full text-left border-collapse rounded-xl overflow-hidden border border-zinc-800 bg-obsidian-900/50">
-          <thead>
-            <tr class="bg-obsidian-900 border-b border-zinc-800 font-mono text-[11px] uppercase text-zinc-400">
-              <th class="py-2.5 px-3">DUPR 區間</th>
-              <th class="py-2.5 px-3">程度分級</th>
-              <th class="py-2.5 px-3">技術特徵與對戰描述</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      `;
-    }
-
-    // 動態產生多人 DUPR 下拉選單（保留已選值）
-    function renderMultiDuprSelectors(containerId, count, prefixLabel, existingValues = []) {
+    // 生成多人個別 DUPR 下拉選單
+    function renderMultiDuprSelectors(containerId, count, prefixLabel = '球友', defaultValues = []) {
       const container = document.getElementById(containerId);
       if (!container) return;
+      const existing = Array.from(container.querySelectorAll('select')).map((s) => s.value);
+      const safeCount = Math.max(1, Math.min(MAX_PLAYERS_PER_COURT, Number(count) || 1));
 
-      // 先讀取目前畫面已選的值，避免調整人數時重置
-      const currentSelected = Array.from(container.querySelectorAll('select')).map((s) => s.value);
-      const sourceValues = currentSelected.length > 0 ? currentSelected : existingValues;
-
-      const optionsHtml = (selectedVal) => DUPR_TIERS.map((t) =>
-        `<option value="${t.code}" ${t.code === selectedVal ? 'selected' : ''}>${t.range} (${t.title.split(' ')[0]})</option>`
-      ).join('');
-
-      const safeCount = Math.max(1, Math.min(MAX_PLAYERS_PER_COURT, count || 1));
       container.innerHTML = Array.from({ length: safeCount }, (_, idx) => {
-        const defaultVal = sourceValues[idx] || sourceValues[sourceValues.length - 1] || '3.0-3.5';
-        const roleTag = idx === 0 && prefixLabel === '球友' ? '第 1 位 (主揪)' : `${prefixLabel} ${idx + 1}`;
+        const selected = existing[idx] || defaultValues[idx] || '3.0-3.5';
+        const options = DUPR_TIERS.map((t) =>
+          `<option value="${t.code}" ${t.code === selected ? 'selected' : ''}>${t.range}（${t.title.split(' ')[0]}）</option>`
+        ).join('');
         return `
-          <div class="bg-obsidian-950/90 border border-zinc-800 rounded-lg p-2 space-y-1">
-            <label class="block text-[11px] font-bold text-amber-200">${roleTag}</label>
-            <select data-player-dupr-idx="${idx}"
-              class="w-full px-2.5 py-1.5 rounded-lg bg-obsidian-900 border border-amber-500/35 text-xs text-white focus:outline-none focus:border-amber-400">
-              ${optionsHtml(defaultVal)}
+          <div class="flex items-center gap-2 bg-obsidian-950/90 border border-zinc-800 rounded-lg px-2.5 py-1.5">
+            <span class="font-mono text-[11px] font-bold text-amber-300 shrink-0">${prefixLabel} #${idx + 1}</span>
+            <select class="flex-1 min-w-0 bg-transparent text-xs text-white focus:outline-none">
+              ${options}
             </select>
           </div>
         `;
       }).join('');
     }
 
-    function toggleInlineDuprTable() {
-      const body = document.getElementById('inline-dupr-table-body');
-      const label = document.getElementById('dupr-toggle-label');
-      const icon = document.getElementById('dupr-toggle-icon');
-      const isHidden = body.classList.toggle('hidden');
-      label.textContent = isHidden ? '展開參考' : '收合說明';
-      icon.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(180deg)';
-    }
-
-    // 自動產生未來 8 個星期日
-    function generateUpcomingWeekends(count = 8) {
-      const result = [];
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      for (let i = 0; i < count * 7 + 7; i++) {
-        const d = new Date(today);
-        d.setDate(today.getDate() + i);
-        const dow = d.getDay();
-        if (dow === 0) {
-          result.push({
-            dateStr: formatDateYMD(d),
-            dayOfWeek: dow,
-            monthDay: `${d.getMonth() + 1}/${d.getDate()}`,
-            weekdayText: '星期日'
-          });
-        }
-        if (result.length >= count) break;
-      }
-      return result;
-    }
-
-    // 取得該假日的預約截止時間（當週星期三 23:59:59）
-    function getBookingDeadline(dateStr) {
-      const [y, m, d] = dateStr.split('-').map(Number);
-      const target = new Date(y, m - 1, d, 0, 0, 0);
-      const wed = new Date(target);
-      wed.setDate(target.getDate() - 4);
-      wed.setHours(23, 59, 59, 999);
-      return wed;
-    }
-
-    function isPastBookingDeadline(dateStr) {
-      return Date.now() > getBookingDeadline(dateStr).getTime();
+    // 渲染國際 DUPR 對照表（內嵌與彈窗共用）
+    function renderDuprGuideTables() {
+      const tableHtml = `
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b border-zinc-800 text-zinc-400 font-mono">
+              <th class="py-2 pr-3 whitespace-nowrap">方塊色 / 區間</th>
+              <th class="py-2 pr-3 whitespace-nowrap">程度分類</th>
+              <th class="py-2">技術與實戰特徵說明</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/70">
+            ${DUPR_TIERS.map((t) => `
+              <tr class="hover:bg-obsidian-900/50">
+                <td class="py-2.5 pr-3 whitespace-nowrap">
+                  <span class="inline-flex items-center gap-2 font-mono font-bold px-2 py-0.5 rounded border ${t.badgeCls}">
+                    <span class="w-2.5 h-2.5 rounded-[2px] ${t.blockCls}"></span>
+                    ${t.range}
+                  </span>
+                </td>
+                <td class="py-2.5 pr-3 font-bold text-zinc-200 whitespace-nowrap">${t.title}</td>
+                <td class="py-2.5 text-zinc-400 leading-relaxed">${t.desc}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+      const inlineEl = document.getElementById('inline-dupr-table-content');
+      const modalEl = document.getElementById('modal-dupr-table-content');
+      if (inlineEl) inlineEl.innerHTML = tableHtml;
+      if (modalEl) modalEl.innerHTML = tableHtml;
     }
 
     function getSessionStats(dateStr, timeSlotId) {
       let totalPlayers = 0;
       let bookedCourts = 0;
+      let reservedPaddles = 0;
       for (const court of COURTS) {
         const b = state.bookings[`${dateStr}_${court.id}_${timeSlotId}`];
         if (b) {
           bookedCourts++;
           totalPlayers += Number(b.playerCount) || 0;
+          reservedPaddles += Number(b.paddleCount) || 0;
         }
       }
-      return { totalPlayers, bookedCourts };
+      return { totalPlayers, bookedCourts, reservedPaddles };
     }
 
+    // 計算器材外借庫存（未填寫實際歸還日期者視為外借中）
+    function getEquipmentInventory() {
+      let borrowedPaddles = 0;
+      let borrowedNets = 0;
+      for (const r of state.equipmentRentals) {
+        if (!r.actualReturnDate) {
+          borrowedPaddles += Number(r.paddleCount) || 0;
+          borrowedNets += Number(r.netCount) || 0;
+        }
+      }
+      return {
+        borrowedPaddles,
+        borrowedNets,
+        availablePaddles: Math.max(0, TOTAL_PADDLES - borrowedPaddles),
+        availableNets: Math.max(0, TOTAL_NETS - borrowedNets)
+      };
+    }
+
+    // 計算特定假日場次尚可借用的公拍數（總數 7 - 外借未歸還 - 同場次已預訂）
+    function getAvailablePaddlesForSlot(dateStr, timeSlotId) {
+      const inv = getEquipmentInventory();
+      const { reservedPaddles } = getSessionStats(dateStr, timeSlotId);
+      return {
+        borrowedPaddles: inv.borrowedPaddles,
+        reservedInSlot: reservedPaddles,
+        remainingPaddles: Math.max(0, TOTAL_PADDLES - inv.borrowedPaddles - reservedPaddles)
+      };
+    }
+
+    function isSlotBlockedByEvent(dateStr) {
+      const ev = state.companyEvents[dateStr];
+      if (!ev) return null;
+      if (ev.scope === 'full' || ev.scope === 'afternoon') return ev;
+      return null;
+    }
+
+    /* =========================================================================
+       5. Toast 提示與 Modal 輔助函式
+       ========================================================================= */
     function showToast(message, type = 'info') {
       const container = document.getElementById('toast-container');
-      const el = document.createElement('div');
-      const styles = {
-        success: 'bg-emerald-950/95 border-emerald-500/60 text-emerald-200',
-        error: 'bg-rose-950/95 border-rose-500/60 text-rose-200',
-        warning: 'bg-amber-950/95 border-amber-500/60 text-amber-200',
-        info: 'bg-obsidian-900/95 border-amber-500/50 text-amber-200'
+      const colors = {
+        success: 'bg-emerald-950/95 border-emerald-500/50 text-emerald-200',
+        error: 'bg-rose-950/95 border-rose-500/50 text-rose-200',
+        warning: 'bg-amber-950/95 border-amber-500/50 text-amber-200',
+        info: 'bg-obsidian-900/95 border-zinc-700 text-zinc-200'
       };
-      el.className = `pointer-events-auto px-4 py-3 rounded-xl border shadow-2xl text-xs font-bold backdrop-blur-md transition-all duration-300 ${styles[type] || styles.info}`;
+      const el = document.createElement('div');
+      el.className = `pointer-events-auto px-4 py-3 rounded-xl border text-xs font-bold shadow-2xl max-w-xs animate-modal ${colors[type] || colors.info}`;
       el.textContent = message;
       container.appendChild(el);
       setTimeout(() => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(8px)';
-        setTimeout(() => el.remove(), 300);
+        el.style.transition = 'opacity 0.25s';
+        setTimeout(() => el.remove(), 260);
       }, 3200);
     }
 
     function openModal(id) {
-      const modal = document.getElementById(id);
-      if (!modal) return;
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('hidden');
+      el.classList.add('flex');
     }
 
     function closeModal(id) {
-      const modal = document.getElementById(id);
-      if (!modal) return;
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('hidden');
+      el.classList.remove('flex');
     }
 
-    function setSyncStatus(mode, text) {
-      state.mode = mode;
-      const dot = document.getElementById('sync-status-dot');
-      const label = document.getElementById('sync-status-text');
-      const footer = document.getElementById('footer-mode-label');
-      if (mode === 'firebase') {
-        dot.className = 'w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]';
-        label.textContent = text || 'FIREBASE LIVE';
-        label.className = 'text-emerald-400';
-        footer.textContent = 'FIREBASE LIVE SYNC';
-      } else {
-        dot.className = 'w-2 h-2 rounded-full bg-amber-400';
-        label.textContent = text || 'DEMO MODE';
-        label.className = 'text-amber-300';
-        footer.textContent = 'LOCAL DEMO MODE';
+    function copySuggestedFirestoreRules() {
+      const rules = `rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /artifacts/advantech-linkou-arena/public/data/{document=**} {\n      allow read, write: if true;\n    }\n  }\n}`;
+      const ta = document.createElement('textarea');
+      ta.value = rules;
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('已複製 Firestore 建議規則！請至 Firebase Console 貼上並發布', 'success');
+      } catch (err) {
+        showToast('複製失敗，請手動設定 Firestore 規則', 'error');
       }
+      ta.remove();
     }
 
     /* =========================================================================
-       5. 資料存取服務 (Firebase Firestore + Demo Fallback)
+       6. 資料存取層 (DataService)：支援 Firebase 即時同步與本機展示模式
        ========================================================================= */
+    let db = null;
+
     function getDataCol(colName) {
       return collection(db, 'artifacts', APP_ID, 'public', 'data', colName);
     }
@@ -1111,11 +1379,11 @@
         }
       },
 
-      async saveCompanyEvent(dateStr, payload) {
+      async saveCompanyEvent(dateStr, eventData) {
         if (state.mode === 'firebase' && db) {
-          await setDoc(getDataDoc('company_events', dateStr), payload);
+          await setDoc(getDataDoc('company_events', dateStr), eventData);
         } else {
-          state.companyEvents[dateStr] = payload;
+          state.companyEvents[dateStr] = eventData;
           renderAll();
         }
       },
@@ -1129,30 +1397,35 @@
         }
       },
 
-      async saveFacilityApproval(key, payload) {
+      async setFacilityApproval(sessionKey, approvedData) {
         if (state.mode === 'firebase' && db) {
-          await setDoc(getDataDoc('facility_approvals', key), payload);
+          if (approvedData) {
+            await setDoc(getDataDoc('facility_approvals', sessionKey), approvedData);
+          } else {
+            await deleteDoc(getDataDoc('facility_approvals', sessionKey));
+          }
         } else {
-          state.facilityApprovals[key] = payload;
+          if (approvedData) {
+            state.facilityApprovals[sessionKey] = approvedData;
+          } else {
+            delete state.facilityApprovals[sessionKey];
+          }
           renderAll();
         }
       },
 
-      async deleteFacilityApproval(key) {
+      async saveSystemConfig(partial) {
+        const merged = {
+          announcement: state.announcement,
+          adminPasscode: state.adminPasscode,
+          ...partial,
+          updatedAt: Date.now()
+        };
         if (state.mode === 'firebase' && db) {
-          await deleteDoc(getDataDoc('facility_approvals', key));
+          await setDoc(getDataDoc('config', 'system'), merged, { merge: true });
         } else {
-          delete state.facilityApprovals[key];
-          renderAll();
-        }
-      },
-
-      async saveSettings(partial) {
-        if (state.mode === 'firebase' && db) {
-          await setDoc(getDataDoc('config', 'settings'), partial, { merge: true });
-        } else {
-          if (typeof partial.announcement === 'string') state.announcement = partial.announcement;
-          if (typeof partial.adminPasscode === 'string') state.adminPasscode = partial.adminPasscode;
+          if (partial.announcement !== undefined) state.announcement = partial.announcement;
+          if (partial.adminPasscode !== undefined) state.adminPasscode = partial.adminPasscode;
           renderAll();
         }
       },
@@ -1160,11 +1433,17 @@
       async addChatMessage(msg) {
         if (state.mode === 'firebase' && db) {
           await setDoc(getDataDoc('chat_messages', msg.id), msg);
-          const combined = [...state.chatMessages.filter((m) => m.id !== msg.id), msg]
-            .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
-          if (combined.length > MAX_CHAT_MESSAGES) {
-            const toDelete = combined.slice(0, combined.length - MAX_CHAT_MESSAGES);
-            await Promise.all(toDelete.map((old) => deleteDoc(getDataDoc('chat_messages', old.id)).catch(() => {})));
+          // 若超過 30 則，清除最舊的訊息
+          const sorted = [...state.chatMessages, msg].sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+          if (sorted.length > MAX_CHAT_MESSAGES) {
+            const overflow = sorted.slice(0, sorted.length - MAX_CHAT_MESSAGES);
+            for (const oldMsg of overflow) {
+              try {
+                await deleteDoc(getDataDoc('chat_messages', oldMsg.id));
+              } catch (e) {
+                console.warn('清理舊留言失敗:', e);
+              }
+            }
           }
         } else {
           state.chatMessages.push(msg);
@@ -1183,22 +1462,61 @@
           state.chatMessages = state.chatMessages.filter((m) => m.id !== id);
           renderChat();
         }
+      },
+
+      async saveEquipmentRental(rental) {
+        if (state.mode === 'firebase' && db) {
+          await setDoc(getDataDoc('equipment_rentals', rental.id), rental);
+        } else {
+          const idx = state.equipmentRentals.findIndex((r) => r.id === rental.id);
+          if (idx >= 0) {
+            state.equipmentRentals[idx] = rental;
+          } else {
+            state.equipmentRentals.unshift(rental);
+          }
+          renderAll();
+        }
+      },
+
+      async deleteEquipmentRental(id) {
+        if (state.mode === 'firebase' && db) {
+          await deleteDoc(getDataDoc('equipment_rentals', id));
+        } else {
+          state.equipmentRentals = state.equipmentRentals.filter((r) => r.id !== id);
+          renderAll();
+        }
       }
     };
 
     /* =========================================================================
-       6. Firebase 初始化與即時監聽
+       7. 初始化 Firebase 連線或回退至本機展示模式
        ========================================================================= */
-    function seedDemoData() {
-      const openSundays = state.weekendDates.filter((d) => !isPastBookingDeadline(d.dateStr));
-      const sun1 = (openSundays[0] || state.weekendDates[0])?.dateStr;
+    function updateSyncBadge(mode) {
+      const dot = document.getElementById('sync-status-dot');
+      const text = document.getElementById('sync-status-text');
+      const footer = document.getElementById('footer-mode-label');
+      if (mode === 'firebase') {
+        dot.className = 'w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]';
+        text.textContent = 'FIREBASE LIVE';
+        text.className = 'text-emerald-400';
+        footer.textContent = 'FIREBASE LIVE SYNC';
+      } else {
+        dot.className = 'w-2 h-2 rounded-full bg-amber-400';
+        text.textContent = 'DEMO LOCAL';
+        text.className = 'text-amber-400';
+        footer.textContent = 'LOCAL DEMO MODE';
+      }
+    }
 
+    function seedDemoData() {
+      const sun1 = state.weekendDates[0]?.dateStr;
       if (sun1) {
         state.bookings[`${sun1}_A_13:00-15:00`] = {
           date: sun1, courtId: 'A', timeSlot: '13:00-15:00', sport: 'pickleball',
           playerDuprs: ['3.0-3.5', '3.0-3.5', '3.5-4.0', '2.5-3.0'],
           duprLevel: '2.5×1 · 3.0×2 · 3.5×1',
           userName: 'Kevin Lin', dept: 'IIoT / #3310', playerCount: 4,
+          paddleCount: 1,
           lookingForPlayers: true, note: '初中階歡樂實戰局，歡迎程度相近球友 +1！',
           cancelPin: '1234', joiners: [], createdAt: Date.now() - 5400000
         };
@@ -1207,34 +1525,39 @@
           playerDuprs: ['2.0-2.5', '2.5-3.0', '2.5-3.0', 'unrated'],
           duprLevel: '新手×1 · 2.0×1 · 2.5×2',
           userName: 'Sophia Chang', dept: 'HR / #1024', playerCount: 4,
+          paddleCount: 2,
           lookingForPlayers: true, note: '新手友善局，歡迎剛入門同事一起玩！',
           cancelPin: '1234', joiners: [], createdAt: Date.now() - 3000000
         };
       }
 
+      const nextWeek = new Date();
+      nextWeek.setDate(nextWeek.getDate() + 3);
+      state.equipmentRentals = [
+        {
+          id: 'demo_eq_1',
+          borrowerName: 'Alex Wu',
+          ext: '#2188',
+          paddleCount: 2,
+          netCount: 1,
+          expectedReturnDate: formatDateYMD(nextWeek),
+          actualReturnDate: '',
+          note: '週末部門露營體驗匹克球',
+          createdAt: Date.now() - 7200000
+        }
+      ];
+
       state.chatMessages = [
         {
           id: 'demo_msg_1',
-          author: '匹克球社小幫手',
-          text: '歡迎使用研華林口匹克球預約系統！報名時請幫同行球友各自選擇 DUPR 等級，看板會即時顯示方塊分佈圖喔～',
+          name: '系統小幫手',
+          text: '歡迎使用研華林口室內運動場匹克球預約系統！場地報名與器材外借皆會即時同步。',
           createdAt: Date.now() - 3600000
         }
       ];
     }
 
-    function activateDemoMode(showPermissionBanner = false) {
-      if (state.mode === 'demo') return;
-      setSyncStatus('demo', 'DEMO MODE');
-      if (showPermissionBanner) {
-        document.getElementById('firebase-permission-banner').classList.remove('hidden');
-      }
-      if (Object.keys(state.bookings).length === 0 && state.chatMessages.length === 0) {
-        seedDemoData();
-      }
-      renderAll();
-    }
-
-    async function initFirebase() {
+    async function initFirebaseOrDemo() {
       try {
         const app = initializeApp(MANUAL_FIREBASE_CONFIG);
         const auth = getAuth(app);
@@ -1243,50 +1566,57 @@
         try {
           await signInAnonymously(auth);
         } catch (authErr) {
-          console.warn('Anonymous auth skipped:', authErr?.code || authErr);
+          console.warn('匿名登入未啟用，將嘗試直接連線 Firestore:', authErr.code || authErr.message);
         }
 
+        state.mode = 'firebase';
+        updateSyncBadge('firebase');
+
+        let permissionDeniedHandled = false;
         const handleSnapError = (err) => {
-          console.error('Firestore listener error:', err);
-          if (err?.code === 'permission-denied') {
-            activateDemoMode(true);
-          } else {
-            activateDemoMode(false);
+          console.error('Firestore 監聽錯誤:', err);
+          if (err && err.code === 'permission-denied' && !permissionDeniedHandled) {
+            permissionDeniedHandled = true;
+            document.getElementById('firebase-permission-banner').classList.remove('hidden');
+            state.mode = 'demo';
+            updateSyncBadge('demo');
+            seedDemoData();
+            renderAll();
           }
         };
 
         onSnapshot(getDataCol('bookings'), (snap) => {
           const map = {};
-          snap.forEach((d) => { map[d.id] = d.data(); });
+          snap.forEach((d) => {
+            map[d.id] = d.data();
+          });
           state.bookings = map;
-          document.getElementById('firebase-permission-banner').classList.add('hidden');
-          setSyncStatus('firebase', 'FIREBASE LIVE');
           renderAll();
         }, handleSnapError);
 
         onSnapshot(getDataCol('company_events'), (snap) => {
           const map = {};
-          snap.forEach((d) => { map[d.id] = d.data(); });
+          snap.forEach((d) => {
+            map[d.id] = d.data();
+          });
           state.companyEvents = map;
           renderAll();
         }, handleSnapError);
 
         onSnapshot(getDataCol('facility_approvals'), (snap) => {
           const map = {};
-          snap.forEach((d) => { map[d.id] = d.data(); });
+          snap.forEach((d) => {
+            map[d.id] = d.data();
+          });
           state.facilityApprovals = map;
           renderAll();
         }, handleSnapError);
 
-        onSnapshot(getDataDoc('config', 'settings'), (docSnap) => {
+        onSnapshot(getDataDoc('config', 'system'), (docSnap) => {
           if (docSnap.exists()) {
             const data = docSnap.data();
-            if (typeof data.announcement === 'string' && data.announcement.trim()) {
-              state.announcement = data.announcement;
-            }
-            if (typeof data.adminPasscode === 'string' && data.adminPasscode.trim()) {
-              state.adminPasscode = data.adminPasscode;
-            }
+            if (data.announcement) state.announcement = data.announcement;
+            if (data.adminPasscode) state.adminPasscode = String(data.adminPasscode);
             renderAnnouncement();
           }
         }, handleSnapError);
@@ -1301,14 +1631,27 @@
           renderChat();
         }, handleSnapError);
 
+        onSnapshot(getDataCol('equipment_rentals'), (snap) => {
+          const list = [];
+          snap.forEach((d) => {
+            list.push({ id: d.id, ...d.data() });
+          });
+          list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          state.equipmentRentals = list;
+          renderAll();
+        }, handleSnapError);
+
       } catch (err) {
-        console.error('Firebase init failed:', err);
-        activateDemoMode(false);
+        console.error('Firebase 初始化失敗，切換至本機模式:', err);
+        state.mode = 'demo';
+        updateSyncBadge('demo');
+        seedDemoData();
+        renderAll();
       }
     }
 
     /* =========================================================================
-       7. 畫面渲染函式
+       8. 畫面渲染函式 (Render)
        ========================================================================= */
     function renderAnnouncement() {
       const el = document.getElementById('announcement-display');
@@ -1318,9 +1661,10 @@
     function renderAdminButton() {
       const btn = document.getElementById('btn-admin-entry');
       const label = document.getElementById('btn-admin-label');
+      if (!btn || !label) return;
       if (state.isAdmin) {
-        btn.className = 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-400 hover:bg-amber-300 text-obsidian-950 border border-amber-300 shadow-[0_0_14px_rgba(251,191,36,0.3)] transition active:scale-95';
-        label.textContent = '管理控制台 (已登入)';
+        btn.className = 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-400 hover:bg-amber-300 text-obsidian-950 border border-amber-300 transition active:scale-95 shadow-[0_0_12px_rgba(251,191,36,0.3)]';
+        label.textContent = `管理控制台 (${state.adminName || '已登入'})`;
       } else {
         btn.className = 'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 transition active:scale-95';
         label.textContent = '管理員登入';
@@ -1329,121 +1673,113 @@
 
     function renderDateSelector() {
       const container = document.getElementById('date-selector');
-      const summary = document.getElementById('selected-date-summary');
-      const selectedObj = state.weekendDates.find((d) => d.dateStr === state.selectedDate);
-
-      if (selectedObj && summary) {
-        const deadline = getBookingDeadline(selectedObj.dateStr);
-        const dlText = `${deadline.getMonth() + 1}/${deadline.getDate()} (三) 23:59`;
-        summary.textContent = `${selectedObj.dateStr} (${selectedObj.weekdayText})｜預約截止：${dlText}`;
-      }
+      if (!container) return;
 
       container.innerHTML = state.weekendDates.map((d) => {
         const isSelected = d.dateStr === state.selectedDate;
         const isExpired = isPastBookingDeadline(d.dateStr);
-        const hasEvent = !!state.companyEvents[d.dateStr];
-        const totalBookings = Object.values(state.bookings)
-          .filter((b) => b.date === d.dateStr && isValidCurrentBooking(b)).length;
+        const ev = isSlotBlockedByEvent(d.dateStr);
 
-        const baseCls = isSelected
-          ? 'bg-amber-400/15 border-amber-400 text-white shadow-[0_0_16px_rgba(251,191,36,0.2)]'
-          : 'bg-obsidian-850 border-zinc-800 text-zinc-300 hover:border-zinc-600';
+        // 僅統計目前有效 2 小時場次的預約數
+        let count = 0;
+        for (const b of Object.values(state.bookings)) {
+          if (b && b.date === d.dateStr && isValidCurrentBooking(b)) count++;
+        }
 
         return `
           <button type="button" onclick="selectDate('${d.dateStr}')"
-            class="shrink-0 min-w-[116px] p-3 rounded-xl border text-left transition active:scale-95 ${baseCls}">
+            class="shrink-0 min-w-[116px] px-3.5 py-2.5 rounded-xl border text-left transition active:scale-95 ${
+              isSelected
+                ? 'bg-amber-400/15 border-amber-400 shadow-[0_0_14px_rgba(251,191,36,0.2)]'
+                : 'bg-obsidian-850/90 border-zinc-800 hover:border-zinc-600'
+            }">
             <div class="flex items-center justify-between gap-2">
-              <span class="font-mono text-sm font-extrabold ${isSelected ? 'text-amber-300' : 'text-zinc-100'}">${d.monthDay}</span>
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300">日</span>
+              <span class="font-mono text-sm font-black ${isSelected ? 'text-amber-300' : 'text-white'}">${d.monthDay}</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${isSelected ? 'bg-amber-400 text-obsidian-950' : 'bg-zinc-800 text-zinc-300'}">${d.shortWeek}</span>
             </div>
-            <div class="mt-2 flex items-center justify-between text-[10px] font-mono">
-              ${hasEvent
-                ? '<span class="text-rose-400 font-bold">🚫 停開</span>'
+            <div class="mt-1.5 flex items-center justify-between gap-1 text-[10px] font-mono">
+              ${ev
+                ? '<span class="text-rose-400 font-bold">公司活動</span>'
                 : isExpired
-                  ? '<span class="text-zinc-500 font-bold">🔒 已截止</span>'
-                  : '<span class="text-emerald-400 font-bold">● 開放中</span>'}
-              <span class="text-zinc-400">${totalBookings} 場</span>
+                  ? '<span class="text-zinc-500 font-bold">已截止</span>'
+                  : '<span class="text-emerald-400 font-bold">開放預約</span>'}
+              <span class="text-zinc-400">${count} 場</span>
             </div>
           </button>
         `;
       }).join('');
+
+      const summary = document.getElementById('selected-date-summary');
+      const cur = state.weekendDates.find((x) => x.dateStr === state.selectedDate);
+      if (summary && cur) {
+        summary.textContent = `${cur.dateStr} (${cur.weekday})｜截止：${formatDeadlineLabel(cur.dateStr)}`;
+      }
     }
 
     function renderDateAlertBanner() {
       const banner = document.getElementById('date-alert-banner');
+      if (!banner) return;
       const dateStr = state.selectedDate;
-      const event = state.companyEvents[dateStr];
+      const ev = isSlotBlockedByEvent(dateStr);
       const isExpired = isPastBookingDeadline(dateStr);
 
-      if (event) {
-        banner.className = 'rounded-xl border border-rose-500/50 bg-rose-950/70 p-3.5 text-sm text-rose-200 flex flex-wrap items-center justify-between gap-2';
-        banner.innerHTML = `
-          <div class="flex items-center gap-2 font-bold">
-            <span>🚫 公司活動暫停開放：</span>
-            <span class="text-white">${escapeHtml(event.title || '公司專案活動')}</span>
-          </div>
-          <span class="font-mono text-xs text-rose-300">13:00 - 17:00 場地暫停借用</span>
-        `;
-        return;
+      if (ev) {
+        banner.className = 'rounded-xl border border-rose-500/50 bg-rose-950/60 p-3.5 text-xs sm:text-sm text-rose-200 flex items-center justify-between gap-3';
+        banner.innerHTML = `<div>🚫 <strong>公司活動暫停開放：</strong>${escapeHtml(ev.title || '公司活動包場')}（${dateStr} 下午時段取消開放）</div>`;
+      } else if (isExpired) {
+        banner.className = 'rounded-xl border border-amber-500/40 bg-amber-950/40 p-3.5 text-xs sm:text-sm text-amber-200 flex items-center justify-between gap-3';
+        banner.innerHTML = `<div>⏳ <strong>已超過本週三預約期限（${formatDeadlineLabel(dateStr)}）：</strong>一般同仁已停止新增預約與 +1 併團${state.isAdmin ? '（您目前為管理員，仍可協助補登或調整）' : ''}。</div>`;
+      } else {
+        banner.className = 'hidden';
+        banner.innerHTML = '';
       }
-
-      if (isExpired) {
-        const deadline = getBookingDeadline(dateStr);
-        banner.className = 'rounded-xl border border-amber-500/40 bg-amber-950/40 p-3.5 text-xs sm:text-sm text-amber-200 flex flex-wrap items-center justify-between gap-2';
-        banner.innerHTML = `
-          <div>
-            <strong>🔒 本日一般預約已截止</strong>（期限為當週星期三 ${deadline.getMonth() + 1}/${deadline.getDate()} 23:59）。
-            ${state.isAdmin ? '<span class="text-emerald-300 font-bold ml-1">管理員模式仍可補登或調整。</span>' : '如需異動請聯繫場地管理員。'}
-          </div>
-          <span class="font-mono text-xs text-amber-300 font-bold">DEADLINE PASSED</span>
-        `;
-        return;
-      }
-
-      banner.className = 'hidden';
-      banner.innerHTML = '';
     }
 
     function renderSessions() {
       const container = document.getElementById('sessions-container');
+      if (!container) return;
+
       const dateStr = state.selectedDate;
-      const event = state.companyEvents[dateStr];
+      const ev = isSlotBlockedByEvent(dateStr);
       const isExpired = isPastBookingDeadline(dateStr);
 
       container.innerHTML = SUNDAY_SLOTS.map((slot) => {
-        const { totalPlayers, bookedCourts } = getSessionStats(dateStr, slot.id);
+        const { totalPlayers, bookedCourts, reservedPaddles } = getSessionStats(dateStr, slot.id);
+        const { availablePaddles: eqAvailPaddles } = getEquipmentInventory();
+        const remainingSlotPaddles = Math.max(0, eqAvailPaddles - reservedPaddles);
         const isReachedMin = totalPlayers >= MIN_SESSION_PLAYERS;
         const progressPct = Math.min(100, Math.round((totalPlayers / MIN_SESSION_PLAYERS) * 100));
-        const approvalKey = `${dateStr}_${slot.id}`;
-        const approval = state.facilityApprovals[approvalKey];
-        const isClosed = !!event;
+        const sessionKey = `${dateStr}_${slot.id}`;
+        const approval = state.facilityApprovals[sessionKey];
 
-        const courtCardsHtml = COURTS.map((court) => {
+        const courtsHtml = COURTS.map((court) => {
           const slotKey = `${dateStr}_${court.id}_${slot.id}`;
           const booking = state.bookings[slotKey];
 
-          // 篩選條件判斷
-          if (state.activeFilter === 'available' && (booking || isClosed)) return '';
-          if (state.activeFilter === 'looking' && (!booking || !booking.lookingForPlayers || Number(booking.playerCount) >= MAX_PLAYERS_PER_COURT)) return '';
+          // 篩選條件
+          if (state.activeFilter === 'available' && (booking || ev || isExpired)) {
+            return '';
+          }
+          if (state.activeFilter === 'looking' && (!booking || !booking.lookingForPlayers || Number(booking.playerCount) >= MAX_PLAYERS_PER_COURT)) {
+            return '';
+          }
 
-          // 狀態 1：公司活動停開
-          if (isClosed) {
+          if (ev) {
             return `
-              <div class="hazard-stripes rounded-xl border border-rose-500/40 p-4 flex flex-col justify-between min-h-[218px]">
+              <div class="hazard-stripes rounded-xl border border-rose-500/40 p-4 flex flex-col justify-between min-h-[195px]">
                 <div class="flex items-center justify-between">
                   <span class="font-mono text-xs font-extrabold text-rose-300">${court.name}</span>
-                  <span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40">CLOSED</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">停開</span>
                 </div>
-                <div class="my-4 text-center">
-                  <div class="text-sm font-extrabold text-rose-200">公司活動暫停開放</div>
-                  <div class="text-xs text-rose-300/80 mt-1">${escapeHtml(event.title || '場地維護 / 活動')}</div>
+                <div class="my-auto text-center py-4">
+                  <div class="text-sm font-extrabold text-rose-200">🚫 公司活動暫停開放</div>
+                  <div class="text-xs text-rose-300/80 mt-1">${escapeHtml(ev.title || '場地保留')}</div>
                 </div>
-                <div class="font-mono text-[10px] text-rose-400/80 text-center">UNAVAILABLE</div>
+                <div class="font-mono text-[10px] text-rose-400/70 text-center">LOCKED BY ADMIN</div>
               </div>
             `;
           }
 
-          // 狀態 2：已預約匹克球場（顯示 DUPR 方塊簡圖）
           if (booking) {
             const players = Number(booking.playerCount) || 0;
             const isFull = players >= MAX_PLAYERS_PER_COURT;
@@ -1452,130 +1788,133 @@
 
             return `
               <button type="button" onclick="openDetailModal('${slotKey}')"
-                class="text-left rounded-xl border border-amber-500/45 bg-gradient-to-b from-amber-500/10 to-obsidian-900 hover:border-amber-400 p-3.5 flex flex-col justify-between gap-2.5 min-h-[218px] transition active:scale-[0.98] shadow-lg">
+                class="group text-left rounded-xl border border-amber-500/45 bg-obsidian-850/95 hover:bg-obsidian-800 hover:border-amber-400 p-4 flex flex-col justify-between gap-2.5 min-h-[195px] transition active:scale-[0.99] shadow-lg">
                 <div class="flex items-center justify-between gap-2 w-full">
-                  <span class="font-mono text-xs font-extrabold text-zinc-200">${court.name}</span>
-                  <span class="text-[11px] font-bold px-2 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/40">
-                    🏓 匹克球
-                  </span>
+                  <span class="font-mono text-xs font-black text-amber-300 tracking-wide">${court.name}</span>
+                  <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/35">🏓 匹克球</span>
                 </div>
 
-                <div class="space-y-1 w-full">
+                <div class="w-full space-y-1.5">
                   <div class="flex items-baseline justify-between gap-2">
-                    <div class="text-sm font-extrabold text-white truncate">${escapeHtml(booking.userName)}</div>
-                    ${booking.dept ? `<div class="font-mono text-[10px] text-zinc-400 truncate shrink-0">${escapeHtml(booking.dept)}</div>` : ''}
-                  </div>
-                  ${booking.note ? `<div class="text-[11px] text-zinc-300 line-clamp-1">${escapeHtml(booking.note)}</div>` : ''}
-                </div>
-
-                <!-- DUPR 等級方塊簡圖 -->
-                <div class="w-full space-y-1">
-                  <div class="flex items-center justify-between text-[10px] font-mono">
-                    <span class="text-amber-300/90 font-bold">DUPR 分佈簡圖</span>
-                    <span class="text-zinc-400 truncate max-w-[130px]">${escapeHtml(formatDuprSummary(duprCodes))}</span>
+                    <span class="text-sm font-extrabold text-white truncate">${escapeHtml(booking.userName)}</span>
+                    ${booking.dept ? `<span class="text-[10px] font-mono text-zinc-400 truncate">${escapeHtml(booking.dept)}</span>` : ''}
                   </div>
                   ${chartHtml}
+                  ${booking.note ? `<p class="text-[11px] text-zinc-400 truncate">💬 ${escapeHtml(booking.note)}</p>` : ''}
                 </div>
 
                 <div class="pt-2 border-t border-zinc-800/80 flex items-center justify-between gap-2 w-full">
-                  <div class="flex items-center gap-1.5">
+                  <div class="flex flex-wrap items-center gap-1.5">
                     <span class="font-mono text-xs font-extrabold ${isFull ? 'text-rose-300' : 'text-emerald-400'}">
                       👥 ${players}/${MAX_PLAYERS_PER_COURT}
                     </span>
+                    ${Number(booking.paddleCount) > 0
+                      ? `<span class="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">🏓公拍×${Number(booking.paddleCount)}</span>`
+                      : ''}
                     ${isFull
                       ? '<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">滿團</span>'
                       : booking.lookingForPlayers
                         ? '<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">+1 開放</span>'
                         : ''}
                   </div>
-                  <span class="font-mono text-[10px] text-zinc-400">詳情 / +1 →</span>
+                  <span class="font-mono text-[10px] text-zinc-400 shrink-0">詳情 / +1 →</span>
                 </div>
               </button>
             `;
           }
 
-          // 狀態 3：空場可預約
+          // 空場地（可預約或已截止）
           const canBook = !isExpired || state.isAdmin;
           return `
-            <button type="button" ${canBook ? `onclick="openBookingModal('${dateStr}', '${court.id}', '${slot.id}')"` : 'disabled'}
-              class="text-left rounded-xl border border-dashed ${canBook ? 'border-emerald-500/40 bg-obsidian-900/70 hover:bg-emerald-500/10 hover:border-emerald-400 cursor-pointer active:scale-[0.98]' : 'border-zinc-800 bg-obsidian-950/60 opacity-55 cursor-not-allowed'} p-4 flex flex-col justify-between min-h-[218px] transition">
+            <button type="button" ${canBook ? `onclick="openBookingModal('${court.id}', '${slot.id}')"` : 'disabled'}
+              class="rounded-xl border border-dashed ${
+                canBook
+                  ? 'border-emerald-500/40 bg-obsidian-900/60 hover:bg-emerald-950/25 hover:border-emerald-400 cursor-pointer active:scale-[0.99]'
+                  : 'border-zinc-800 bg-obsidian-950/60 opacity-60 cursor-not-allowed'
+              } p-4 flex flex-col justify-between min-h-[195px] transition text-left">
               <div class="flex items-center justify-between w-full">
-                <span class="font-mono text-xs font-extrabold text-zinc-300">${court.name}</span>
-                <span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded ${canBook ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' : 'bg-zinc-800 text-zinc-500'}">
-                  ${canBook ? 'AVAILABLE' : 'LOCKED'}
-                </span>
+                <span class="font-mono text-xs font-extrabold ${canBook ? 'text-emerald-400' : 'text-zinc-500'}">${court.name}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded ${
+                  canBook
+                    ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
+                    : 'bg-zinc-800 text-zinc-500'
+                }">${canBook ? '可預約' : '已截止'}</span>
               </div>
-              <div class="my-6 text-center w-full">
-                <div class="text-2xl ${canBook ? 'text-emerald-400' : 'text-zinc-600'} font-light mb-1">${canBook ? '＋' : '🔒'}</div>
-                <div class="text-xs font-bold ${canBook ? 'text-zinc-200' : 'text-zinc-500'}">
-                  ${canBook ? '點擊預約匹克球 (2H)' : '已超過週三期限'}
+
+              <div class="my-auto text-center py-4">
+                <div class="text-2xl mb-1">${canBook ? '➕' : '🔒'}</div>
+                <div class="text-sm font-extrabold ${canBook ? 'text-zinc-200' : 'text-zinc-500'}">
+                  ${canBook ? '點擊預約匹克球場' : '已過週三預約期限'}
                 </div>
+                <div class="text-[11px] text-zinc-500 mt-1">單場 1～8 人・可填寫多人 DUPR</div>
               </div>
+
               <div class="font-mono text-[10px] text-zinc-500 text-center w-full">
-                ${canBook ? '1~8 PLAYERS // PICKLEBALL' : 'CLOSED'}
+                ${slot.label} (2H)
               </div>
             </button>
           `;
-        }).filter(Boolean).join('');
+        }).join('');
+
+        const hasVisibleCards = courtsHtml.trim().length > 0;
 
         return `
           <div class="bg-obsidian-850/90 rounded-2xl border border-zinc-800 overflow-hidden shadow-xl">
-            <!-- 場次標題列與全場人數進度 -->
+            <!-- 時段標題列 -->
             <div class="bg-obsidian-900/95 border-b border-zinc-800 px-4 sm:px-5 py-4 space-y-3">
               <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
                 <div class="flex flex-wrap items-center gap-2.5">
-                  <span class="font-mono text-sm sm:text-base font-black px-3 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
-                    ${slot.label}
-                  </span>
-                  <span class="text-sm font-extrabold text-white">${slot.title}</span>
+                  <span class="font-mono text-base sm:text-lg font-black text-white tracking-tight">${slot.label}</span>
+                  <span class="text-xs font-bold text-amber-300">${slot.title}</span>
                   <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">${slot.duration}</span>
                   <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/25">🏓 已約 ${bookedCourts}/${COURTS.length} 場</span>
+                  <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-obsidian-950 text-zinc-300 border border-zinc-700" title="扣除器材外借後，本時段公拍預訂與剩餘數">
+                    🎒 公拍已預訂 ${reservedPaddles} / 剩餘 ${remainingSlotPaddles} 隻
+                  </span>
                 </div>
 
-                <!-- 廠務預約狀態與管理員快捷切換 -->
+                <!-- 廠務預約狀態與管理員切換按鈕 -->
                 <div class="flex flex-wrap items-center gap-2">
-                  ${isClosed
-                    ? '<span class="text-xs font-bold px-3 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40">🚫 公司活動停開</span>'
-                    : approval
-                      ? `<span class="text-xs font-extrabold px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">🏢✅ 廠務預約完成${approval.approvedBy ? ` (${escapeHtml(approval.approvedBy)})` : ''}</span>`
-                      : isReachedMin
-                        ? '<span class="text-xs font-bold px-3 py-1 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40">🏢⏳ 已達門檻・待廠務核准</span>'
-                        : '<span class="text-xs font-bold px-3 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">⚠️ 未滿 6 人尚無法向廠務借用</span>'
+                  ${approval
+                    ? `<span class="text-xs font-extrabold px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">🏢✅ 廠務預約完成</span>`
+                    : isReachedMin
+                      ? `<span class="text-xs font-bold px-3 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/35">🏢⏳ 人數達標・待廠務核准</span>`
+                      : `<span class="text-xs font-bold px-3 py-1 rounded-lg bg-zinc-800 text-zinc-400 border border-zinc-700">尚未達 6 人開館門檻</span>`
                   }
-                  ${state.isAdmin && !isClosed ? `
-                    <button type="button" onclick="toggleFacilityApproval('${dateStr}', '${slot.id}')"
-                      class="px-3 py-1 rounded-lg text-xs font-extrabold transition active:scale-95 ${approval
-                        ? 'bg-zinc-800 hover:bg-rose-500/20 text-zinc-300 hover:text-rose-300 border border-zinc-700'
-                        : 'bg-emerald-400 hover:bg-emerald-300 text-obsidian-950'}">
-                      ${approval ? '取消廠務完成標記' : '✓ 標記廠務預約完成'}
+                  ${state.isAdmin ? `
+                    <button type="button" onclick="toggleFacilityApproval('${sessionKey}')"
+                      class="px-3 py-1 rounded-lg text-xs font-extrabold transition active:scale-95 ${
+                        approval
+                          ? 'bg-zinc-800 hover:bg-rose-500/20 text-zinc-300 hover:text-rose-300 border border-zinc-700'
+                          : 'bg-emerald-400 hover:bg-emerald-300 text-obsidian-950'
+                      }">
+                      ${approval ? '取消廠務標記' : '✅ 標記廠務預約完成'}
                     </button>
                   ` : ''}
                 </div>
               </div>
 
-              <!-- 全場 6 人門檻進度條 -->
-              ${!isClosed ? `
-                <div class="space-y-1.5">
-                  <div class="flex items-center justify-between text-xs">
-                    <span class="${isReachedMin ? 'text-emerald-400 font-bold' : 'text-amber-300 font-semibold'}">
-                      ${isReachedMin
-                        ? `✓ 已達 6 人開館門檻（全場四面合計 ${totalPlayers} 人）`
-                        : `⚠️ 全場累計 ${totalPlayers} / ${MIN_SESSION_PLAYERS} 人（尚差 ${MIN_SESSION_PLAYERS - totalPlayers} 人，未滿 6 人全場無法借用）`}
-                    </span>
-                    <span class="font-mono text-[11px] text-zinc-400">${progressPct}%</span>
-                  </div>
-                  <div class="h-1.5 w-full rounded-full bg-obsidian-950 overflow-hidden border border-zinc-800">
-                    <div class="h-full transition-all duration-300 ${isReachedMin ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]' : 'bg-amber-400'}" style="width: ${progressPct}%"></div>
-                  </div>
+              <!-- 全場 6 人借用門檻進度條 -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="${isReachedMin ? 'text-emerald-300 font-bold' : 'text-amber-300 font-bold'}">
+                    ${isReachedMin
+                      ? `✓ 全場四面場地合計 ${totalPlayers} 人，已達公司 6 人借用門檻！`
+                      : `⚠️ 全場累計 ${totalPlayers} / ${MIN_SESSION_PLAYERS} 人（尚差 ${MIN_SESSION_PLAYERS - totalPlayers} 人，未滿 6 人四面場皆無法借用）`}
+                  </span>
+                  <span class="font-mono text-[11px] text-zinc-400">${progressPct}%</span>
                 </div>
-              ` : ''}
+                <div class="h-1.5 w-full rounded-full bg-obsidian-950 overflow-hidden border border-zinc-800">
+                  <div class="h-full transition-all duration-300 ${isReachedMin ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]' : 'bg-amber-400'}" style="width: ${progressPct}%"></div>
+                </div>
+              </div>
             </div>
 
             <!-- A~D 四面場地卡片網格 -->
-            <div class="p-4 sm:p-5">
-              ${courtCardsHtml
-                ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">${courtCardsHtml}</div>`
-                : '<div class="text-center py-8 text-xs text-zinc-500 font-mono">此篩選條件下無符合的場地</div>'}
+            <div class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              ${hasVisibleCards
+                ? courtsHtml
+                : '<div class="col-span-full text-center py-8 text-xs text-zinc-500 font-mono">此篩選條件下目前沒有符合的場地</div>'}
             </div>
           </div>
         `;
@@ -1585,36 +1924,172 @@
     function renderChat() {
       const container = document.getElementById('chat-messages-container');
       const badge = document.getElementById('chat-count-badge');
-      const msgs = state.chatMessages.slice(-MAX_CHAT_MESSAGES);
+      if (!container) return;
 
-      if (badge) {
-        badge.textContent = `${msgs.length} / ${MAX_CHAT_MESSAGES} 則`;
-      }
+      const msgs = state.chatMessages.slice(-MAX_CHAT_MESSAGES);
+      if (badge) badge.textContent = `${msgs.length} / ${MAX_CHAT_MESSAGES} 則`;
 
       if (msgs.length === 0) {
-        container.innerHTML = '<div class="text-center py-6 text-xs text-zinc-500">目前還沒有留言，歡迎搶頭香約球！</div>';
+        container.innerHTML = '<div class="text-center py-6 text-xs text-zinc-500 font-mono">目前還沒有留言，快來揪團或打聲招呼吧！</div>';
         return;
       }
 
-      container.innerHTML = msgs.map((m) => `
-        <div class="bg-obsidian-900/90 border border-zinc-800/90 rounded-xl px-3.5 py-2.5 flex items-start justify-between gap-3">
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-extrabold text-amber-300">${escapeHtml(m.author)}</span>
-              <span class="font-mono text-[10px] text-zinc-500">${formatTimeHM(m.createdAt)}</span>
+      container.innerHTML = msgs.map((m) => {
+        const dt = m.createdAt ? new Date(m.createdAt) : new Date();
+        const timeText = `${String(dt.getMonth() + 1).padStart(2, '0')}/${String(dt.getDate()).padStart(2, '0')} ${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}`;
+        return `
+          <div class="bg-obsidian-900/90 border border-zinc-800/90 rounded-xl px-3.5 py-2.5 flex items-start justify-between gap-3">
+            <div class="min-w-0 space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-extrabold text-amber-300">${escapeHtml(m.name)}</span>
+                <span class="font-mono text-[10px] text-zinc-500">${timeText}</span>
+              </div>
+              <p class="text-xs sm:text-sm text-zinc-200 break-words leading-relaxed">${escapeHtml(m.text)}</p>
             </div>
-            <p class="text-xs sm:text-sm text-zinc-200 mt-1 break-words leading-relaxed">${escapeHtml(m.text)}</p>
+            ${state.isAdmin ? `
+              <button type="button" onclick="handleDeleteChatMessage('${escapeHtml(m.id)}')"
+                class="shrink-0 text-[10px] font-bold px-2 py-1 rounded bg-rose-500/15 hover:bg-rose-500 text-rose-300 hover:text-white transition">
+                刪除
+              </button>
+            ` : ''}
           </div>
-          ${state.isAdmin ? `
-            <button type="button" onclick="handleDeleteChatMessage('${escapeHtml(m.id)}')"
-              class="shrink-0 text-[10px] font-bold px-2 py-1 rounded bg-rose-500/15 hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/30 transition">
-              刪除
-            </button>
-          ` : ''}
-        </div>
-      `).join('');
+        `;
+      }).join('');
 
       container.scrollTop = container.scrollHeight;
+    }
+
+    function renderEquipmentView() {
+      const inv = getEquipmentInventory();
+
+      // 1. 更新上方 Tab 徽章
+      const tabBadge = document.getElementById('tab-equipment-badge');
+      if (tabBadge) {
+        tabBadge.textContent = `拍 ${inv.availablePaddles}/${TOTAL_PADDLES}・網 ${inv.availableNets}/${TOTAL_NETS}`;
+      }
+
+      // 2. 更新庫存卡片
+      const paddleAvailEl = document.getElementById('eq-paddle-avail');
+      const paddleBar = document.getElementById('eq-paddle-bar');
+      const paddleDetail = document.getElementById('eq-paddle-detail');
+      if (paddleAvailEl) {
+        paddleAvailEl.textContent = `${inv.availablePaddles} / ${TOTAL_PADDLES}`;
+        paddleAvailEl.className = `font-mono text-2xl font-black ${inv.availablePaddles === 0 ? 'text-rose-400' : inv.availablePaddles <= 2 ? 'text-amber-400' : 'text-emerald-400'}`;
+        paddleBar.style.width = `${Math.round((inv.availablePaddles / TOTAL_PADDLES) * 100)}%`;
+        paddleBar.className = `h-full transition-all duration-300 ${inv.availablePaddles === 0 ? 'bg-rose-500' : inv.availablePaddles <= 2 ? 'bg-amber-400' : 'bg-emerald-400'}`;
+        paddleDetail.innerHTML = `<span>外借未歸還：${inv.borrowedPaddles} 隻</span><span>連動假日球聚報名數量</span>`;
+      }
+
+      const netAvailEl = document.getElementById('eq-net-avail');
+      const netBar = document.getElementById('eq-net-bar');
+      const netDetail = document.getElementById('eq-net-detail');
+      if (netAvailEl) {
+        netAvailEl.textContent = `${inv.availableNets} / ${TOTAL_NETS}`;
+        netAvailEl.className = `font-mono text-2xl font-black ${inv.availableNets === 0 ? 'text-rose-400' : 'text-cyan-400'}`;
+        netBar.style.width = `${Math.round((inv.availableNets / TOTAL_NETS) * 100)}%`;
+        netBar.className = `h-full transition-all duration-300 ${inv.availableNets === 0 ? 'bg-rose-500' : 'bg-cyan-400'}`;
+        netDetail.innerHTML = `<span>外借未歸還：${inv.borrowedNets} 面</span><span>開放球友登記外借</span>`;
+      }
+
+      // 3. 更新表單最大可借數量
+      const pInput = document.getElementById('eq-input-paddles');
+      const nInput = document.getElementById('eq-input-nets');
+      if (pInput) {
+        pInput.max = inv.availablePaddles;
+        if (Number(pInput.value) > inv.availablePaddles) pInput.value = inv.availablePaddles;
+        document.getElementById('eq-form-paddle-max').textContent = `目前可借 ${inv.availablePaddles} 隻`;
+      }
+      if (nInput) {
+        nInput.max = inv.availableNets;
+        if (Number(nInput.value) > inv.availableNets) nInput.value = inv.availableNets;
+        document.getElementById('eq-form-net-max').textContent = `目前可借 ${inv.availableNets} 面`;
+      }
+
+      // 4. 更新近期假日球聚公拍預留狀況
+      const demandContainer = document.getElementById('eq-sunday-demand-list');
+      if (demandContainer) {
+        const demands = [];
+        for (const d of state.weekendDates.slice(0, 4)) {
+          for (const slot of SUNDAY_SLOTS) {
+            const { reservedPaddles } = getSessionStats(d.dateStr, slot.id);
+            if (reservedPaddles > 0) {
+              demands.push({ date: d.monthDay, timeSlot: slot.id, count: reservedPaddles });
+            }
+          }
+        }
+        demandContainer.innerHTML = demands.length > 0
+          ? demands.map((item) => `
+              <span class="font-mono text-xs px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-300 border border-amber-500/30">
+                ${item.date} (日) ${item.timeSlot}：已預訂公拍 ${item.count} 隻
+              </span>
+            `).join('')
+          : '<span class="text-xs text-zinc-500">目前近期週日球聚尚無公拍預訂紀錄。</span>';
+      }
+
+      // 5. 渲染外借紀錄清單
+      const listContainer = document.getElementById('eq-records-container');
+      const countBadge = document.getElementById('eq-record-count');
+      const filtered = state.equipmentRentals.filter((r) => {
+        if (state.equipmentFilter === 'active') return !r.actualReturnDate;
+        if (state.equipmentFilter === 'returned') return Boolean(r.actualReturnDate);
+        return true;
+      });
+
+      if (countBadge) countBadge.textContent = `${filtered.length} 筆`;
+
+      if (!listContainer) return;
+      if (filtered.length === 0) {
+        listContainer.innerHTML = '<div class="text-center py-8 text-xs text-zinc-500 font-mono">此分類下目前無器材外借紀錄</div>';
+        return;
+      }
+
+      const todayStr = formatDateYMD(new Date());
+      listContainer.innerHTML = filtered.map((r) => {
+        const isReturned = Boolean(r.actualReturnDate);
+        const isOverdue = !isReturned && r.expectedReturnDate && r.expectedReturnDate < todayStr;
+        const items = [];
+        if (Number(r.paddleCount) > 0) items.push(`🏓 公拍 ×${Number(r.paddleCount)} 隻`);
+        if (Number(r.netCount) > 0) items.push(`🥅 球網 ×${Number(r.netCount)} 面`);
+
+        return `
+          <div class="rounded-xl border ${isReturned ? 'border-zinc-800 bg-obsidian-950/60' : isOverdue ? 'border-rose-500/50 bg-rose-950/20' : 'border-amber-500/35 bg-obsidian-950/90'} p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+            <div class="space-y-1.5 min-w-0">
+              <div class="flex flex-wrap items-center gap-2">
+                ${isReturned
+                  ? '<span class="text-[11px] font-extrabold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/35">🟢 已歸還</span>'
+                  : isOverdue
+                    ? '<span class="text-[11px] font-extrabold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40">⚠️ 逾期未還</span>'
+                    : '<span class="text-[11px] font-extrabold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/35">🔴 外借中</span>'}
+                <span class="text-sm font-extrabold text-white">${escapeHtml(r.borrowerName)}</span>
+                <span class="font-mono text-xs text-zinc-400">分機：${escapeHtml(r.ext)}</span>
+                <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-obsidian-900 text-amber-200 border border-zinc-700">
+                  ${items.join(' ＋ ') || '未指定器材'}
+                </span>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-zinc-400">
+                <span>預計歸還：<strong class="${isOverdue ? 'text-rose-300' : 'text-zinc-200'}">${escapeHtml(r.expectedReturnDate || '-')}</strong></span>
+                <span>實際歸還：<strong class="${isReturned ? 'text-emerald-300' : 'text-zinc-500'}">${escapeHtml(r.actualReturnDate || '尚未歸還')}</strong></span>
+                ${r.note ? `<span class="font-sans text-zinc-400">備註：${escapeHtml(r.note)}</span>` : ''}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="openReturnModal('${escapeHtml(r.id)}')"
+                class="px-3.5 py-2 rounded-lg text-xs font-extrabold transition active:scale-95 ${isReturned
+                  ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700'
+                  : 'bg-emerald-400 hover:bg-emerald-300 text-obsidian-950'}">
+                ${isReturned ? '修改歸還日' : '✅ 登記歸還'}
+              </button>
+              ${state.isAdmin ? `
+                <button type="button" onclick="handleDeleteEquipmentRental('${escapeHtml(r.id)}')"
+                  class="px-3 py-2 rounded-lg text-xs font-bold bg-rose-500/15 hover:bg-rose-500 text-rose-300 hover:text-white border border-rose-500/35 transition">
+                  刪除
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     function renderAll() {
@@ -1624,60 +2099,125 @@
       renderDateAlertBanner();
       renderSessions();
       renderChat();
+      renderEquipmentView();
     }
 
     /* =========================================================================
-       8. 互動邏輯：日期切換、多人 DUPR 預約、+1 併團、取消、管理員操作
+       9. 互動操作函式 (Handlers)
        ========================================================================= */
+    function toggleInlineDuprTable() {
+      const body = document.getElementById('inline-dupr-table-body');
+      const label = document.getElementById('dupr-toggle-label');
+      const icon = document.getElementById('dupr-toggle-icon');
+      const isHidden = body.classList.contains('hidden');
+      body.classList.toggle('hidden', !isHidden);
+      label.textContent = isHidden ? '收合說明' : '展開參考';
+      icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
     function selectDate(dateStr) {
       state.selectedDate = dateStr;
       renderAll();
     }
 
-    function updatePlayerCountHint() {
-      const val = parseInt(document.getElementById('input-player-count').value, 10) || 0;
-      const timeSlot = document.getElementById('input-time-slot').value;
-      const { totalPlayers: existingTotal } = getSessionStats(state.selectedDate, timeSlot);
-      const projected = existingTotal + val;
-      const hint = document.getElementById('player-count-status');
+    function switchMainTab(tab) {
+      state.activeTab = tab;
+      const isBooking = tab === 'booking';
+      document.getElementById('view-booking').classList.toggle('hidden', !isBooking);
+      document.getElementById('view-equipment').classList.toggle('hidden', isBooking);
 
-      if (val < 1 || val > MAX_PLAYERS_PER_COURT) {
-        hint.className = 'text-xs px-3 py-2 rounded-lg bg-rose-500/15 border border-rose-500/40 text-rose-300 font-semibold';
-        hint.textContent = `⚠️ 單一場地人數須介於 1～${MAX_PLAYERS_PER_COURT} 人之間。`;
-      } else {
-        // 同步更新每位球友的 DUPR 選單數量
-        renderMultiDuprSelectors('booking-players-dupr-list', val, '球友');
-        if (projected >= MIN_SESSION_PLAYERS) {
-          hint.className = 'text-xs px-3 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 font-semibold';
-          hint.textContent = `✓ 送出後本時段全場累計 ${projected} 人，已達 6 人開館借用門檻！`;
-        } else {
-          hint.className = 'text-xs px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300';
-          hint.textContent = `ℹ️ 送出後全場累計 ${projected} / 6 人（尚差 ${MIN_SESSION_PLAYERS - projected} 人），建議勾選「開放 +1」方便大家併團。`;
-        }
-      }
+      const btnBooking = document.getElementById('tab-btn-booking');
+      const btnEquipment = document.getElementById('tab-btn-equipment');
+      const activeCls = 'flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-extrabold transition bg-amber-400 text-obsidian-950 shadow-[0_0_14px_rgba(251,191,36,0.28)]';
+      const inactiveCls = 'flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition text-zinc-300 hover:text-white hover:bg-obsidian-850';
+
+      btnBooking.className = isBooking ? activeCls : inactiveCls;
+      btnEquipment.className = !isBooking ? activeCls : inactiveCls;
+      renderEquipmentView();
     }
 
-    function openBookingModal(dateStr, courtId, timeSlot) {
-      if (isPastBookingDeadline(dateStr) && !state.isAdmin) {
-        showToast('此日期已超過當週星期三 23:59 預約期限', 'warning');
-        return;
+    function setEquipmentFilter(filter) {
+      state.equipmentFilter = filter;
+      document.querySelectorAll('.eq-filter-btn').forEach((b) => {
+        const active = b.dataset.eqFilter === filter;
+        b.className = active
+          ? 'eq-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-amber-400 text-obsidian-950'
+          : 'eq-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-obsidian-850 text-zinc-300 border border-zinc-700 hover:border-zinc-500';
+      });
+      renderEquipmentView();
+    }
+
+    function updatePlayerCountHint() {
+      const count = parseInt(document.getElementById('input-player-count').value, 10) || 1;
+      const clamped = Math.max(1, Math.min(MAX_PLAYERS_PER_COURT, count));
+      const hint = document.getElementById('player-count-status');
+      const timeSlot = document.getElementById('input-time-slot').value;
+      const { totalPlayers } = getSessionStats(state.selectedDate, timeSlot);
+      const projected = totalPlayers + clamped;
+
+      if (projected >= MIN_SESSION_PLAYERS) {
+        hint.className = 'text-xs px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300';
+        hint.textContent = `✓ 本次報名 ${clamped} 人後，該時段全場累計 ${projected} 人（已達 6 人開館借用門檻）`;
+      } else {
+        hint.className = 'text-xs px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300';
+        hint.textContent = `⚠️ 本次報名 ${clamped} 人後，該時段全場累計 ${projected} 人（還差 ${MIN_SESSION_PLAYERS - projected} 人達 6 人門檻，建議保持勾選「開放 +1」）`;
       }
 
-      document.getElementById('input-slot-key').value = `${dateStr}_${courtId}_${timeSlot}`;
+      renderMultiDuprSelectors('booking-players-dupr-list', clamped, '球友');
+    }
+
+    function updateBookingPaddleUI() {
+      const timeSlot = document.getElementById('input-time-slot').value;
+      const { borrowedPaddles, reservedInSlot, remainingPaddles } = getAvailablePaddlesForSlot(state.selectedDate, timeSlot);
+      const chk = document.getElementById('input-need-paddle');
+      const qtyWrap = document.getElementById('booking-paddle-qty-wrap');
+      const qtyInput = document.getElementById('input-paddle-count');
+      const badge = document.getElementById('booking-paddle-avail-badge');
+      const hint = document.getElementById('booking-paddle-stock-hint');
+
+      badge.textContent = remainingPaddles > 0 ? `可借 ${remainingPaddles} 隻` : '公拍已借滿';
+      badge.className = remainingPaddles > 0
+        ? 'font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
+        : 'font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30';
+
+      if (remainingPaddles === 0) {
+        chk.checked = false;
+        chk.disabled = true;
+        qtyWrap.classList.add('hidden');
+      } else {
+        chk.disabled = false;
+        qtyInput.max = remainingPaddles;
+        if (Number(qtyInput.value) > remainingPaddles) qtyInput.value = remainingPaddles;
+        if (Number(qtyInput.value) < 1) qtyInput.value = 1;
+        qtyWrap.classList.toggle('hidden', !chk.checked);
+      }
+
+      hint.textContent = `公拍總數 ${TOTAL_PADDLES} 隻｜器材外借中 ${borrowedPaddles} 隻｜本時段其他場已預訂 ${reservedInSlot} 隻 → 本次最多可借 ${remainingPaddles} 隻`;
+    }
+
+    function openBookingModal(courtId, timeSlot) {
+      if (isPastBookingDeadline(state.selectedDate) && !state.isAdmin) {
+        showToast('已超過當週星期三預約期限，無法新增預約', 'warning');
+        return;
+      }
+      const slotKey = `${state.selectedDate}_${courtId}_${timeSlot}`;
+      document.getElementById('input-slot-key').value = slotKey;
       document.getElementById('input-court-id').value = courtId;
       document.getElementById('input-time-slot').value = timeSlot;
-      document.getElementById('booking-modal-subtitle').textContent = `${dateStr} (日)｜COURT ${courtId}｜${timeSlot}`;
-
+      document.getElementById('booking-modal-subtitle').textContent = `${state.selectedDate} (日)｜COURT ${courtId}｜${timeSlot}`;
       document.getElementById('booking-form-error').classList.add('hidden');
+
       document.getElementById('input-player-count').value = 4;
       document.getElementById('input-cancel-pin').value = '';
       document.getElementById('input-note').value = '';
       document.getElementById('input-looking').checked = true;
+      document.getElementById('input-need-paddle').checked = false;
+      document.getElementById('input-paddle-count').value = 1;
 
-      // 重置並生成預設 4 人的 DUPR 選單
       document.getElementById('booking-players-dupr-list').innerHTML = '';
       renderMultiDuprSelectors('booking-players-dupr-list', 4, '球友', ['3.0-3.5', '3.0-3.5', '3.0-3.5', '3.0-3.5']);
       updatePlayerCountHint();
+      updateBookingPaddleUI();
       openModal('modal-booking');
     }
 
@@ -1694,36 +2234,55 @@
       document.getElementById('detail-subtitle').textContent = `${booking.date} (日)｜${booking.timeSlot} (2 HRS)`;
       document.getElementById('detail-user').textContent = booking.dept ? `${booking.userName} (${booking.dept})` : booking.userName;
       document.getElementById('detail-players').textContent = `${booking.playerCount} / ${MAX_PLAYERS_PER_COURT} 人`;
+      const paddleUsed = Number(booking.paddleCount) || 0;
+      document.getElementById('detail-paddles').textContent = paddleUsed > 0 ? `已預訂 ${paddleUsed} 隻公拍` : '無需公拍';
 
       document.getElementById('detail-dupr-chart').innerHTML = renderDuprBlockChartHtml(duprCodes, false);
-      document.getElementById('detail-dupr-summary').textContent = `分佈統計：${formatDuprSummary(duprCodes)}`;
+      document.getElementById('detail-dupr-summary').textContent = `分佈明細：${formatDuprSummary(duprCodes)}`;
 
       const noteRow = document.getElementById('detail-note-row');
-      noteRow.textContent = booking.note ? `📝 備註：${booking.note}` : '📝 備註：無';
+      noteRow.textContent = booking.note ? `💬 備註：${booking.note}` : '💬 無備註';
 
       const joinersRow = document.getElementById('detail-joiners-row');
-      if (Array.isArray(booking.joiners) && booking.joiners.length > 0) {
+      if (booking.joiners && booking.joiners.length > 0) {
         joinersRow.classList.remove('hidden');
-        joinersRow.textContent = `🙋 已 +1 球友：${booking.joiners.map((j) => {
-          const dText = Array.isArray(j.duprs) && j.duprs.length
-            ? formatDuprSummary(j.duprs)
-            : (j.dupr || '');
-          return dText ? `${j.name} (+${j.count}｜${dText})` : `${j.name} (+${j.count})`;
-        }).join('、')}`;
+        const joinerLabels = booking.joiners.map((j) => {
+          const dStr = Array.isArray(j.duprs) && j.duprs.length ? `｜${formatDuprSummary(j.duprs)}` : '';
+          const pStr = Number(j.paddleCount) > 0 ? `｜公拍×${j.paddleCount}` : '';
+          return `${escapeHtml(j.name)} (+${j.count}${dStr}${pStr})`;
+        });
+        joinersRow.innerHTML = `<strong>🙋 已 +1 併團名單：</strong>${joinerLabels.join('、')}`;
       } else {
         joinersRow.classList.add('hidden');
       }
 
+      // 線上 +1 區塊
       const joinSection = document.getElementById('join-section');
       if (booking.lookingForPlayers && remaining > 0 && (!isExpired || state.isAdmin)) {
         joinSection.classList.remove('hidden');
         document.getElementById('join-remaining-text').textContent = `尚可加入 ${remaining} 人`;
-        const joinCountInput = document.getElementById('join-input-count');
-        joinCountInput.max = remaining;
-        joinCountInput.value = 1;
+        const countInput = document.getElementById('join-input-count');
+        countInput.max = remaining;
+        countInput.value = 1;
         document.getElementById('join-input-name').value = '';
         document.getElementById('join-players-dupr-list').innerHTML = '';
         renderMultiDuprSelectors('join-players-dupr-list', 1, '加入者', ['3.0-3.5']);
+
+        const { remainingPaddles } = getAvailablePaddlesForSlot(booking.date, booking.timeSlot);
+        const jChk = document.getElementById('join-need-paddle');
+        const jWrap = document.getElementById('join-paddle-qty-wrap');
+        const jQty = document.getElementById('join-paddle-count');
+        const jBadge = document.getElementById('join-paddle-avail-badge');
+        jChk.checked = false;
+        jWrap.classList.add('hidden');
+        jBadge.textContent = remainingPaddles > 0 ? `本時段可借 ${remainingPaddles} 隻` : '公拍已借滿';
+        if (remainingPaddles === 0) {
+          jChk.disabled = true;
+        } else {
+          jChk.disabled = false;
+          jQty.max = remainingPaddles;
+          jQty.value = 1;
+        }
       } else {
         joinSection.classList.add('hidden');
       }
@@ -1739,7 +2298,7 @@
       if (!booking) return;
 
       const name = document.getElementById('join-input-name').value.trim();
-      const addCount = parseInt(document.getElementById('join-input-count').value, 10) || 0;
+      const addCount = parseInt(document.getElementById('join-input-count').value, 10) || 1;
       const remaining = MAX_PLAYERS_PER_COURT - Number(booking.playerCount);
 
       if (!name) {
@@ -1747,7 +2306,7 @@
         return;
       }
       if (addCount < 1 || addCount > remaining) {
-        showToast(`本場最多還可加入 ${remaining} 人`, 'warning');
+        showToast(`最多只能再加入 ${remaining} 人（單場上限 8 人）`, 'warning');
         return;
       }
 
@@ -1755,12 +2314,21 @@
         .slice(0, addCount)
         .map((sel) => normalizeDuprCode(sel.value));
 
+      const joinNeedPaddle = document.getElementById('join-need-paddle').checked;
+      const addPaddles = joinNeedPaddle ? (parseInt(document.getElementById('join-paddle-count').value, 10) || 0) : 0;
+      const { remainingPaddles } = getAvailablePaddlesForSlot(booking.date, booking.timeSlot);
+      if (joinNeedPaddle && (addPaddles < 1 || addPaddles > remainingPaddles)) {
+        showToast(`本時段目前最多還可借用 ${remainingPaddles} 隻公拍`, 'warning');
+        return;
+      }
+
       const existingDuprs = getBookingPlayerDuprs(booking);
       const mergedDuprs = [...existingDuprs, ...addedDuprs];
 
       const newJoiner = {
         name,
         count: addCount,
+        paddleCount: addPaddles,
         duprs: addedDuprs,
         joinedAt: Date.now()
       };
@@ -1769,6 +2337,7 @@
         ...booking,
         sport: 'pickleball',
         playerCount: Number(booking.playerCount) + addCount,
+        paddleCount: (Number(booking.paddleCount) || 0) + addPaddles,
         playerDuprs: mergedDuprs,
         duprLevel: formatDuprSummary(mergedDuprs),
         joiners: [...(booking.joiners || []), newJoiner]
@@ -1777,21 +2346,21 @@
       try {
         await DataService.saveBooking(slotKey, updated);
         closeModal('modal-detail');
-        showToast(`已成功 +${addCount} 加入 ${booking.userName} 的匹克球場次！`, 'success');
+        showToast(`已成功 +${addCount} 加入 COURT ${booking.courtId}！`, 'success');
       } catch (err) {
         console.error(err);
         showToast('加入失敗，請稍後再試', 'error');
       }
     }
 
-    async function handleCancelBooking(isAdminForce) {
+    async function handleCancelBooking(forceAdmin = false) {
       const slotKey = state.activeDetailKey;
       const booking = state.bookings[slotKey];
       if (!booking) return;
 
-      if (!isAdminForce) {
+      if (!forceAdmin) {
         const pin = document.getElementById('input-verify-pin').value.trim();
-        if (pin !== String(booking.cancelPin)) {
+        if (pin !== String(booking.cancelPin || '')) {
           showToast('取消密碼錯誤，請重新確認', 'error');
           return;
         }
@@ -1800,35 +2369,65 @@
       try {
         await DataService.deleteBooking(slotKey);
         closeModal('modal-detail');
-        showToast('已成功取消該筆 2 小時預約', 'success');
+        showToast(`已取消 COURT ${booking.courtId} (${booking.timeSlot}) 預約`, 'info');
       } catch (err) {
         console.error(err);
         showToast('取消失敗，請稍後再試', 'error');
       }
     }
 
-    async function toggleFacilityApproval(dateStr, timeSlot) {
-      if (!state.isAdmin) return;
-      const key = `${dateStr}_${timeSlot}`;
+    function openReturnModal(rentalId) {
+      const rental = state.equipmentRentals.find((r) => r.id === rentalId);
+      if (!rental) return;
+      state.activeReturnRentalId = rentalId;
+      const items = [];
+      if (Number(rental.paddleCount) > 0) items.push(`公拍 ${rental.paddleCount} 隻`);
+      if (Number(rental.netCount) > 0) items.push(`球網 ${rental.netCount} 面`);
+      document.getElementById('return-modal-info').innerHTML = `
+        <div><strong>借用人：</strong>${escapeHtml(rental.borrowerName)} (${escapeHtml(rental.ext)})</div>
+        <div><strong>借用項目：</strong>${items.join('、')}</div>
+        <div><strong>預計歸還：</strong>${escapeHtml(rental.expectedReturnDate || '-')}</div>
+      `;
+      document.getElementById('input-actual-return-date').value = rental.actualReturnDate || formatDateYMD(new Date());
+      openModal('modal-return-equipment');
+    }
+
+    async function handleConfirmReturn() {
+      const rental = state.equipmentRentals.find((r) => r.id === state.activeReturnRentalId);
+      if (!rental) return;
+      const returnDate = document.getElementById('input-actual-return-date').value;
+      if (!returnDate) {
+        showToast('請選擇實際歸還日期', 'warning');
+        return;
+      }
       try {
-        if (state.facilityApprovals[key]) {
-          await DataService.deleteFacilityApproval(key);
-          showToast('已取消廠務預約完成標記', 'info');
-        } else {
-          await DataService.saveFacilityApproval(key, {
-            date: dateStr,
-            timeSlot,
-            approvedBy: state.adminName || '管理員',
-            approvedAt: Date.now()
-          });
-          showToast('已標記為「廠務預約完成」', 'success');
-        }
+        await DataService.saveEquipmentRental({
+          ...rental,
+          actualReturnDate: returnDate,
+          returnedAt: Date.now()
+        });
+        closeModal('modal-return-equipment');
+        showToast('已更新實際歸還日期並釋出器材庫存！', 'success');
       } catch (err) {
         console.error(err);
-        showToast('更新廠務狀態失敗', 'error');
+        showToast('更新歸還紀錄失敗，請稍後再試', 'error');
       }
     }
 
+    async function handleDeleteEquipmentRental(rentalId) {
+      if (!state.isAdmin) return;
+      try {
+        await DataService.deleteEquipmentRental(rentalId);
+        showToast('已刪除該筆器材外借紀錄', 'info');
+      } catch (err) {
+        console.error(err);
+        showToast('刪除失敗，請稍後再試', 'error');
+      }
+    }
+
+    /* =========================================================================
+       10. 管理員登入與控制台操作
+       ========================================================================= */
     function handleAdminButtonClick() {
       if (state.isAdmin) {
         openAdminConsole();
@@ -1840,22 +2439,23 @@
     }
 
     function openAdminConsole() {
-      document.getElementById('admin-console-whoami').textContent = `CURRENT ADMIN: ${state.adminName || '管理員'}`;
+      document.getElementById('admin-console-whoami').textContent = `ADMIN: ${state.adminName || '社團管理員'} // LOGGED IN`;
+      const dateSel = document.getElementById('admin-event-date');
+      dateSel.innerHTML = state.weekendDates
+        .map((d) => `<option value="${d.dateStr}" ${d.dateStr === state.selectedDate ? 'selected' : ''}>${d.dateStr} (${d.shortWeek})</option>`)
+        .join('');
       document.getElementById('admin-announcement-input').value = state.announcement;
       document.getElementById('admin-new-passcode').value = '';
 
-      const legacyCount = Object.values(state.bookings).filter((b) => !isValidCurrentBooking(b)).length;
+      const legacyKeys = Object.entries(state.bookings)
+        .filter(([, b]) => !isValidCurrentBooking(b))
+        .map(([k]) => k);
       const legacyText = document.getElementById('admin-legacy-count-text');
       if (legacyText) {
-        legacyText.textContent = legacyCount > 0
-          ? `目前偵測到 ${legacyCount} 筆舊版時段殘留紀錄（不會顯示在看板上），建議一鍵清除`
-          : '目前資料庫乾淨，無舊版無效時段殘留紀錄 ✓';
+        legacyText.textContent = legacyKeys.length > 0
+          ? `偵測到 ${legacyKeys.length} 筆舊版（非目前 2 小時制）的殘留資料，建議一鍵清理。`
+          : '目前資料庫中無舊版殘留資料，狀態乾淨！';
       }
-
-      const dateSel = document.getElementById('admin-event-date');
-      dateSel.innerHTML = state.weekendDates.map((d) =>
-        `<option value="${d.dateStr}" ${d.dateStr === state.selectedDate ? 'selected' : ''}>${d.dateStr} (${d.weekdayText})</option>`
-      ).join('');
 
       openModal('modal-admin-console');
     }
@@ -1863,81 +2463,80 @@
     function handleAdminLogout() {
       state.isAdmin = false;
       state.adminName = '';
-      sessionStorage.removeItem('adv_admin_auth');
+      sessionStorage.removeItem('advantech_pkl_admin');
       closeModal('modal-admin-console');
       renderAll();
       showToast('已登出管理員模式', 'info');
     }
 
-    async function handleSaveCompanyEvent() {
-      const dateStr = document.getElementById('admin-event-date').value;
-      const scope = document.getElementById('admin-event-scope').value;
-      const title = document.getElementById('admin-event-title').value.trim() || '公司專案活動';
+    async function toggleFacilityApproval(sessionKey) {
+      if (!state.isAdmin) return;
+      const exists = Boolean(state.facilityApprovals[sessionKey]);
       try {
-        await DataService.saveCompanyEvent(dateStr, {
-          date: dateStr,
-          scope,
-          title,
-          updatedBy: state.adminName || '管理員',
-          updatedAt: Date.now()
-        });
-        showToast(`已將 ${dateStr} 設為停開`, 'success');
+        await DataService.setFacilityApproval(
+          sessionKey,
+          exists ? null : { approvedBy: state.adminName || 'Admin', approvedAt: Date.now() }
+        );
+        showToast(exists ? '已取消廠務預約標記' : '已標記為「廠務預約完成」！', 'success');
       } catch (err) {
         console.error(err);
-        showToast('設定停開失敗', 'error');
+        showToast('更新廠務狀態失敗', 'error');
+      }
+    }
+
+    async function handleSaveCompanyEvent() {
+      if (!state.isAdmin) return;
+      const dateStr = document.getElementById('admin-event-date').value;
+      const scope = document.getElementById('admin-event-scope').value;
+      const title = document.getElementById('admin-event-title').value.trim() || '公司活動暫停開放';
+      try {
+        await DataService.saveCompanyEvent(dateStr, { date: dateStr, scope, title, updatedAt: Date.now() });
+        showToast(`已將 ${dateStr} 設為公司活動停開`, 'success');
+      } catch (err) {
+        console.error(err);
+        showToast('設定失敗，請稍後再試', 'error');
       }
     }
 
     async function handleRemoveCompanyEvent() {
+      if (!state.isAdmin) return;
       const dateStr = document.getElementById('admin-event-date').value;
       try {
         await DataService.deleteCompanyEvent(dateStr);
-        showToast(`已恢復 ${dateStr} 場地開放`, 'success');
+        showToast(`已恢復 ${dateStr} 開放預約`, 'success');
       } catch (err) {
         console.error(err);
-        showToast('恢復開放失敗', 'error');
+        showToast('操作失敗，請稍後再試', 'error');
       }
     }
 
     async function handleSaveAnnouncement() {
+      if (!state.isAdmin) return;
       const text = document.getElementById('admin-announcement-input').value.trim();
-      if (!text) {
-        showToast('公告內容不可為空', 'warning');
-        return;
-      }
+      if (!text) return;
       try {
-        await DataService.saveSettings({ announcement: text });
-        showToast('系統公告已更新並同步', 'success');
+        await DataService.saveSystemConfig({ announcement: text });
+        showToast('置頂公告已儲存並同步！', 'success');
       } catch (err) {
         console.error(err);
-        showToast('更新公告失敗', 'error');
+        showToast('公告更新失敗', 'error');
       }
     }
 
     async function handleUpdateAdminPasscode() {
+      if (!state.isAdmin) return;
       const newCode = document.getElementById('admin-new-passcode').value.trim();
       if (newCode.length < 4) {
         showToast('新密碼長度至少需 4 碼', 'warning');
         return;
       }
       try {
-        await DataService.saveSettings({ adminPasscode: newCode });
+        await DataService.saveSystemConfig({ adminPasscode: newCode });
         document.getElementById('admin-new-passcode').value = '';
-        showToast('管理員共用密碼已更新並同步至雲端', 'success');
+        showToast('管理員共用密碼已更新並同步！', 'success');
       } catch (err) {
         console.error(err);
-        showToast('更新密碼失敗', 'error');
-      }
-    }
-
-    async function handleDeleteChatMessage(msgId) {
-      if (!state.isAdmin) return;
-      try {
-        await DataService.deleteChatMessage(msgId);
-        showToast('已刪除該則留言', 'info');
-      } catch (err) {
-        console.error(err);
-        showToast('刪除留言失敗', 'error');
+        showToast('密碼更新失敗', 'error');
       }
     }
 
@@ -1945,26 +2544,36 @@
       if (!state.isAdmin) return;
       const legacyKeys = Object.entries(state.bookings)
         .filter(([, b]) => !isValidCurrentBooking(b))
-        .map(([key]) => key);
-
+        .map(([k]) => k);
       if (legacyKeys.length === 0) {
-        showToast('目前沒有任何舊版殘留紀錄需要清理', 'info');
+        showToast('沒有需要清理的舊版殘留資料', 'info');
         return;
       }
-
       try {
-        await Promise.all(legacyKeys.map((key) => DataService.deleteBooking(key)));
-        const legacyText = document.getElementById('admin-legacy-count-text');
-        if (legacyText) legacyText.textContent = '目前資料庫乾淨，無舊版無效時段殘留紀錄 ✓';
-        showToast(`已成功清理 ${legacyKeys.length} 筆舊版殘留預約紀錄！`, 'success');
+        for (const key of legacyKeys) {
+          await DataService.deleteBooking(key);
+        }
+        showToast(`已成功清理 ${legacyKeys.length} 筆舊版殘留資料！`, 'success');
+        openAdminConsole();
       } catch (err) {
         console.error(err);
-        showToast('清理失敗，請稍後再試', 'error');
+        showToast('清理過程發生錯誤', 'error');
+      }
+    }
+
+    async function handleDeleteChatMessage(id) {
+      if (!state.isAdmin) return;
+      try {
+        await DataService.deleteChatMessage(id);
+        showToast('已刪除該則留言', 'info');
+      } catch (err) {
+        console.error(err);
+        showToast('刪除留言失敗', 'error');
       }
     }
 
     function exportBookingsCSV() {
-      const rows = [['日期', '時段', '場地', '預約人', '部門/分機', '總人數', 'DUPR分佈統計', '各球友DUPR明細', '開放+1', '備註', '已+1名單']];
+      const rows = [['日期', '時段', '場地', '預約人', '部門/分機', '總人數', '預訂公拍數', 'DUPR分佈統計', '各球友DUPR明細', '開放+1', '備註', '已+1名單']];
       const list = Object.values(state.bookings)
         .filter(isValidCurrentBooking)
         .sort((a, b) =>
@@ -1978,50 +2587,29 @@
         }).join('; ');
         rows.push([
           b.date, b.timeSlot, `COURT ${b.courtId}`,
-          b.userName, b.dept || '', b.playerCount,
+          b.userName, b.dept || '', b.playerCount, Number(b.paddleCount) || 0,
           formatDuprSummary(duprCodes),
           duprCodes.join(' / '),
           b.lookingForPlayers ? '是' : '否', b.note || '', joinerText
         ]);
       }
-      const csv = '\uFEFF' + rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+      const csvContent = '\uFEFF' + rows
+        .map((r) => r.map((cell) => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(','))
+        .join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `advantech_linkou_pickleball_${formatDateYMD(new Date())}.csv`;
+      a.download = `advantech_pickleball_bookings_${formatDateYMD(new Date())}.csv`;
       a.click();
       URL.revokeObjectURL(url);
-      showToast('已下載匹克球預約紀錄 CSV 報表', 'success');
-    }
-
-    function copySuggestedFirestoreRules() {
-      const rules = `rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /artifacts/advantech-linkou-arena/public/data/{document=**} {\n      allow read, write: if true;\n    }\n  }\n}`;
-      const ta = document.createElement('textarea');
-      ta.value = rules;
-      document.body.appendChild(ta);
-      ta.select();
-      try {
-        document.execCommand('copy');
-        showToast('已複製建議的 Firestore 規則！', 'success');
-      } catch {
-        showToast('複製失敗，請手動複製說明中的規則', 'error');
-      }
-      ta.remove();
+      showToast('CSV 報表已開始下載', 'success');
     }
 
     /* =========================================================================
-       9. 表單送出與事件監聽綁定
+       11. 表單與按鈕事件綁定
        ========================================================================= */
-    document.getElementById('input-player-count').addEventListener('input', updatePlayerCountHint);
-
-    document.getElementById('join-input-count').addEventListener('input', (e) => {
-      const maxVal = parseInt(e.target.max, 10) || MAX_PLAYERS_PER_COURT;
-      const val = Math.max(1, Math.min(maxVal, parseInt(e.target.value, 10) || 1));
-      renderMultiDuprSelectors('join-players-dupr-list', val, '加入者');
-    });
-
-    // 篩選按鈕切換
     document.querySelectorAll('.filter-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         state.activeFilter = btn.dataset.filter;
@@ -2035,47 +2623,68 @@
       });
     });
 
-    // 新增預約表單送出
+    document.getElementById('input-player-count').addEventListener('input', updatePlayerCountHint);
+    document.getElementById('input-need-paddle').addEventListener('change', updateBookingPaddleUI);
+
+    document.getElementById('join-need-paddle').addEventListener('change', (e) => {
+      document.getElementById('join-paddle-qty-wrap').classList.toggle('hidden', !e.target.checked);
+    });
+
+    document.getElementById('join-input-count').addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10) || 1;
+      const max = parseInt(e.target.max, 10) || 7;
+      renderMultiDuprSelectors('join-players-dupr-list', Math.max(1, Math.min(max, val)), '加入者');
+    });
+
+    // 新增場地預約表單送出
     document.getElementById('booking-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const errBox = document.getElementById('booking-form-error');
       errBox.classList.add('hidden');
-
-      const slotKey = document.getElementById('input-slot-key').value;
-      const courtId = document.getElementById('input-court-id').value;
-      const timeSlot = document.getElementById('input-time-slot').value;
-      const userName = document.getElementById('input-user-name').value.trim();
-      const dept = document.getElementById('input-dept').value.trim();
-      const playerCount = parseInt(document.getElementById('input-player-count').value, 10) || 0;
-      const cancelPin = document.getElementById('input-cancel-pin').value.trim();
-      const lookingForPlayers = document.getElementById('input-looking').checked;
-      const note = document.getElementById('input-note').value.trim();
 
       const showErr = (msg) => {
         errBox.textContent = msg;
         errBox.classList.remove('hidden');
       };
 
-      if (state.bookings[slotKey]) {
-        showErr('該場地剛剛已被預約，請選擇其他場地。');
-        return;
-      }
+      const slotKey = document.getElementById('input-slot-key').value;
+      const courtId = document.getElementById('input-court-id').value;
+      const timeSlot = document.getElementById('input-time-slot').value;
+      const userName = document.getElementById('input-user-name').value.trim();
+      const dept = document.getElementById('input-dept').value.trim();
+      const playerCount = parseInt(document.getElementById('input-player-count').value, 10);
+      const cancelPin = document.getElementById('input-cancel-pin').value.trim();
+      const lookingForPlayers = document.getElementById('input-looking').checked;
+      const note = document.getElementById('input-note').value.trim();
+
       if (!userName) {
-        showErr('請填寫主揪姓名。');
+        showErr('請填寫主揪姓名或英文名。');
         return;
       }
-      if (playerCount < 1 || playerCount > MAX_PLAYERS_PER_COURT) {
-        showErr(`本場人數須介於 1～${MAX_PLAYERS_PER_COURT} 人之間。`);
+      if (isNaN(playerCount) || playerCount < 1 || playerCount > MAX_PLAYERS_PER_COURT) {
+        showErr(`單場報名人數須介於 1 至 ${MAX_PLAYERS_PER_COURT} 人之間。`);
         return;
       }
       if (!/^\d{4}$/.test(cancelPin)) {
-        showErr('請輸入 4 位數字作為取消密碼。');
+        showErr('請設定 4 位數字的取消密碼（例如 1234）。');
+        return;
+      }
+      if (state.bookings[slotKey]) {
+        showErr('此場地時段剛剛已被其他同仁預約，請選擇其他場地。');
         return;
       }
 
       const playerDuprs = Array.from(document.querySelectorAll('#booking-players-dupr-list select'))
         .slice(0, playerCount)
         .map((sel) => normalizeDuprCode(sel.value));
+
+      const needPaddle = document.getElementById('input-need-paddle').checked;
+      const paddleCount = needPaddle ? (parseInt(document.getElementById('input-paddle-count').value, 10) || 0) : 0;
+      const { remainingPaddles } = getAvailablePaddlesForSlot(state.selectedDate, timeSlot);
+      if (needPaddle && (paddleCount < 1 || paddleCount > remainingPaddles)) {
+        showErr(`本時段目前公拍最多可借 ${remainingPaddles} 隻（已扣除器材外借與同場次預訂）。`);
+        return;
+      }
 
       const payload = {
         date: state.selectedDate,
@@ -2087,6 +2696,7 @@
         userName,
         dept,
         playerCount,
+        paddleCount,
         lookingForPlayers,
         note,
         cancelPin,
@@ -2097,33 +2707,35 @@
       try {
         await DataService.saveBooking(slotKey, payload);
         closeModal('modal-booking');
-        showToast(`預約成功！已為您鎖定 COURT ${courtId} 匹克球場 (${timeSlot})`, 'success');
+        showToast(`預約成功！已為您鎖定 COURT ${courtId} (${timeSlot})`, 'success');
       } catch (err) {
         console.error(err);
-        showErr('寫入失敗，請確認網路或資料庫權限後再試。');
+        showErr('寫入失敗，請檢查網路或資料庫權限後再試。');
       }
     });
 
     // 管理員登入表單送出
     document.getElementById('admin-login-form').addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('admin-login-name').value.trim() || '管理員';
-      const code = document.getElementById('admin-login-passcode').value.trim();
       const errBox = document.getElementById('admin-login-error');
+      errBox.classList.add('hidden');
+
+      const name = document.getElementById('admin-login-name').value.trim() || '社團管理員';
+      const code = document.getElementById('admin-login-passcode').value.trim();
 
       if (code !== state.adminPasscode) {
-        errBox.textContent = '❌ 密碼錯誤，請重新確認。';
+        errBox.textContent = '管理員密碼錯誤，請重新輸入。';
         errBox.classList.remove('hidden');
         return;
       }
 
       state.isAdmin = true;
       state.adminName = name;
-      sessionStorage.setItem('adv_admin_auth', JSON.stringify({ isAdmin: true, adminName: name }));
+      sessionStorage.setItem('advantech_pkl_admin', JSON.stringify({ name, ok: true }));
       closeModal('modal-admin-login');
       renderAll();
-      openAdminConsole();
       showToast(`歡迎回來，${name}！已啟用管理員權限`, 'success');
+      openAdminConsole();
     });
 
     // 聊天室留言送出
@@ -2131,13 +2743,13 @@
       e.preventDefault();
       const nameInput = document.getElementById('chat-input-name');
       const textInput = document.getElementById('chat-input-text');
-      const author = nameInput.value.trim();
+      const name = nameInput.value.trim();
       const text = textInput.value.trim();
-      if (!author || !text) return;
+      if (!name || !text) return;
 
       const msg = {
         id: `msg_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
-        author,
+        name,
         text,
         createdAt: Date.now()
       };
@@ -2151,55 +2763,132 @@
       }
     });
 
+    // 器材外借表單送出
+    document.getElementById('equipment-rental-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errBox = document.getElementById('eq-form-error');
+      errBox.classList.add('hidden');
+
+      const borrowerName = document.getElementById('eq-input-name').value.trim();
+      const ext = document.getElementById('eq-input-ext').value.trim();
+      const paddleCount = parseInt(document.getElementById('eq-input-paddles').value, 10) || 0;
+      const netCount = parseInt(document.getElementById('eq-input-nets').value, 10) || 0;
+      const expectedReturnDate = document.getElementById('eq-input-expected-date').value;
+      const actualReturnDate = document.getElementById('eq-input-actual-date').value;
+      const note = document.getElementById('eq-input-note').value.trim();
+
+      const showErr = (msg) => {
+        errBox.textContent = msg;
+        errBox.classList.remove('hidden');
+      };
+
+      if (!borrowerName || !ext) {
+        showErr('請填寫借用人姓名與公司分機。');
+        return;
+      }
+      if (paddleCount <= 0 && netCount <= 0) {
+        showErr('請至少選擇借用 1 隻公拍或 1 面球網。');
+        return;
+      }
+      if (!expectedReturnDate) {
+        showErr('請選擇預計歸還日期。');
+        return;
+      }
+
+      const inv = getEquipmentInventory();
+      if (!actualReturnDate) {
+        if (paddleCount > inv.availablePaddles) {
+          showErr(`公拍庫存不足！目前最多僅剩 ${inv.availablePaddles} 隻可外借。`);
+          return;
+        }
+        if (netCount > inv.availableNets) {
+          showErr(`球網庫存不足！目前最多僅剩 ${inv.availableNets} 面可外借。`);
+          return;
+        }
+      }
+
+      const rental = {
+        id: `eq_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        borrowerName,
+        ext,
+        paddleCount,
+        netCount,
+        expectedReturnDate,
+        actualReturnDate: actualReturnDate || '',
+        note,
+        createdAt: Date.now()
+      };
+
+      try {
+        await DataService.saveEquipmentRental(rental);
+        document.getElementById('eq-input-paddles').value = 0;
+        document.getElementById('eq-input-nets').value = 0;
+        document.getElementById('eq-input-actual-date').value = '';
+        document.getElementById('eq-input-note').value = '';
+        showToast('器材外借登記完成！庫存已即時同步更新', 'success');
+      } catch (err) {
+        console.error(err);
+        showErr('登記失敗，請確認網路或資料庫權限後再試。');
+      }
+    });
+
     // 將 HTML inline onclick 需要呼叫的函式掛載至 window
     Object.assign(window, {
       selectDate,
+      switchMainTab,
+      setEquipmentFilter,
+      openReturnModal,
+      handleConfirmReturn,
+      handleDeleteEquipmentRental,
       openBookingModal,
       openDetailModal,
-      openModal,
-      closeModal,
-      toggleInlineDuprTable,
       handleJoinBooking,
       handleCancelBooking,
-      toggleFacilityApproval,
       handleAdminButtonClick,
       handleAdminLogout,
+      toggleFacilityApproval,
       handleSaveCompanyEvent,
       handleRemoveCompanyEvent,
       handleSaveAnnouncement,
       handleUpdateAdminPasscode,
-      handleDeleteChatMessage,
       handleCleanupLegacyBookings,
+      handleDeleteChatMessage,
       exportBookingsCSV,
-      copySuggestedFirestoreRules
+      toggleInlineDuprTable,
+      copySuggestedFirestoreRules,
+      openModal,
+      closeModal
     });
 
     /* =========================================================================
-       10. 啟動初始化
+       12. 啟動應用程式
        ========================================================================= */
     function bootstrap() {
-      // 渲染國際 DUPR 對照表（頁內折疊區與彈窗共用）
-      const guideHtml = buildDuprGuideTableHtml();
-      document.getElementById('inline-dupr-table-content').innerHTML = guideHtml;
-      document.getElementById('modal-dupr-table-content').innerHTML = guideHtml;
-
-      // 還原同分頁的管理員登入狀態
+      // 還原同分頁管理員登入狀態
       try {
-        const saved = JSON.parse(sessionStorage.getItem('adv_admin_auth') || 'null');
-        if (saved && saved.isAdmin) {
+        const saved = JSON.parse(sessionStorage.getItem('advantech_pkl_admin') || 'null');
+        if (saved && saved.ok) {
           state.isAdmin = true;
-          state.adminName = saved.adminName || '管理員';
+          state.adminName = saved.name || '社團管理員';
         }
-      } catch {
-        // 忽略無效快取
+      } catch (e) {
+        // 忽略解析錯誤
       }
 
-      state.weekendDates = generateUpcomingWeekends(8);
+      // 生成未來 8 個星期日，並自動停在第一個未超過週三期限的日期
+      state.weekendDates = generateUpcomingSundays(8);
       const firstOpen = state.weekendDates.find((d) => !isPastBookingDeadline(d.dateStr));
       state.selectedDate = (firstOpen || state.weekendDates[0]).dateStr;
 
+      // 預設器材預計歸還日為 3 天後
+      const defaultReturn = new Date();
+      defaultReturn.setDate(defaultReturn.getDate() + 3);
+      const expInput = document.getElementById('eq-input-expected-date');
+      if (expInput) expInput.value = formatDateYMD(defaultReturn);
+
+      renderDuprGuideTables();
       renderAll();
-      initFirebase();
+      initFirebaseOrDemo();
     }
 
     bootstrap();
